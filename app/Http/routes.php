@@ -42,4 +42,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('users/{user}/delete', 'UsersController@delete');
     Route::resource('users', 'UsersController');
 
+
+    Route::resource('clients', 'ClientController');
+
 });
