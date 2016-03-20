@@ -27,13 +27,13 @@
     <section class="content">
         @yield('content')
     </section>
-
+</div>
     @if (!Auth::guest())
         <!-- Main Footer -->
         @include('layouts.footer')
     @endif
 
-</div>
+
   @include('layouts.global-scripts')
   @yield('custom-scripts')
 </body>

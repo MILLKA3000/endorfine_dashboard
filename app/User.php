@@ -8,6 +8,7 @@ class User extends Authenticatable
 {
     protected $table = 'users';
 
+    protected $guarded  = array('id');
     /**
      * The attributes that are mass assignable.
      *
@@ -25,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function getNameRole()
+    {
+        return $this->hasOne('App\Role','id','role_id');
+    }
+
 }

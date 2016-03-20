@@ -1,5 +1,5 @@
 <?php
-
+Route::model('user', 'App\User');
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -34,5 +34,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/', 'HomeController@index');
+
+    # Users
+    Route::get('users/data', 'UsersController@data'); //for ajax table
+    Route::get('users/{user}/show', 'UsersController@show');
+    Route::get('users/{user}/edit', 'UsersController@edit');
+    Route::get('users/{user}/delete', 'UsersController@delete');
+    Route::resource('users', 'UsersController');
 
 });
