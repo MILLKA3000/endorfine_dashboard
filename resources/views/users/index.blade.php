@@ -25,7 +25,7 @@
         <tr>
             <th data-sortable="true" data-filterable="text"> Ім'я </th>
             <th data-sortable="true" data-filterable="text"> Email </th>
-            <th data-sortable="true" data-filterable="select"> Активний </th>
+            <th data-sortable="true"> Активний </th>
             <th data-sortable="true" data-filterable="select">Роль</th>
             <th data-sortable="true" >Створений</th>
             <th >Дія</th>
