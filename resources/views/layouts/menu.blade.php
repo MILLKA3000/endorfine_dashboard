@@ -50,7 +50,7 @@
                     <li class="treeview">
                         <a href="#"><span>Статуси</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li>{{link_to('/', $title = 'Клієнти')}}</li>
+                            <li>{{link_to('/clients/statuses', $title = 'Клієнти')}}</li>
                             <li>{{link_to('/', $title = 'Абонементи')}}</li>
                         </ul>
                     </li>
