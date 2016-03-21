@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StatusesTicket extends Model
 {
     protected $table = 'statusTicket';
+    protected $fillable = [
+        'name'
+    ];
 }
