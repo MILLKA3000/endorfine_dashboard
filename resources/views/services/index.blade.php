@@ -4,11 +4,11 @@
 @section('content')
     <div class="bottom-menu-header">
         <h3>
-            Cтатуси абонементів
+            Додаткові послуги
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="/tickets/statuses/create"
-                       class="btn btn-sm  btn-primary"><span class="glyphicon glyphicon-plus-sign"></span>Новий статус</a>
+                    <a href="/services/create"
+                       class="btn btn-sm  btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Нова послуга</a>
                 </div>
             </div>
         </h3>
@@ -19,12 +19,15 @@
            data-paging="true"
            data-info="true"
            data-length-change="true"
-           data-ajax="/tickets/statuses/data"
+           data-ajax="/services/data"
            data-page-length="25">
         <thead>
         <tr>
-            <th data-sortable="true" data-filterable="text">Назва статусу</th>
-            <th data-sortable="true" >Створений</th>
+            <th data-sortable="true" data-filterable="text">Назва сервісу</th>
+            <th data-sortable="true" data-filterable="text">Деталі</th>
+            <th data-sortable="true" data-filterable="select">Акивний час</th>
+            <th data-sortable="true" data-filterable="text">Ціна</th>
+            <th data-sortable="true" >Активність</th>
             <th >Дія</th>
         </tr>
         </thead>
