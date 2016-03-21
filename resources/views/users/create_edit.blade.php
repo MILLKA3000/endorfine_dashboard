@@ -61,9 +61,9 @@
             {!! Form::label('enabled', 'Активний?', array('class' => 'control-label')) !!}
             <div class="controls">
                 {!! Form::label('enabled', 'Активний', array('class' => 'control-label')) !!}
-                {!! Form::radio('enabled', '1', @isset($user)? $user->confirmed : 'false') !!}
+                {!! Form::radio('enabled', '1', @isset($user)? $user->enabled : 'false') !!}
                 {!! Form::label('enabled', 'Деактивний', array('class' => 'control-label')) !!}
-                {!! Form::radio('enabled', '0', @isset($user)? $user->confirmed : 'true') !!}
+                {!! Form::radio('enabled', '0', @isset($user)? $user->enabled : 'true') !!}
                 <span class="help-block">{{ $errors->first('enabled', ':message') }}</span>
             </div>
         </div>

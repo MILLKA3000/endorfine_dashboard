@@ -28,15 +28,32 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">HEADER</li>
+            <li class="header">Меню</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><span>Link</span></a></li>
-            <li><a href="#"><span>Another Link</span></a></li>
+            <li class="active">{{link_to('/', $title = 'Головна')}}</li>
+            {{--<li><a href="#"><span>Another Link</span></a></li>--}}
             <li class="treeview">
-                <a href="#"><span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><span>Клієнт</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">Link in level 2</a></li>
-                    <li><a href="#">Link in level 2</a></li>
+                    <li>{{link_to('/users', $title = 'База пацієнтів')}}</li>
+                    <li>{{link_to('/', $title = 'Абонементи')}}</li>
+                    <li>{{link_to('/', $title = 'Знижки')}}</li>
+                    <li>{{link_to('/', $title = 'Сервіси')}}</li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><span>Налаштування</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li>{{link_to('/', $title = 'Юзери')}}</li>
+                    <li>{{link_to('/', $title = 'Сервіси')}}</li>
+                    <li>{{link_to('/', $title = 'Ролі')}}</li>
+                    <li class="treeview">
+                        <a href="#"><span>Статуси</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            {{link_to('/', $title = 'Клієнти')}}
+                            {{link_to('/', $title = 'Абонементи')}}
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul><!-- /.sidebar-menu -->
