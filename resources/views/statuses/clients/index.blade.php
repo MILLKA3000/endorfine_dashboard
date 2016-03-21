@@ -23,7 +23,7 @@
            data-page-length="25">
         <thead>
         <tr>
-            <th data-sortable="true" data-filterable="text"> Ім'я </th>
+            <th data-sortable="true" data-filterable="text"> Назва статуса </th>
             <th data-sortable="true" data-filterable="select">Знижка</th>
             <th data-sortable="true" >Створений</th>
             <th >Дія</th>

@@ -12,6 +12,15 @@ class discountType extends Seeder
     public function run()
     {
         \App\Discounts::create([
+            'name' => 'Без знижки',
+            'detail' => 'Без знижки',
+            'percent' => '0',
+            'status' => '1',
+            'enabled' => '1'
+        ]);
+
+
+        \App\Discounts::create([
             'name' => 'Vip знижка для кліентів більше 1 року',
             'detail' => 'Vip знижка для кліентів більше 1 року',
             'percent' => '5',

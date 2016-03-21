@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\ClientStatuses;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Client;
+use Yajra\Datatables\Facades\Datatables;
 
 class ClientController extends Controller
 {
@@ -15,7 +18,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('client.details_client');
+        return view('client.index');
     }
 
     /**
@@ -25,7 +28,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        $statuses = ClientStatuses::all();
+        return view('client.create_edit', compact('statuses'));
     }
 
     /**
@@ -36,18 +40,20 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $status = new Client ();
+        $status->fill($request->toArray());
+        $status->save();
+        return redirect('/clients');
     }
 
     /**
-     * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Client $client
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Client $client)
     {
-        //
+        return view('client.details_client',compact('client'));
     }
 
     /**
@@ -82,5 +88,38 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getPhoto()
+    {
+        $im = $_POST['image'];
+        $ifp = fopen(public_path().'/photo/image.png', "wb");
+
+        $data = explode(',', $im);
+
+        fwrite($ifp, base64_decode($data[1]));
+        fclose($ifp);
+
+
+
+    }
+
+    public function data()
+    {
+        $clients = Client::select('id', 'photo', 'name','phone','detail','birthday','status_id','enabled')->get();
+
+        return Datatables::of($clients)
+            ->edit_column('status_id', function($client){
+                return $client->getNameStatus->name;
+            })
+            ->edit_column('photo', function($client){
+                return "<img src='/photo/image.png' width='50'>";
+            })
+            ->edit_column('enabled', '@if ($enabled=="1") <span class=\'glyphicon text-green glyphicon-ok\'></span> @else <span class=\'glyphicon text-red glyphicon-remove\'></span> @endif')
+
+            ->add_column('actions', '<a href="{{ URL::to(\'tickets/statuses/\' . $id . \'/edit\' ) }}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
+                    <a href="{{{ URL::to(\'tickets/statuses/\' . $id . \'/destroy\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
+            ->remove_column('id')
+            ->make();
     }
 }

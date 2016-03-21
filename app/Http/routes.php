@@ -50,9 +50,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('tickets/statuses/{status}/destroy', 'StatusTicketController@destroy');
     Route::resource('tickets/statuses', 'StatusTicketController');
 
-//    Route::resource('clients', 'ClientController');
-
-
     # StatusClient
     Route::get('clients/statuses/data', 'ClientStatusController@data'); //for ajax table
     Route::get('clients/statuses/{status}/show', 'ClientStatusController@show');
@@ -61,4 +58,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('clients/statuses/{status}/destroy', 'ClientStatusController@destroy');
     Route::resource('clients/statuses', 'ClientStatusController');
 
+    #Clients
+    Route::get('clients/data', 'ClientController@data'); //for ajax table
+    Route::resource('clients', 'ClientController');
+
+
+    Route::post('photoPut', 'ClientController@getPhoto');
 });
