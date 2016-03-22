@@ -37,7 +37,7 @@
                 <ul class="treeview-menu">
                     <li>{{link_to('/clients', $title = 'База пацієнтів')}}</li>
                     <li>{{link_to('/', $title = 'Абонементи')}}</li>
-                    <li>{{link_to('/', $title = 'Знижки')}}</li>
+                    <li>{{link_to('/discounts', $title = 'Знижки')}}</li>
                     <li>{{link_to('/', $title = 'Сервіси')}}</li>
                 </ul>
             </li>

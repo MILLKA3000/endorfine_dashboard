@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Discounts extends Model
 {
     protected $table = 'discounts';
+    protected $fillable = [
+        'name', 'detail', 'percent', 'status', 'enabled'
+    ];
 }

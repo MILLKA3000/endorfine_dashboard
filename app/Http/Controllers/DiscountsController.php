@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NameRequest;
-use App\Role;
+use App\Discounts;
+use App\Http\Requests\Discounts\DiscountRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Yajra\Datatables\Facades\Datatables;
 
-class RolesController extends Controller
+class DiscountsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        return view('settings.roles.index');
+        return view('clients.discounts.index');
     }
 
     /**
@@ -28,7 +28,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('settings.roles.create_edit');
+        return view('clients.discounts.create_edit');
     }
 
     /**
@@ -37,11 +37,9 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NameRequest $request)
+    public function store(DiscountRequest $request)
     {
-        $status = new Role($request->toArray());
-        $status->save();
-        return redirect('role');
+        //
     }
 
     /**
@@ -50,7 +48,7 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($role)
+    public function show($id)
     {
         //
     }
@@ -61,9 +59,9 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
-        return view('settings.roles.create_edit', compact('role'));
+        //
     }
 
     /**
@@ -73,10 +71,9 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(NameRequest $request, Role $role)
+    public function update(DiscountRequest $request, $id)
     {
-        $role->update($request->toArray());
-        return redirect('role');
+        //
     }
 
     /**
@@ -85,17 +82,17 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
-        $role->delete();
-        return redirect('role');
+        //
     }
+
     /**
      * @return mixed
      */
     public function data()
     {
-        $roles = Role::select('id', 'name', 'created_at')->get();
+        $roles = Discounts::select('id', 'name', 'detail', 'percent', 'status', 'enabled')->get();
         return Datatables::of($roles)
 
             ->add_column('actions', '<a href="{{ URL::to(\'role/\' . $id . \'/edit\' ) }}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
