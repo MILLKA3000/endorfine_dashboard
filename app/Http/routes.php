@@ -41,6 +41,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('users/{user}/delete', 'UsersController@delete');
         Route::resource('users', 'UsersController');
 
+        # Roles
+        Route::get('role/data', 'RolesController@data'); //for ajax table
+        Route::get('role/{role}/show', 'RolesController@show');
+        Route::get('role/{role}/edit', 'RolesController@edit');
+        Route::put('role/{role}/edit', 'RolesController@update');
+        Route::get('role/{role}/destroy', 'RolesController@destroy');
+        Route::resource('role', 'RolesController');
+
         # Services
         Route::get('services/data', 'ServicesController@data'); //for ajax table
         Route::get('services/{status}/show', 'ServicesController@show');
