@@ -19,4 +19,9 @@ class Client extends Model
         return $this->hasOne('App\ClientStatuses','id','status_id');
     }
 
+    public function getActiveTickets()
+    {
+        return $this->hasMany('App\ClientsToTickets','client_id','id')->where('statusTicket_id',1);
+    }
+
 }

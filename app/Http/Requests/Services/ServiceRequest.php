@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Services;
 
 use App\Http\Requests\Request;
 
-class ClientRequest extends Request
+class ServiceRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,10 @@ class ClientRequest extends Request
      */
     public function rules()
     {
-        if($this->ticket > 1 && $this->numTicket==null){
-            return [
-                'numTicket' => 'required|min:1'
-            ];
-        }
-
         return [
             'name' => 'required|min:3',
-            'phone' => 'required'
+            'activityTime' => 'required|min:1',
+            'value' => 'required|min:1',
         ];
     }
 }

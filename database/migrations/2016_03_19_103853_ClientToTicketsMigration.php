@@ -22,6 +22,7 @@ class ClientToTicketsMigration extends Migration
 
         Schema::create('clientsToTickets', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('numTicket');
             $table->unsignedInteger('ticket_id')->nullable();
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('set null');
             $table->unsignedInteger('client_id')->nullable();

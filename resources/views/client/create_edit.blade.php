@@ -32,7 +32,6 @@
                     <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                 </div>
             </div>
-
             <div class="form-group  {{ $errors->has('phone') ? 'has-error' : '' }}">
                 {!! Form::label('phone', 'Телефон', array('class' => 'control-label')) !!}
 
@@ -64,19 +63,29 @@
                 </div>
             </div>
 
-            <div class="form-group  {{ $errors->has('ticket') ? 'has-error' : '' }}">
-                {!! Form::label('ticket', 'Абонемент', array('class' => 'control-label')) !!}
-                <div class="controls">
-                    {!! Form::select('ticket', $tickets->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
-                    <span class="help-block">{{ $errors->first('ticket', ':message') }}</span>
+            <div class="row callout callout-info">
+                <div class="form-group col-xs-8 {{ $errors->has('ticket') ? 'has-error' : '' }}">
+                    {!! Form::label('ticket', 'Абонемент', array('class' => 'control-label')) !!}
+                    <div class="controls">
+                        {!! Form::select('ticket', $tickets->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                        <span class="help-block">{{ $errors->first('ticket', ':message') }}</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group  {{ $errors->has('discount') ? 'has-error' : '' }}">
-                {!! Form::label('discount', 'Знижка', array('class' => 'control-label')) !!}
-                <div class="controls">
-                    {!! Form::select('discount', $discounts->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
-                    <span class="help-block">{{ $errors->first('discount', ':message') }}</span>
+                <div class="form-group col-xs-4 {{ $errors->has('numTicket') ? 'has-error' : '' }}">
+                    {!! Form::label('numTicket', 'Номер абонемента', array('class' => 'control-label')) !!}
+                    <div class="controls">
+                        {!! Form::text('numTicket', null, array('class' => 'form-control')) !!}
+                        <span class="help-block">{{ $errors->first('numTicket', ':message') }}</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 {{ $errors->has('discount') ? 'has-error' : '' }}">
+                    {!! Form::label('discount', 'Знижка', array('class' => 'control-label')) !!}
+                    <div class="controls">
+                        {!! Form::select('discount', $discounts->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                        <span class="help-block">{{ $errors->first('discount', ':message') }}</span>
+                    </div>
                 </div>
             </div>
 
@@ -105,7 +114,7 @@
                 {!! Form::label('photo', 'Фото', array('class' => 'control-label')) !!}
                 <div class="controls">
                     <div id="webcam"></div>
-                    {!! Form::text('photo', null, array('class' => 'form-control','style'=>'display:none')) !!}
+                    {!! Form::textarea('photo', '', array('class' => 'form-control photo-client','style'=>'display:none')) !!}
                     <span class="help-block">{{ $errors->first('photo', ':message') }}</span>
                     <a href="javascript:webcam.capture();void(0);" class="btn btn-sm btn-default">Зробити фото</a>
                     <div id="photo"></div>
@@ -169,7 +178,8 @@
 
                     if (pos >= 4 * 320 * 240) {
                         ctx.putImageData(img, 0, 0);
-                        $.post("/photoPut", {type: "data", image: canvas.toDataURL("image/png") });
+                        $('.photo-client').val(canvas.toDataURL("image/png"));
+//                        $.post("/photoPut", {type: "data", image: canvas.toDataURL("image/png") });
                         pos = 0;
                     }
                 };
