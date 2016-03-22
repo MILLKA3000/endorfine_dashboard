@@ -39,7 +39,9 @@ class DiscountsController extends Controller
      */
     public function store(DiscountRequest $request)
     {
-        //
+        $status = new Discounts($request->toArray());
+        $status->save();
+        return redirect('/discounts');
     }
 
     /**
@@ -59,9 +61,9 @@ class DiscountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Discounts $discount)
     {
-        //
+        return view('clients.discounts.create_edit', compact('discount'));
     }
 
     /**
@@ -71,9 +73,11 @@ class DiscountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(DiscountRequest $request, $id)
+    public function update( Discounts $discount, DiscountRequest $request)
     {
-        //
+
+        $discount->update($request->toArray());
+        return redirect('discounts');
     }
 
     /**
@@ -82,9 +86,10 @@ class DiscountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Discounts $discount)
     {
-        //
+        $discount->delete();
+        return redirect('discounts');
     }
 
     /**
@@ -92,11 +97,11 @@ class DiscountsController extends Controller
      */
     public function data()
     {
-        $roles = Discounts::select('id', 'name', 'detail', 'percent', 'status', 'enabled')->get();
-        return Datatables::of($roles)
-
-            ->add_column('actions', '<a href="{{ URL::to(\'role/\' . $id . \'/edit\' ) }}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
-                    <a href="{{{ URL::to(\'role/\' . $id . \'/destroy\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
+        $discounts = Discounts::select('id', 'name', 'detail', 'percent', 'status', 'enabled')->get();
+        return Datatables::of($discounts)
+            ->edit_column('enabled', '@if ($enabled=="1") <span class=\'glyphicon text-green glyphicon-ok\'></span> @else <span class=\'glyphicon text-red glyphicon-remove\'></span> @endif')
+            ->add_column('actions', '<a href="{{ URL::to(\'discounts/\' . $id . \'/edit\' ) }}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
+                    <a href="{{{ URL::to(\'discounts/\' . $id . \'/destroy\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
             ->remove_column('id')
             ->make();
     }

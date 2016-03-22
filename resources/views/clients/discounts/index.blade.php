@@ -4,11 +4,11 @@
 @section('content')
     <div class="bottom-menu-header">
         <h3>
-            Ролі користувачів
+            Знижки
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="/role/create"
-                       class="btn btn-sm  btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Нова роль користувача</a>
+                    <a href="/discounts/create"
+                       class="btn btn-sm  btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Нова знижка</a>
                 </div>
             </div>
         </h3>

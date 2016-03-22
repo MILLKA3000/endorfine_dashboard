@@ -27,7 +27,7 @@
                     <span class="help-block">{{ $errors->first('name', ':message') }}</span>
                 </div>
             </div>
-            <div class="form-group  {{ $errors->has('email') ? 'has-error' : '' }}">
+            <div class="form-group  {{ $errors->has('detail') ? 'has-error' : '' }}">
                 {!! Form::label('detail', 'Деталі', array('class' => 'control-label')) !!}
                 <div class="controls">
                     {!! Form::text('detail', null, array('class' => 'form-control')) !!}

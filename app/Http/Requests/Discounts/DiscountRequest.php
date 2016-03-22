@@ -25,7 +25,7 @@ class DiscountRequest extends Request
     {
         return [
             'name' => 'required|min:3',
-            'percent' => 'required'
+            'percent' => 'required|min:0|max:100|numeric'
         ];
     }
 }
