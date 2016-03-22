@@ -10,7 +10,7 @@
 @section('content')
     <div class="bottom-menu-header">
         <h3>
-            Створення Кліента
+            Створення Клієнта
             <div class="pull-right">
                 <div class="pull-right">
 
@@ -75,7 +75,7 @@
                 <div class="form-group col-xs-4 {{ $errors->has('numTicket') ? 'has-error' : '' }}">
                     {!! Form::label('numTicket', 'Номер абонемента', array('class' => 'control-label')) !!}
                     <div class="controls">
-                        {!! Form::text('numTicket', null, array('class' => 'form-control')) !!}
+                        {!! Form::text('numTicket', $lastTicket, array('class' => 'form-control')) !!}
                         <span class="help-block">{{ $errors->first('numTicket', ':message') }}</span>
                     </div>
                 </div>
@@ -113,11 +113,28 @@
             <div class="form-group  {{ $errors->has('photo') ? 'has-error' : '' }}">
                 {!! Form::label('photo', 'Фото', array('class' => 'control-label')) !!}
                 <div class="controls">
-                    <div id="webcam"></div>
-                    {!! Form::textarea('photo', '', array('class' => 'form-control photo-client','style'=>'display:none')) !!}
-                    <span class="help-block">{{ $errors->first('photo', ':message') }}</span>
-                    <a href="javascript:webcam.capture();void(0);" class="btn btn-sm btn-default">Зробити фото</a>
-                    <div id="photo"></div>
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Веб камера</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="webcam" class="center"></div>
+                            {!! Form::textarea('photo', '', array('class' => 'form-control photo-client','style'=>'display:none')) !!}
+                            <span class="help-block">{{ $errors->first('photo', ':message') }}</span>
+                            <a href="javascript:webcam.capture();void(0);" class="btn btn-sm btn-default">Зробити фото</a>
+                            <div id="photo"></div>
+                        </div>
+                    </div>
+
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Фото клієнта</h3>
+                        </div>
+                        <div class="box-body">
+                            <img id="example" class="img-responsive center-block text-center" src="" alt="Приклад фото клієнта">
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
@@ -144,7 +161,7 @@
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.js") }}"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js") }}"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js") }}"></script>
-    <script src="{{ asset ("/bower_components/AdminLTE/plugins/JQuery/jquery.webcam.js") }}"></script>
+    <script src="{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jquery.webcam.js") }}"></script>
 
     <script>
         $(function() {
@@ -179,7 +196,7 @@
                     if (pos >= 4 * 320 * 240) {
                         ctx.putImageData(img, 0, 0);
                         $('.photo-client').val(canvas.toDataURL("image/png"));
-//                        $.post("/photoPut", {type: "data", image: canvas.toDataURL("image/png") });
+                        $('#example').attr('src', canvas.toDataURL("image/png"));
                         pos = 0;
                     }
                 };
@@ -200,10 +217,10 @@
 
             $("#webcam").webcam({
 
-                width: 320,
+                width: '100%',
                 height: 240,
                 mode: "callback",
-                swffile: "{{ asset ("/bower_components/AdminLTE/plugins/JQuery/jscam_canvas_only.swf") }}",
+                swffile: "{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jscam_canvas_only.swf") }}",
 
                 onSave: saveCB,
 

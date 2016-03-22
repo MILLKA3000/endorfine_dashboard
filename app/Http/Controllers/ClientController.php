@@ -41,7 +41,8 @@ class ClientController extends Controller
         $statuses = ClientStatuses::all();
         $tickets = Ticket::all();
         $discounts = Discounts::whereIn('status',[2,3])->get();
-        return view('client.create_edit', compact('statuses','tickets','discounts'));
+        $lastTicket = (clientsToTickets::get()->last())?clientsToTickets::get()->last()->id+1:1;
+        return view('client.create_edit', compact('statuses','tickets','discounts','lastTicket'));
     }
 
     /**
@@ -115,11 +116,13 @@ class ClientController extends Controller
 
     private function getPhoto($im)
     {
-        $path = '/photo/'.$this->client.'.png';
-        $ifp = fopen(public_path().$path, "wb");
-        $data = explode(',', $im);
-        fwrite($ifp, base64_decode($data[1]));
-        fclose($ifp);
+        $path = '/photo/' . $this->client . '.png';
+        if(!empty($im)) {
+            $ifp = fopen(public_path() . $path, "wb");
+            $data = explode(',', $im);
+            fwrite($ifp, base64_decode($data[1]));
+            fclose($ifp);
+        }
         return ['photo'=>$path];
     }
 

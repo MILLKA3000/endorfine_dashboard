@@ -4,7 +4,7 @@
 @section('content')
     <div class="bottom-menu-header">
         <h3>
-            База Кліентів
+            База Клієнтів
             <div class="pull-right">
                 <div class="pull-right">
                     <a href="/clients/create"
@@ -14,13 +14,14 @@
         </h3>
     </div>
 
-    <table id="table2" class="table table-bordered table-hover dataTable"
+    <table id="table2" class="table responsive no-wrap table-bordered table-hover dataTable"
            data-global-search="true"
            data-paging="true"
            data-info="true"
            data-length-change="true"
            data-ajax="/clients/data"
-           data-page-length="25">
+           data-page-length="25"
+            width="100%">
         <thead>
         <tr>
             <th>Фото</th>
@@ -41,6 +42,6 @@
 @section('custom-scripts')
     <script src="{{ asset('js/dataTablesSelect.js') }}"></script>
     <script>
-        $('#table2').dataTableHelper();
+        $('#table2').dataTableHelper({responsive: true});
     </script>
 @stop
