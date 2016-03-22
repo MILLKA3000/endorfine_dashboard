@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ClientStatuses;
+use App\ClientsToTickets;
+use App\Discounts;
+use App\Http\Requests\Client\ClientRequest;
+use App\Ticket;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -29,7 +33,9 @@ class ClientController extends Controller
     public function create()
     {
         $statuses = ClientStatuses::all();
-        return view('client.create_edit', compact('statuses'));
+        $tickets = Ticket::all();
+        $discounts = Discounts::whereIn('status',[2,3])->get();
+        return view('client.create_edit', compact('statuses','tickets','discounts'));
     }
 
     /**
@@ -38,11 +44,19 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
         $status = new Client ();
         $status->fill($request->toArray());
         $status->save();
+
+        $ticket = new ClientsToTickets();
+        $ticket->ticket_id = $request->ticket;
+        $ticket->client_id = $status->id;
+        $ticket->statusTicket_id = 1;
+        $ticket->discount_id = $request->discount;
+        $ticket->save();
+
         return redirect('/clients');
     }
 

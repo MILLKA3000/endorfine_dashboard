@@ -12,6 +12,15 @@ class tickets extends Seeder
     public function run()
     {
         \App\Ticket::create([
+            'name' => 'Без абонемента',
+            'detail' => 'Без абонемента',
+            'qtySessions' => '0',
+            'activityTime' => '0',
+            'value' => '0',
+            'enabled' => true
+        ]);
+
+        \App\Ticket::create([
             'name' => 'Абонемент на 8 занять',
             'detail' => 'Абонемент на 8 занять',
             'qtySessions' => '8',

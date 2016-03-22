@@ -15,7 +15,7 @@ class discountType extends Seeder
             'name' => 'Без знижки',
             'detail' => 'Без знижки',
             'percent' => '0',
-            'status' => '1',
+            'status' => '3',
             'enabled' => '1'
         ]);
 

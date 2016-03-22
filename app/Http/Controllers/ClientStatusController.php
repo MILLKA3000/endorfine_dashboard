@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ClientStatuses;
 use App\Discounts;
+use App\Http\Requests\NameRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -28,7 +29,7 @@ class ClientStatusController extends Controller
      */
     public function create()
     {
-        $discount = Discounts::where('status',1)->get();
+        $discount = Discounts::whereIn('status',[1,3])->get();
         return view('statuses.clients.create_edit', compact('discount'));
     }
 
@@ -38,7 +39,7 @@ class ClientStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NameRequest $request)
     {
         $status = new ClientStatuses ();
         $status->fill($request->toArray());
@@ -65,7 +66,7 @@ class ClientStatusController extends Controller
      */
     public function edit(ClientStatuses $status)
     {
-        $discount = Discounts::where('status',1)->get();
+        $discount = Discounts::whereIn('status',[1,3])->get();
         return view('statuses.clients.create_edit', compact('status','discount'));
     }
 
@@ -76,7 +77,7 @@ class ClientStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClientStatuses $status)
+    public function update(NameRequest $request, ClientStatuses $status)
     {
         $status->update($request->toArray());
         return redirect('/clients/statuses');

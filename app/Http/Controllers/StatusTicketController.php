@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NameRequest;
 use App\StatusesTicket;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class StatusTicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NameRequest $request)
     {
         $status = new StatusesTicket($request->toArray());
         $status->save();
@@ -72,7 +73,7 @@ class StatusTicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StatusesTicket $status)
+    public function update(NameRequest $request, StatusesTicket $status)
     {
         $status->update($request->toArray());
         return redirect('/tickets/statuses');

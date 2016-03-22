@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NameRequest;
 use App\Services;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class ServicesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NameRequest $request)
     {
         $status = new Services($request->toArray());
         $status->save();
@@ -73,7 +74,7 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NameRequest $request, $id)
     {
         $services = Services::find($id);
         $services->update($request->toArray());

@@ -37,12 +37,13 @@
                 {!! Form::label('phone', 'Телефон', array('class' => 'control-label')) !!}
 
                 <div class="input-group">
-                    <div class="input-group-addon">
+                    <div class="input-group-addon {{ $errors->has('phone') ? 'has-error' : '' }}">
                         <i class="fa fa-phone"></i>
                     </div>
-                    {!! Form::text('phone', null, array('class' => 'form-control','data-inputmask'=>'\'mask\': \'(999) 999-9999\'','data-mask'=>'')) !!}
-                    <span class="help-block">{{ $errors->first('phone', ':message') }}</span>
+                    {!! Form::text('phone', null, array('class' => 'form-control','data-inputmask'=>'\'mask\': \'(999) 999-99-99\'','data-mask'=>'')) !!}
+
                 </div>
+                <span class="help-block">{{ $errors->first('phone', ':message') }}</span>
             </div>
             <div class="form-group  {{ $errors->has('birthday') ? 'has-error' : '' }}">
                 {!! Form::label('birthday', 'Дата народження', array('class' => 'control-label')) !!}
@@ -55,19 +56,35 @@
                 </div>
             </div>
 
-            <div class="form-group  {{ $errors->has('detail') ? 'has-error' : '' }}">
-                {!! Form::label('detail', 'Опис', array('class' => 'control-label')) !!}
-                <div class="controls">
-                    {!! Form::textarea('detail', null, array('class' => 'form-control','rows'=>3)) !!}
-                    <span class="help-block">{{ $errors->first('detail', ':message') }}</span>
-                </div>
-            </div>
-
             <div class="form-group  {{ $errors->has('status_id') ? 'has-error' : '' }}">
                 {!! Form::label('status_id', 'Статус кліента', array('class' => 'control-label')) !!}
                 <div class="controls">
                     {!! Form::select('status_id', $statuses->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
                     <span class="help-block">{{ $errors->first('status_id', ':message') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group  {{ $errors->has('ticket') ? 'has-error' : '' }}">
+                {!! Form::label('ticket', 'Абонемент', array('class' => 'control-label')) !!}
+                <div class="controls">
+                    {!! Form::select('ticket', $tickets->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                    <span class="help-block">{{ $errors->first('ticket', ':message') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group  {{ $errors->has('discount') ? 'has-error' : '' }}">
+                {!! Form::label('discount', 'Знижка', array('class' => 'control-label')) !!}
+                <div class="controls">
+                    {!! Form::select('discount', $discounts->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                    <span class="help-block">{{ $errors->first('discount', ':message') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group  {{ $errors->has('detail') ? 'has-error' : '' }}">
+                {!! Form::label('detail', 'Опис', array('class' => 'control-label')) !!}
+                <div class="controls">
+                    {!! Form::textarea('detail', null, array('class' => 'form-control','rows'=>3)) !!}
+                    <span class="help-block">{{ $errors->first('detail', ':message') }}</span>
                 </div>
             </div>
 
