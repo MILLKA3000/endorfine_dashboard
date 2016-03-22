@@ -46,7 +46,7 @@
                 <ul class="treeview-menu">
                     <li>{{link_to('/users', $title = 'Юзери')}}</li>
                     <li>{{link_to('/services', $title = 'Сервіси')}}</li>
-                    <li>{{link_to('/', $title = 'Ролі')}}</li>
+                    <li>{{link_to('/role', $title = 'Ролі')}}</li>
                     <li class="treeview">
                         <a href="#"><span>Статуси</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">

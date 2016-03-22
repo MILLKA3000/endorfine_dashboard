@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Services;
+use App\Role;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Yajra\Datatables\Facades\Datatables;
 
-class ServicesController extends Controller
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        return view('services.index');
+        return view('.settings.roles.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        return view('services.create_edit');
+        return view('settings.roles.create_edit');
     }
 
     /**
@@ -38,9 +38,9 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        $status = new Services($request->toArray());
+        $status = new Role($request->toArray());
         $status->save();
-        return redirect('/services');
+        return redirect('role');
     }
 
     /**
@@ -49,7 +49,7 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($role)
     {
         //
     }
@@ -60,10 +60,9 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        $services = Services::find($id);
-        return view('services.create_edit', compact('services'));
+        return view('settings.roles.create_edit', compact('role'));
     }
 
     /**
@@ -73,11 +72,10 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        $services = Services::find($id);
-        $services->update($request->toArray());
-        return redirect('/services');
+        $role->update($request->toArray());
+        return redirect('role');
     }
 
     /**
@@ -86,23 +84,21 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        $services = Services::find($id);
-        $services->delete();
-        return redirect('/services');
+        $role->delete();
+        return redirect('role');
     }
-
     /**
      * @return mixed
      */
     public function data()
     {
-        $services = Services::select('id', 'name', 'detail', 'activityTime', 'value', 'enabled')->get();
-        return Datatables::of($services)
-            ->edit_column('enabled', '@if ($enabled=="1") <span class=\'glyphicon text-green glyphicon-ok\'></span> @else <span class=\'glyphicon text-red glyphicon-remove\'></span> @endif')
-            ->add_column('actions', '<a href="{{ URL::to(\'services/\' . $id . \'/edit\' ) }}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
-                    <a href="{{{ URL::to(\'services/\' . $id . \'/destroy\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
+        $roles = Role::select('id', 'name', 'created_at')->get();
+        return Datatables::of($roles)
+
+            ->add_column('actions', '<a href="{{ URL::to(\'role/\' . $id . \'/edit\' ) }}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
+                    <a href="{{{ URL::to(\'role/\' . $id . \'/destroy\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
             ->remove_column('id')
             ->make();
     }
