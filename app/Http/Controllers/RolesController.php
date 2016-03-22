@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NameRequest;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        return view('.settings.roles.index');
+        return view('settings.roles.index');
     }
 
     /**
@@ -36,7 +37,7 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NameRequest $request)
     {
         $status = new Role($request->toArray());
         $status->save();
@@ -72,7 +73,7 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(NameRequest $request, Role $role)
     {
         $role->update($request->toArray());
         return redirect('role');

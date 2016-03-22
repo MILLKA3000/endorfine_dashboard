@@ -79,6 +79,13 @@ Route::group(['middleware' => ['web']], function () {
 
 
         Route::post('photoPut', 'ClientController@getPhoto');
+
+        # Discounts
+        Route::get('discounts/data', 'DiscountsController@data'); //for ajax table
+        Route::get('discounts/{discount}/edit', 'DiscountsController@edit');
+        Route::put('discounts/{discount}/edit', 'DiscountsController@update');
+        Route::get('discounts/{discount}/destroy', 'DiscountsController@destroy');
+        Route::resource('discounts', 'DiscountsController');
     });
 });
 
