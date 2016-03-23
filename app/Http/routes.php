@@ -86,6 +86,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::put('discounts/{discount}/edit', 'DiscountsController@update');
         Route::get('discounts/{discount}/destroy', 'DiscountsController@destroy');
         Route::resource('discounts', 'DiscountsController');
+
+        # Tickets
+        Route::get('tickets/data', 'TicketsController@data'); //for ajax table
+        Route::get('tickets/{ticket}/show', 'TicketsController@show');
+        Route::get('tickets/{ticket}/edit', 'TicketsController@edit');
+        Route::put('tickets/{ticket}/edit', 'TicketsController@update');
+        Route::get('tickets/{ticket}/destroy', 'TicketsController@destroy');
+        Route::resource('tickets', 'TicketsController');
     });
 });
 
