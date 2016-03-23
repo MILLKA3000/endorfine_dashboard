@@ -9,25 +9,28 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+                        <img class="img-responsive" style="width: 100%" src="{{ URL::to('/photo/'.$client->id.'.png') }}" alt="Фото клієнта">
 
-                        <h3 class="profile-username text-center">Nina Mcintire</h3>
+                        <h3 class="profile-username text-center">{{$client->name}}</h3>
 
-                        <p class="text-muted text-center">Software Engineer</p>
+                        <p class="text-muted text-center">{{$client->getNameStatus->name}}</p>
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Followers</b> <a class="pull-right">1,322</a>
+                                <b>Абонемент</b> <a class="pull-right">{{$client->getActiveTickets->first()->numTicket}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Following</b> <a class="pull-right">543</a>
+                                <b>Знижка</b> <a class="pull-right"><small class="label label-success">({{$client->getNameStatus->getNameDiscountForClients->percent}}%)</small></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Friends</b> <a class="pull-right">13,287</a>
+                                <b>День народження</b> <a class="pull-right">{{$client->birthday}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                {{--<b>Загальна кількість занять</b> <a class="pull-right">{{$client->getActiveTraning->getQtyTicket->qtySessions}}</a>--}}
+                                <b>Загальна кількість занять</b> <a class="pull-right">1</a>
                             </li>
                         </ul>
 
-                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -36,40 +39,25 @@
                 <!-- About Me Box -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">About Me</h3>
+                        <h3 class="box-title">Детальніше</h3>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
-                        <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+                        <div class="box-body">
 
-                        <p class="text-muted">
-                            B.S. in Computer Science from the University of Tennessee at Knoxville
-                        </p>
+                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Користувач створений</strong>
 
-                        <hr>
+                            <p class="pull-right">{{$client->created_at}}</p>
+                        </div>
+                        <div class="box-body">
 
-                        <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+                            @if (!empty($client->detail))
 
-                        <p class="text-muted">Malibu, California</p>
+                                <strong><i class="fa fa-file-text-o margin-r-5"></i> Опис</strong>
 
-                        <hr>
+                                <p>{{$client->detail}}</p>
 
-                        <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-                        <p>
-                            <span class="label label-danger">UI Design</span>
-                            <span class="label label-success">Coding</span>
-                            <span class="label label-info">Javascript</span>
-                            <span class="label label-warning">PHP</span>
-                            <span class="label label-primary">Node.js</span>
-                        </p>
-
-                        <hr>
-
-                        <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-                    </div>
+                            @endif
+                        </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
@@ -78,274 +66,161 @@
             <div class="col-md-9">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
-                        <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
-                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                        <li class="active"><a href="#activity" data-toggle="tab">Абонементи</a></li>
+                        <li><a href="#timeline" data-toggle="tab">Календар</a></li>
+                        <li><a href="#settings" data-toggle="tab">Профіль</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="active tab-pane" id="activity">
-                            <!-- Post -->
-                            <div class="post">
-                                <div class="user-block">
-                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                                    <span class="description">Shared publicly - 7:30 PM today</span>
-                                </div>
-                                <!-- /.user-block -->
-                                <p>
-                                    Lorem ipsum represents a long-held tradition for designers,
-                                    typographers and the like. Some people hate it and argue for
-                                    its demise, but others ignore the hate as they create awesome
-                                    tools to help create filler text for everyone from bacon lovers
-                                    to Charlie Sheen fans.
-                                </p>
-                                <ul class="list-inline">
-                                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                    </li>
-                                    <li class="pull-right">
-                                        <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                                            (5)</a></li>
-                                </ul>
-
-                                <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                            </div>
-                            <!-- /.post -->
-
-                            <!-- Post -->
-                            <div class="post clearfix">
-                                <div class="user-block">
-                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                                    <span class="description">Sent you a message - 3 days ago</span>
-                                </div>
-                                <!-- /.user-block -->
-                                <p>
-                                    Lorem ipsum represents a long-held tradition for designers,
-                                    typographers and the like. Some people hate it and argue for
-                                    its demise, but others ignore the hate as they create awesome
-                                    tools to help create filler text for everyone from bacon lovers
-                                    to Charlie Sheen fans.
-                                </p>
-
-                                <form class="form-horizontal">
-                                    <div class="form-group margin-bottom-none">
-                                        <div class="col-sm-9">
-                                            <input class="form-control input-sm" placeholder="Response">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
+                            <div class="bottom-menu-header">
+                                <h3>
+                                    Абонементи
+                                    <div class="pull-right">
+                                        <div class="pull-right">
+                                            <a href="/clients/{{$client->id}}/joinTicket"
+                                               class="btn btn-sm  btn-primary"><span class="glyphicon glyphicon-plus-sign"></span>Добавити абонемент</a>
                                         </div>
                                     </div>
-                                </form>
+                                </h3>
                             </div>
-                            <!-- /.post -->
+                            <table id="table2" class="table responsive no-wrap table-bordered table-hover dataTable"
+                                   data-paging="true"
+                                   data-ajax="/clients/getAllTickets/{{$client->id}}"
+                                   data-page-length="25"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th data-sortable="true" data-filterable="select" width="10%">Абонементи</th>
+                                    <th data-sortable="true" width="10%">Кількість занять</th>
+                                    <th data-sortable="true" width="10%">Дата закінчення</th>
+                                    <th data-sortable="true" data-filterable="text" width="10%">Знижка</th>
+                                    <th data-sortable="true" data-filterable="select" width="10%">Активний</th>
 
-                            <!-- Post -->
-                            <div class="post">
-                                <div class="user-block">
-                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                                    <span class="description">Posted 5 photos - 5 days ago</span>
-                                </div>
-                                <!-- /.user-block -->
-                                <div class="row margin-bottom">
-                                    <div class="col-sm-6">
-                                        <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <img class="img-responsive" src="../../dist/img/photo2.png" alt="Photo">
-                                                <br>
-                                                <img class="img-responsive" src="../../dist/img/photo3.jpg" alt="Photo">
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-6">
-                                                <img class="img-responsive" src="../../dist/img/photo4.jpg" alt="Photo">
-                                                <br>
-                                                <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </div>
-                                    <!-- /.col -->
-                                </div>
-                                <!-- /.row -->
-
-                                <ul class="list-inline">
-                                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                                    </li>
-                                    <li class="pull-right">
-                                        <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                                            (5)</a></li>
-                                </ul>
-
-                                <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                            </div>
-                            <!-- /.post -->
+                                    <th width="10%">Дія</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
                         </div>
-                        <!-- /.tab-pane -->
+
                         <div class="tab-pane" id="timeline">
-                            <!-- The timeline -->
-                            <ul class="timeline timeline-inverse">
-                                <!-- timeline time label -->
-                                <li class="time-label">
-                        <span class="bg-red">
-                          10 Feb. 2014
-                        </span>
-                                </li>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-envelope bg-blue"></i>
 
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                                        <div class="timeline-body">
-                                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                            quora plaxo ideeli hulu weebly balihoo...
-                                        </div>
-                                        <div class="timeline-footer">
-                                            <a class="btn btn-primary btn-xs">Read more</a>
-                                            <a class="btn btn-danger btn-xs">Delete</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-user bg-aqua"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                                        </h3>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-comments bg-yellow"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                                        <div class="timeline-body">
-                                            Take me to your leader!
-                                            Switzerland is small and neutral!
-                                            We are more like Germany, ambitious and misunderstood!
-                                        </div>
-                                        <div class="timeline-footer">
-                                            <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline time label -->
-                                <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                                </li>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-camera bg-purple"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                                        <div class="timeline-body">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <li>
-                                    <i class="fa fa-clock-o bg-gray"></i>
-                                </li>
-                            </ul>
                         </div>
-                        <!-- /.tab-pane -->
 
                         <div class="tab-pane" id="settings">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                            <div class="bottom-menu-header">
+                                <h3>
+                                    Особисті дані клієнта
+                                    <div class="pull-right">
+                                        <div class="pull-right">
 
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                        </div>
+                                    </div>
+                                </h3>
+                            </div>
+                            {!! Form::model($client, array('url' => URL::to('clients') . '/' . $client->id.'/edit', 'method' => 'PUT', 'class' => 'bf row', 'files'=> true)) !!}
+
+                                <div class="col-md-8">
+                                    <div class="form-group  {{ $errors->has('name') ? 'has-error' : '' }}">
+                                        {!! Form::label('name', 'Ім\'я', array('class' => 'control-label')) !!}
+                                        <div class="controls">
+                                            {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                            <span class="help-block">{{ $errors->first('name', ':message') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group  {{ $errors->has('phone') ? 'has-error' : '' }}">
+                                        {!! Form::label('phone', 'Телефон', array('class' => 'control-label')) !!}
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon {{ $errors->has('phone') ? 'has-error' : '' }}">
+                                                <i class="fa fa-phone"></i>
+                                            </div>
+                                            {!! Form::text('phone', null, array('class' => 'form-control','data-inputmask'=>'\'mask\': \'(999) 999-99-99\'','data-mask'=>'')) !!}
+
+                                        </div>
+                                        <span class="help-block">{{ $errors->first('phone', ':message') }}</span>
+                                    </div>
+                                    <div class="form-group  {{ $errors->has('birthday') ? 'has-error' : '' }}">
+                                        {!! Form::label('birthday', 'Дата народження', array('class' => 'control-label')) !!}
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            {!! Form::date('birthday', \Carbon\Carbon::now(), array('class' => 'form-control','data-inputmask'=>'\'alias\': \'mm/dd/yyyy\'','data-mask'=>'')) !!}
+                                            <span class="help-block">{{ $errors->first('birthday', ':message') }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group  {{ $errors->has('status_id') ? 'has-error' : '' }}">
+                                        {!! Form::label('status_id', 'Статус кліента', array('class' => 'control-label')) !!}
+                                        <div class="controls">
+                                            {!! Form::select('status_id', $statuses->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                                            <span class="help-block">{{ $errors->first('status_id', ':message') }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group  {{ $errors->has('detail') ? 'has-error' : '' }}">
+                                        {!! Form::label('detail', 'Опис', array('class' => 'control-label')) !!}
+                                        <div class="controls">
+                                            {!! Form::textarea('detail', null, array('class' => 'form-control','rows'=>3)) !!}
+                                            <span class="help-block">{{ $errors->first('detail', ':message') }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group  {{ $errors->has('enabled') ? 'has-error' : '' }}">
+                                        {!! Form::label('enabled', 'Активний?', array('class' => 'control-label')) !!}
+                                        <div class="controls">
+                                            {!! Form::label('enabled', 'Так', array('class' => 'control-label')) !!}
+                                            {!! Form::radio('enabled', '1', 1) !!}
+                                            {!! Form::label('enabled', 'Ні', array('class' => 'control-label')) !!}
+                                            {!! Form::radio('enabled', '0', 0) !!}
+                                            <span class="help-block">{{ $errors->first('enabled', ':message') }}</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                <div class="col-md-4">
 
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                    <div class="form-group  {{ $errors->has('photo') ? 'has-error' : '' }}">
+                                        {!! Form::label('photo', 'Фото', array('class' => 'control-label')) !!}
+                                        <div class="controls">
+                                            <div class="box box-success">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Веб камера</h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div id="webcam" class="center"></div>
+                                                    {!! Form::textarea('photo', '', array('class' => 'form-control photo-client','style'=>'display:none')) !!}
+                                                    <span class="help-block">{{ $errors->first('photo', ':message') }}</span>
+                                                    <a href="javascript:webcam.capture();void(0);" class="btn btn-sm btn-default">Зробити фото</a>
+                                                    <div id="photo"></div>
+                                                </div>
+                                            </div>
 
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputName" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+                                            <div class="box box-success">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Фото клієнта</h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <img id="example" class="img-responsive center-block text-center" src="" alt="Приклад фото клієнта">
+                                                </div>
+                                            </div>
 
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
 
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                            </label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                    <div class="col-md-12">
+                                        <button type="reset" class="btn btn-sm btn-default">
+                                            <span class="glyphicon glyphicon-remove-circle"></span> Очистити
+                                        </button>
+                                        <button type="submit" class="btn btn-sm btn-success">
+                                            <span class="glyphicon glyphicon-ok-circle"></span> Зберегти
+                                        </button>
                                     </div>
                                 </div>
-                            </form>
+
+                            {!! Form::close() !!}
                         </div>
                         <!-- /.tab-pane -->
                     </div>
@@ -357,3 +232,87 @@
         </div>
         <!-- /.row -->
 @endsection
+{{-- Scripts --}}
+@section('custom-scripts')
+    <script src="{{ asset('js/dataTablesSelect.js') }}"></script>
+    <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.js") }}"></script>
+    <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js") }}"></script>
+    <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js") }}"></script>
+    <script src="{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jquery.webcam.js") }}"></script>
+
+    <script>
+        $(function() {
+            $("#phone").inputmask();
+
+            var pos = 0, ctx = null, saveCB, image = [];
+
+            var canvas = document.createElement("canvas");
+            canvas.setAttribute('width', 320);
+            canvas.setAttribute('height', 240);
+
+            if (canvas.toDataURL) {
+
+                ctx = canvas.getContext("2d");
+
+                image = ctx.getImageData(0, 0, 320, 240);
+
+                saveCB = function(data) {
+
+                    var col = data.split(";");
+                    var img = image;
+
+                    for(var i = 0; i < 320; i++) {
+                        var tmp = parseInt(col[i]);
+                        img.data[pos + 0] = (tmp >> 16) & 0xff;
+                        img.data[pos + 1] = (tmp >> 8) & 0xff;
+                        img.data[pos + 2] = tmp & 0xff;
+                        img.data[pos + 3] = 0xff;
+                        pos+= 4;
+                    }
+
+                    if (pos >= 4 * 320 * 240) {
+                        ctx.putImageData(img, 0, 0);
+                        $('.photo-client').val(canvas.toDataURL("image/png"));
+                        $('#example').attr('src', canvas.toDataURL("image/png"));
+                        pos = 0;
+                    }
+                };
+
+            } else {
+
+                saveCB = function(data) {
+                    image.push(data);
+
+                    pos+= 4 * 320;
+
+                    if (pos >= 4 * 320 * 240) {
+                        $.post("/photoPut", {type: "pixel", image: image.join('|')});
+                        pos = 0;
+                    }
+                };
+            }
+
+            $("#webcam").webcam({
+
+                width: '100%',
+                height: 150,
+                mode: "callback",
+                swffile: "{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jscam_canvas_only.swf") }}",
+
+                onSave: saveCB,
+
+                onCapture: function () {
+                    webcam.save();
+                },
+
+                debug: function (type, string) {
+                    console.log(type + ": " + string);
+                }
+            });
+
+        });
+
+        $('#table2').dataTableHelper({responsive: true});
+    </script>
+
+@stop

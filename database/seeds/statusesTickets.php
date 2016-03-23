@@ -12,6 +12,10 @@ class statusesTickets extends Seeder
     public function run()
     {
         \App\StatusesTicket::create([
+            'name' => 'В резерві',
+        ]);
+
+        \App\StatusesTicket::create([
             'name' => 'Активний абонемент',
         ]);
 

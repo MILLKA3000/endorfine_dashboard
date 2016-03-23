@@ -75,7 +75,11 @@ Route::group(['middleware' => ['web']], function () {
 
         #Clients
         Route::get('clients/data', 'ClientController@data'); //for ajax table
-        Route::get('clients/{status}/destroy', 'ClientController@destroy');
+        Route::get('clients/getAllTickets/{client}', 'ClientController@getAllTickets'); //for ajax table
+        Route::put('clients/{client}/edit', 'ClientController@update');
+        Route::put('clients/{client}/saveTicketClient', 'ClientController@saveTicketClient');
+        Route::get('clients/{client}/joinTicket', 'ClientController@joinToUser');
+        Route::get('clients/{client}/destroy', 'ClientController@destroy');
         Route::resource('clients', 'ClientController');
 
 
