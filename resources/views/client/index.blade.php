@@ -42,6 +42,32 @@
 @section('custom-scripts')
     <script src="{{ asset('js/dataTablesSelect.js') }}"></script>
     <script>
-        $('#table2').dataTableHelper({responsive: true});
+        $('#table2').dataTableHelper({responsive: true,
+            "fnInitComplete": function(){
+                photo = $('.photo_mic');
+                photo.on("mousedown", function(e){
+                    width = $(this).innerWidth();
+                    $(this).css({"position": "absolute","z-index": "1000"}).animate({
+                        width: "300px"
+                    }, 200);
+                });
+
+                photo.on("mouseup", function(e){
+                    $(this).animate({
+                        width: 50
+                    }, 200,function(){
+                        $(this).css({"z-index": "1"});
+                    });
+                });
+                photo.on("mouseout", function(e){
+                    $(this).animate({
+                        width: 50
+                    }, 200,function(){
+                        $(this).css({"z-index": "1"});
+                    });
+                });
+            }});
+
+
     </script>
 @stop

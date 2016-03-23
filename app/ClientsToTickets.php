@@ -19,6 +19,15 @@ class ClientsToTickets extends Model
     {
         return $this->hasOne('App\Ticket','id','ticket_id');
     }
+    public function getQtyTicket()
+    {
+        return $this->hasMany('App\Ticket','id','ticket_id');
+    }
+
+    public function getStatusTicket()
+    {
+        return $this->hasOne('App\StatusesTicket','id','statusTicket_id');
+    }
 
     public function getNameDiscountForTicket()
     {

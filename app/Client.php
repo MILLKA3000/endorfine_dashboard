@@ -21,7 +21,12 @@ class Client extends Model
 
     public function getActiveTickets()
     {
-        return $this->hasMany('App\ClientsToTickets','client_id','id')->where('statusTicket_id',1);
+        return $this->hasMany('App\ClientsToTickets','client_id','id')->whereIn('statusTicket_id',[1,2]);
+    }
+
+    public function getActiveTraning()
+    {
+        return $this->hasMany('App\ClientsToTickets','client_id','id')->whereIn('statusTicket_id',[1,2]);
     }
 
 }

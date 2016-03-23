@@ -11028,7 +11028,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sFirst": "First",
+				"sFirst": "Перша",
 	
 	
 				/**
@@ -11051,7 +11051,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sLast": "Last",
+				"sLast": "Остання",
 	
 	
 				/**
@@ -11074,7 +11074,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": "Наступна",
 	
 	
 				/**
@@ -11097,7 +11097,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "Попередня"
 			},
 	
 			/**
@@ -11120,7 +11120,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "<span style='color:red'>Немає даних для відображення</span>",
 	
 	
 			/**
@@ -11152,7 +11152,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Показано від _START_ до _END_ з _TOTAL_ записів",
 	
 	
 			/**
@@ -11173,7 +11173,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Показано від 0 до 0 з 0 записів",
 	
 	
 			/**
@@ -11313,7 +11313,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ entries",
+			"sLengthMenu": "Показати _MENU_ записів на сторінці",
 	
 	
 			/**
@@ -11337,7 +11337,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLoadingRecords": "Loading...",
+			"sLoadingRecords": "Зачекайте...",
 	
 	
 			/**
@@ -11393,7 +11393,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Пошук по всім записам:",
 	
 	
 			/**
