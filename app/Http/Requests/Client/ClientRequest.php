@@ -25,13 +25,14 @@ class ClientRequest extends Request
     {
         if($this->ticket > 1 && $this->numTicket==null){
             return [
-                'numTicket' => 'required|min:1'
+                'numTicket' => 'required|min:1|unique:numTicket'
             ];
         }
 
         return [
             'name' => 'required|min:3',
-            'phone' => 'required'
+            'phone' => 'required',
+            'numTicket' => 'unique:clientsToTickets|min:1'
         ];
     }
 }

@@ -1,6 +1,6 @@
 @include('layouts.header')
 @yield('custom-style')
-<body class="skin-blue">
+<body class="skin-red">
 <div class="wrapper">
 
     @if (!Auth::guest())
@@ -22,11 +22,16 @@
                     {{--<li class="active">Here</li>--}}
                 {{--</ol>--}}
             {{--</section>--}}
-
+            <section class="content">
+                <div class="box box-primary content-box">
+                    @yield('content')
+                </div>
+            </section>
+    @else
+            <section class="content">
+                    @yield('content')
+            </section>
     @endif
-    <section class="content">
-        @yield('content')
-    </section>
 </div>
     @if (!Auth::guest())
         <!-- Main Footer -->
@@ -37,4 +42,7 @@
   @include('layouts.global-scripts')
   @yield('custom-scripts')
 </body>
+<script>
+
+</script>
 </html>
