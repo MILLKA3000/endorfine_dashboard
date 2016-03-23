@@ -75,6 +75,7 @@ Route::group(['middleware' => ['web']], function () {
 
         #Clients
         Route::get('clients/data', 'ClientController@data'); //for ajax table
+        Route::get('clients/{status}/destroy', 'ClientController@destroy');
         Route::resource('clients', 'ClientController');
 
 
