@@ -11,6 +11,7 @@ use Yajra\Datatables\Facades\Datatables;
 
 class DiscountsController extends Controller
 {
+    protected $listStatuses=[1=>'Клієнт', 2=>'Абонемент', 3=>'Всі'];
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +29,8 @@ class DiscountsController extends Controller
      */
     public function create()
     {
-        return view('clients.discounts.create_edit');
+        $status = $this->listStatuses;
+        return view('clients.discounts.create_edit', compact('status'));
     }
 
     /**
@@ -63,7 +65,8 @@ class DiscountsController extends Controller
      */
     public function edit(Discounts $discount)
     {
-        return view('clients.discounts.create_edit', compact('discount'));
+        $status = $this->listStatuses;
+        return view('clients.discounts.create_edit', compact('discount','status'));
     }
 
     /**
@@ -99,6 +102,9 @@ class DiscountsController extends Controller
     {
         $discounts = Discounts::select('id', 'name', 'detail', 'percent', 'status', 'enabled')->get();
         return Datatables::of($discounts)
+            ->edit_column('status', function($discount){
+                return $this->listStatuses[$discount->status];
+            })
             ->edit_column('enabled', '@if ($enabled=="1") <span class=\'glyphicon text-green glyphicon-ok\'></span> @else <span class=\'glyphicon text-red glyphicon-remove\'></span> @endif')
             ->add_column('actions', '<a href="{{ URL::to(\'discounts/\' . $id . \'/edit\' ) }}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
                     <a href="{{{ URL::to(\'discounts/\' . $id . \'/destroy\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
