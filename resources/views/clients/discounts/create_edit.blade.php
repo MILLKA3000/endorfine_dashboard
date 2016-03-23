@@ -42,9 +42,10 @@
                 </div>
             </div>
             <div class="form-group  {{ $errors->has('status') ? 'has-error' : '' }}">
-                {!! Form::label('status', 'Статус', array('class' => 'control-label')) !!}
+                {!! Form::label('status', 'Для кого знижка', array('class' => 'control-label')) !!}
                 <div class="controls">
-                    {!! Form::text('status', null, array('class' => 'form-control')) !!}
+
+                    {!! Form::select('status', $status, (isset($status))?$status[1]:'', array('class' => 'form-control')) !!}
                     <span class="help-block">{{ $errors->first('status', ':message') }}</span>
                 </div>
             </div>

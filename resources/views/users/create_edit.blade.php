@@ -38,7 +38,7 @@
         <div class="form-group  {{ $errors->has('role_id') ? 'has-error' : '' }}">
             {!! Form::label('role_id', 'Роль', array('class' => 'control-label')) !!}
             <div class="controls">
-                {!! Form::select('role_id', $roles->lists('name', 'id'), (isset($user))?$user->getNameRole->id:'',array('class' => 'form-control')) !!}
+                    {!! Form::select('role_id', $roles->lists('name', 'id'), (isset($user))?$user->getNameRole->id:'',array('class' => 'form-control')) !!}
                 <span class="help-block">{{ $errors->first('role_id', ':message') }}</span>
             </div>
         </div>
