@@ -17,4 +17,8 @@ class TraningToWeek extends Model
     protected $fillable = [
         'id_training_detail', 'numDay', 'start_time','end_time'
     ];
+
+    public function getTrainingDetail(){
+        return $this->hasOne('App\TraningDetails','id','id_training_detail');
+    }
 }
