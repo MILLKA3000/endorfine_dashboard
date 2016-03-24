@@ -24,7 +24,10 @@ class TicketsRequest extends Request
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3',
+            'qtySessions' => 'required|min:0|numeric',
+            'activityTime' => 'required|min:0|numeric',
+            'value' => 'required|min:0|numeric',
         ];
     }
 }
