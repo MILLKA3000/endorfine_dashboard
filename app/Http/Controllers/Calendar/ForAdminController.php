@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Calendar;
 
-use App\Calendar\EventModel;
+use App\DetailsCalendar;
 use App\TraningToTrainer;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -26,6 +26,8 @@ class ForAdminController extends Controller
                 for ($i=0; $i<=7; $i++){
                     foreach ($this->getDays($i) as $days)
                     {
+//                        $calendarLocal = DetailsCalendar::where('training_id',$trainer->id)->get();
+
                         if($traning->numDay == $days->dayOfWeek) {
                             $events[] = [
                                 'title' => $traning->getTrainingDetail->name,
@@ -35,6 +37,7 @@ class ForAdminController extends Controller
                                 'textColor' => 'black',
                                 'id' => $traning->id,
                                 'description' => $trainer->detail,
+                                'detail_description' => $trainer->detail,
                                 'trainer' => $trainer->getNameTrainer->name,
                             ];
                         }

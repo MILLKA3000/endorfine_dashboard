@@ -42,10 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->command->info('--------------------------------');
         $this->command->info('The Statuses Client table has been seeded!');
         $this->command->info('--------------------------------');
-        $this->call(holidays::class);
-        $this->command->info('--------------------------------');
-        $this->command->info('The Holidays table has been seeded!');
-        $this->command->info('--------------------------------');
         $this->call(traning_details::class);
         $this->command->info('--------------------------------');
         $this->command->info('The tranings_detail table has been seeded!');
@@ -55,6 +51,9 @@ class DatabaseSeeder extends Seeder
         $this->command->info('The tranings_detail table has been seeded!');
         $this->command->info('--------------------------------');
         $this->call(traning_to_user::class);
+        $this->command->info('--------------------------------');
+        $this->command->info('The tranings_detail table has been seeded!');
+        $this->call(traning_detailsForOne::class);
         $this->command->info('--------------------------------');
         $this->command->info('The tranings_detail table has been seeded!');
         $this->command->info('--------------------------------');
