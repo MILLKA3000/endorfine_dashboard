@@ -24,9 +24,9 @@ class ForAdminController extends Controller
         foreach($trainers as $trainer){
             foreach($trainer->getAllTranings as $traning){
                 for ($i=0; $i<=7; $i++){
-                    foreach ($this->getDays($i-1) as $days)
+                    foreach ($this->getDays($i) as $days)
                     {
-                        if($traning->numDay==$i) {
+                        if($traning->numDay == $days->dayOfWeek) {
                             $events[] = [
                                 'title' => $traning->getTrainingDetail->name,
                                 'start' => $days->toDateString()." ".$traning->start_time,
@@ -52,9 +52,9 @@ class ForAdminController extends Controller
     public function getDays($day)
     {
         return new \DatePeriod(
-            Carbon::parse("first Mon of this month")->addDay($day),
+            Carbon::parse("first day of this month")->addDay($day),
             CarbonInterval::week(),
-            Carbon::parse("first Mon of next month")
+            Carbon::parse("first day of next month")->addMonth(1)
         );
     }
 

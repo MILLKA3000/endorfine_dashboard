@@ -32,8 +32,11 @@
             $('#calendar').fullCalendar({
                 firstDay: 1,
                 timeFormat: 'H:mm',
+                'fixedWeekCount':false,
                 displayEventEnd: true,
                 header: {
+                    left: 'promptResource today prev,next',
+                    center: 'title',
                     right: 'agendaWeek,month'
                 },
                 events: {!!$events!!},
