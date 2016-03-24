@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AdditionalServicesMigration extends Migration
+class Holidays extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,11 @@ class AdditionalServicesMigration extends Migration
      */
     public function up()
     {
-        Schema::create('additionalServices_Type', function (Blueprint $table) {
+        Schema::create('holidays', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('detail');
-            $table->integer('activityTime');
-            $table->integer('value');
-            $table->integer('enabled');
+            $table->string('note');
+            $table->date('date');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +29,6 @@ class AdditionalServicesMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('additionalServices_Type');
+        Schema::drop('holidays');
     }
 }

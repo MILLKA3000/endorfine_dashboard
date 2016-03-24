@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdditionalServises extends Model
 {
-    protected $table = 'additionalServicesType';
+    protected $table = 'additionalServices_Type';
 }

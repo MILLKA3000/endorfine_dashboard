@@ -76,14 +76,27 @@ Route::group(['middleware' => ['web']], function () {
         #Clients
         Route::get('clients/data', 'ClientController@data'); //for ajax table
         Route::get('clients/getAllTickets/{client}', 'ClientController@getAllTickets'); //for ajax table
+        Route::get('clients/getAllService/{client}', 'ClientController@getAllService'); //for ajax table
         Route::put('clients/{client}/edit', 'ClientController@update');
-        Route::put('clients/{client}/saveTicketClient', 'ClientController@saveTicketClient');
-        Route::get('clients/{client}/joinTicket', 'ClientController@joinToUser');
+
+            #ClientToTickets
+            Route::put('clients/{client}/saveTicketClient', 'ClientController@saveTicketClient');
+            Route::get('clients/{activeTicket}/updateTicketClient', 'ClientController@editTicketClient');
+            Route::put('clients/{activeTicket}/updateTicketClient', 'ClientController@updateTicketClient');
+            Route::get('clients/{ticket}/destroyTicketClient', 'ClientController@destroyTicketClient');
+            Route::get('clients/{client}/joinTicket', 'ClientController@joinTicket');
+
+            #ClientToService
+            Route::put('clients/{client}/saveServiceClient', 'ClientController@saveServiceClient');
+            Route::get('clients/{service}/destroyServiceClient', 'ClientController@destroyServiceClient');
+            Route::get('clients/{client}/joinService', 'ClientController@joinService');
+
+
         Route::get('clients/{client}/destroy', 'ClientController@destroy');
         Route::resource('clients', 'ClientController');
 
 
-        Route::post('photoPut', 'ClientController@getPhoto');
+//        Route::post('photoPut', 'ClientController@getPhoto');
 
         # Discounts
         Route::get('discounts/data', 'DiscountsController@data'); //for ajax table

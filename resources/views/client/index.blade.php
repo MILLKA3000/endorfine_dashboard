@@ -24,6 +24,7 @@
             width="100%">
         <thead>
         <tr>
+            <th data-sortable="true" data-filterable="text" width="5%">#</th>
             <th>Фото</th>
             <th data-sortable="true" data-filterable="text" width="10%">Кліент</th>
             <th data-sortable="true" data-filterable="text" width="10%">Телефон</th>
@@ -43,7 +44,7 @@
     <script src="{{ asset('js/dataTablesSelect.js') }}"></script>
     <script>
         $('#table2').dataTableHelper({responsive: true,
-            "fnInitComplete": function(){
+            "fnInfoCallback": function(){
                 photo = $('.photo_mic');
                 photo.on("mousedown", function(e){
                     width = $(this).innerWidth();
@@ -52,14 +53,7 @@
                     }, 200);
                 });
 
-                photo.on("mouseup", function(e){
-                    $(this).animate({
-                        width: 50
-                    }, 200,function(){
-                        $(this).css({"z-index": "1"});
-                    });
-                });
-                photo.on("mouseout", function(e){
+                photo.on("mouseup mouseout", function(e){
                     $(this).animate({
                         width: 50
                     }, 200,function(){

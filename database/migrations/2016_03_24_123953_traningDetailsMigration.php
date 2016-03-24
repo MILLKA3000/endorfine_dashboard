@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ClientVisitedMigration extends Migration
+class TraningDetailsMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class ClientVisitedMigration extends Migration
      */
     public function up()
     {
-        Schema::create('clientsVisited', function (Blueprint $table) {
+        Schema::create('training_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('ticket_id')->nullable();
-            $table->foreign('ticket_id')->references('id')->on('clientsToTickets')->onDelete('set null');
+            $table->string('name');
             $table->string('note');
+            $table->string('detail');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +29,6 @@ class ClientVisitedMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('clientsVisited');
+        Schema::drop('training_detail');
     }
 }

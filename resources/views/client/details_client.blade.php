@@ -2,75 +2,19 @@
 {{-- Content --}}
 @section('content')
 
-
         <div class="row">
-            <div class="col-md-3">
-
-                <!-- Profile Image -->
-                <div class="box box-primary">
-                    <div class="box-body box-profile">
-                        <img class="img-responsive" style="width: 100%" src="{{ URL::to('/photo/'.$client->id.'.png') }}" alt="Фото клієнта">
-
-                        <h3 class="profile-username text-center">{{$client->name}}</h3>
-
-                        <p class="text-muted text-center">{{$client->getNameStatus->name}}</p>
-
-                        <ul class="list-group list-group-unbordered">
-                            <li class="list-group-item">
-                                <b>Абонемент</b> <a class="pull-right">{{$client->getActiveTickets->first()->numTicket}}</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Знижка</b> <a class="pull-right"><small class="label label-success">({{$client->getNameStatus->getNameDiscountForClients->percent}}%)</small></a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>День народження</b> <a class="pull-right">{{$client->birthday}}</a>
-                            </li>
-                            <li class="list-group-item">
-                                {{--<b>Загальна кількість занять</b> <a class="pull-right">{{$client->getActiveTraning->getQtyTicket->qtySessions}}</a>--}}
-                                <b>Загальна кількість занять</b> <a class="pull-right">1</a>
-                            </li>
-                        </ul>
-
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-
-                <!-- About Me Box -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Детальніше</h3>
-                    </div>
-                    <!-- /.box-header -->
-                        <div class="box-body">
-
-                            <strong><i class="fa fa-file-text-o margin-r-5"></i> Користувач створений</strong>
-
-                            <p class="pull-right">{{$client->created_at}}</p>
-                        </div>
-                        <div class="box-body">
-
-                            @if (!empty($client->detail))
-
-                                <strong><i class="fa fa-file-text-o margin-r-5"></i> Опис</strong>
-
-                                <p>{{$client->detail}}</p>
-
-                            @endif
-                        </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
+            @include('client.clientInfo')
             <!-- /.col -->
             <div class="col-md-9">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#activity" data-toggle="tab">Абонементи</a></li>
+                        <li><a href="#service" data-toggle="tab">Додаткові послуги</a></li>
                         <li><a href="#timeline" data-toggle="tab">Календар</a></li>
                         <li><a href="#settings" data-toggle="tab">Профіль</a></li>
                     </ul>
                     <div class="tab-content">
+                        {{--TICKETS--}}
                         <div class="active tab-pane" id="activity">
                             <div class="bottom-menu-header">
                                 <h3>
@@ -83,7 +27,7 @@
                                     </div>
                                 </h3>
                             </div>
-                            <table id="table2" class="table responsive no-wrap table-bordered table-hover dataTable"
+                            <table id="ticket-table" class="table responsive no-wrap table-bordered table-hover dataTable"
                                    data-paging="true"
                                    data-ajax="/clients/getAllTickets/{{$client->id}}"
                                    data-page-length="25"
@@ -102,11 +46,40 @@
                                 <tbody></tbody>
                             </table>
                         </div>
+                        {{-- SERVICE--}}
 
+                        <div class="tab-pane" id="service">
+                            <div class="bottom-menu-header">
+                                <h3>
+                                    Додаткові послуги
+                                    <div class="pull-right">
+                                        <div class="pull-right">
+                                            <a href="/clients/{{$client->id}}/joinService"
+                                               class="btn btn-sm  btn-primary"><span class="glyphicon glyphicon-plus-sign"></span>Добавити послугу</a>
+                                        </div>
+                                    </div>
+                                </h3>
+                            </div>
+                            <table id="service-table" class="table responsive no-wrap table-bordered table-hover dataTable"
+                                   data-paging="true"
+                                   data-ajax="/clients/getAllService/{{$client->id}}"
+                                   data-page-length="25"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th data-sortable="true" data-filterable="select" width="10%">Послуга</th>
+                                    <th data-sortable="true" width="10%">Дата закінчення</th>
+                                    <th width="10%">Дія</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        {{--CALENDAR--}}
                         <div class="tab-pane" id="timeline">
 
                         </div>
-
+                        {{--OPTIONS--}}
                         <div class="tab-pane" id="settings">
                             <div class="bottom-menu-header">
                                 <h3>
@@ -242,7 +215,18 @@
 
     <script>
         $(function() {
-            $("#phone").inputmask();
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                url = url.toLowerCase(); // This is just to avoid case sensitiveness
+                name = name.replace(/[\[\]]/g, "\\$&").toLowerCase();// This is just to avoid case sensitiveness for query parameter name
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                        results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+            $('[href=#'+getParameterByName('active')+']').tab('show');
 
             var pos = 0, ctx = null, saveCB, image = [];
 
@@ -312,7 +296,8 @@
 
         });
 
-        $('#table2').dataTableHelper({responsive: true});
+        $('.table').dataTableHelper({responsive: true});
+        $("#phone").inputmask();
     </script>
 
 @stop

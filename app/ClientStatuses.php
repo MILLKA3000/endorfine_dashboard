@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClientStatuses extends Model
 {
-    protected $table = 'statuses';
+    protected $table = 'client_statuses';
 
     protected $guarded  = array('id');
 

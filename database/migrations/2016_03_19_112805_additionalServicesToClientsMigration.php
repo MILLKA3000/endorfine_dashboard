@@ -12,10 +12,13 @@ class AdditionalServicesToClientsMigration extends Migration
      */
     public function up()
     {
-        Schema::create('additionalServicesToClients', function (Blueprint $table) {
+        Schema::create('additionalServices_ToClients', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('client_id')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
+            $table->foreign('client_id')->references('id')->on('client_info')->onDelete('set null');
+            $table->unsignedInteger('service_id')->nullable();
+            $table->foreign('service_id')->references('id')->on('additionalServices_Type')->onDelete('set null');
+            $table->date('endDateForUse');
             $table->string('note');
             $table->timestamps();
             $table->softDeletes();
@@ -29,6 +32,6 @@ class AdditionalServicesToClientsMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('additionalServicesToClients');
+        Schema::drop('additionalServices_ToClients');
     }
 }

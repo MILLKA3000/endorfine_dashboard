@@ -19,6 +19,12 @@ class ClientsToTickets extends Model
     {
         return $this->hasOne('App\Ticket','id','ticket_id');
     }
+
+    public function hasEnabled()
+    {
+        return $this->hasOne('App\Ticket','id','ticket_id')->where('enabled','1');
+    }
+
     public function getQtyTicket()
     {
         return $this->hasMany('App\Ticket','id','ticket_id');

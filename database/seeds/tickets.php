@@ -17,7 +17,7 @@ class tickets extends Seeder
             'qtySessions' => '0',
             'activityTime' => '0',
             'value' => '0',
-            'enabled' => true
+            'enabled' => false
         ]);
 
         \App\Ticket::create([

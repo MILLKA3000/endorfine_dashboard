@@ -12,7 +12,7 @@ class ClientsMigration extends Migration
      */
     public function up()
     {
-        Schema::create('statuses', function (Blueprint $table) {
+        Schema::create('client_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('discount_id')->nullable();
@@ -21,7 +21,7 @@ class ClientsMigration extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('client_info', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('phone');
@@ -30,10 +30,10 @@ class ClientsMigration extends Migration
             $table->string('detail');
             $table->string('note');
             $table->unsignedInteger('status_id')->nullable();
-            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
+            $table->foreign('status_id')->references('id')->on('client_statuses')->onDelete('set null');
             $table->integer('enabled');
             $table->timestamps();
-            $table->softDeletes();
+            $table->softDeletes(true);
         });
     }
 
@@ -44,7 +44,7 @@ class ClientsMigration extends Migration
      */
     public function down()
     {
-        Schema::drop('clients');
-        Schema::drop('statuses');
+        Schema::drop('client_info');
+        Schema::drop('client_statuses');
     }
 }
