@@ -28,7 +28,7 @@ Route::model('user', 'App\User');
 
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
-
+    Route::get('/authorize', 'Auth\AuthController@handleProviderCallback');
     Route::group(['middleware' => 'auth'], function () {
 
 
@@ -116,6 +116,8 @@ Route::group(['middleware' => ['web']], function () {
 
         # Calendar
         Route::resource('calendar', 'Calendar\ForAdminController');
+
+
     });
 });
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Calendar;
 
-use App\DetailsCalendar;
 use App\TraningToTrainer;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -10,6 +9,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Laravel5GoogleCalendar\Calendar;
+use App\Laravel5GoogleCalendar\Events as CalendarEvent;
+
+use Illuminate\Support\Facades\Auth;
 
 class ForAdminController extends Controller
 {
@@ -18,8 +21,20 @@ class ForAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+//        Calendar::setVar('calendar', '');
+//
+//        $aa = Calendar::readCalendar();
+//        dd($aa);
+//        https://www.googleapis.com/calendar/v3/calendars/natalya.4ekanova%40gmail.com/events?
+        //callback=jQuery21402727069087633329_1458917943443&
+        //key=AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE&
+        //timeMin=2016-02-28T00%3A00%3A00%2B00%3A00&
+        //timeMax=2016-02-28T00%3A00%3A00%2B00%3A00&
+        //singleEvents=true&
+        //maxResults=9999&
+        //_=1458917943444
         $trainers = TraningToTrainer::all();
         foreach($trainers as $trainer){
             foreach($trainer->getAllTranings as $traning){

@@ -7,6 +7,7 @@
             База Клієнтів
             <div class="pull-right">
                 <div class="pull-right">
+                    <a class="btn btn-sm btn-warning" href="{{ URL::previous() }}">Назад</a>
                     <a href="/clients/create"
                        class="btn btn-sm  btn-primary"><span class="glyphicon glyphicon-plus-sign"></span>Новий Кліент</a>
                 </div>
