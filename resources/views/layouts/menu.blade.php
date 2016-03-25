@@ -42,6 +42,12 @@
                 </ul>
             </li>
             <li class="treeview">
+                <a href="#"><span>Тренування</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li>{{link_to('/calendar', $title = 'Графік')}}</li>
+                </ul>
+            </li>
+            <li class="treeview">
                 <a href="#"><span>Налаштування</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li>{{link_to('/users', $title = 'Юзери')}}</li>

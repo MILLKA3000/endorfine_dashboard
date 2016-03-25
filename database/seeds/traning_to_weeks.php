@@ -19,8 +19,29 @@ class traning_to_weeks extends Seeder
         ]);
 
         \App\TraningToWeek::create([
-            'id_training_detail' => 2,
+            'id_training_detail' => 3,
             'numDay' => 1,
+            'start_time' => '11:00',
+            'end_time' => '11:50',
+        ]);
+
+        \App\TraningToWeek::create([
+            'id_training_detail' => 2,
+            'numDay' => 3,
+            'start_time' => '11:00',
+            'end_time' => '11:50',
+        ]);
+
+        \App\TraningToWeek::create([
+            'id_training_detail' => 3,
+            'numDay' => 4,
+            'start_time' => '11:00',
+            'end_time' => '11:50',
+        ]);
+
+        \App\TraningToWeek::create([
+            'id_training_detail' => 2,
+            'numDay' => 5,
             'start_time' => '11:00',
             'end_time' => '11:50',
         ]);

@@ -112,6 +112,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::put('tickets/{ticket}/edit', 'TicketsController@update');
         Route::get('tickets/{ticket}/destroy', 'TicketsController@destroy');
         Route::resource('tickets', 'TicketsController');
+
+
+        # Calendar
+        Route::resource('calendar', 'Calendar\ForAdminController');
     });
 });
 

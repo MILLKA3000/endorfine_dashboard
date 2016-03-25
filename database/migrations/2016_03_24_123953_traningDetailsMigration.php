@@ -15,6 +15,7 @@ class TraningDetailsMigration extends Migration
         Schema::create('training_detail', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('color');
             $table->string('note');
             $table->string('detail');
             $table->timestamps();
