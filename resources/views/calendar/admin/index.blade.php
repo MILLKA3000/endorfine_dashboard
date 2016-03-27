@@ -14,7 +14,6 @@
 @section('custom-scripts')
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/fullcalendar/fullcalendar.min.js") }}"></script>
-    <script src="{{ asset ("/bower_components/AdminLTE/plugins/fullcalendar/gcal.js") }}"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -23,15 +22,12 @@
                 timeFormat: 'H:mm',
                 editable: true,
                 'fixedWeekCount':false,
-//                displayEventEnd: true,
                 header: {
                     left: 'promptResource today prev,next',
                     center: 'title',
                     right: 'agendaWeek,month'
                 },
-                googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
-
-                events: 'natalya.4ekanova@gmail.com',
+                events: {!!$events_to_calendar!!},
                 eventRender: function (event, element) {
                     element.qtip({
                         content: {
