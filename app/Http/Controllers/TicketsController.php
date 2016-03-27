@@ -20,7 +20,7 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        return view('tickets.index');
+        return view('clients.tickets.index');
     }
 
     /**
@@ -43,7 +43,7 @@ class TicketsController extends Controller
     {
         $status = new Ticket($request->toArray());
         $status->save();
-        return redirect('/tickets');
+        return redirect('tickets');
     }
 
     /**
@@ -65,7 +65,7 @@ class TicketsController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        return view('tickets.create_edit', compact('ticket'));
+        return view('clients.tickets.create_edit', compact('ticket'));
     }
 
     /**

@@ -35,10 +35,9 @@
             <li class="treeview">
                 <a href="#"><span>Клієнт</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li>{{link_to('/clients', $title = 'База пацієнтів')}}</li>
+                    <li>{{link_to('/clients', $title = 'База клієнтів')}}</li>
                     <li>{{link_to('/tickets', $title = 'Абонементи')}}</li>
                     <li>{{link_to('/discounts', $title = 'Знижки')}}</li>
-                    <li>{{link_to('/', $title = 'Сервіси')}}</li>
                 </ul>
             </li>
             <li class="treeview">
