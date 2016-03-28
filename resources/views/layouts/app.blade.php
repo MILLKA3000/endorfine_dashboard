@@ -27,10 +27,12 @@
                     @yield('content')
                 </div>
             </section>
+                    @yield('footer-info')
     @else
             <section class="content">
-                    @yield('content')
+                @yield('content')
             </section>
+
     @endif
 </div>
     @if (!Auth::guest())

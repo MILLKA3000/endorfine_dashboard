@@ -32,7 +32,7 @@
                     element.qtip({
                         content: {
                             title: {text: event.title},
-                            text: event.description + '<br><br> <b> ТРЕНЕР: ' + event.description + '</b>'
+                            text: event.description + '<br><br> <b> ТРЕНЕР: ' + event.trainer + '</b>'
                         },
                         style: {
                             width: 200,

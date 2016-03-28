@@ -46,6 +46,7 @@ class GetAllCalendarsModel extends Model
                         'id' => (string)$events->id,
                         'textColor' => 'black',
                         'description' => $events->description,
+                        'trainer' => $events->organizer->displayName,
                     ];
             }
         return $events_to_calendar;

@@ -25,12 +25,35 @@
     width: 100%!important;
 }
 
+
+.dashboard_footer {
+    margin: 5px 0 -15px 0;
+}
+
+.content-dashboard{
+    padding-top: 15px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+.box{
+     margin-bottom: 0px;
+}
+
+.content-dashboard-footer{
+    padding: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
 @media (max-width: 992px){
     .box-profile .list-group-item{
         height: 60px;
     }
 }
-.dashboard_footer {
-    margin: 5px 0 -15px 0;
-}
 
+@media (max-height: 768px){
+    .content-dashboard {
+        max-height: 40vh;
+    }
+}

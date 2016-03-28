@@ -20,4 +20,9 @@ class SearchController extends Controller
         return $html;
 //        return view('home');
     }
+
+    public function graph()
+    {
+        return view('search.graph');
+    }
 }

@@ -120,6 +120,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
         Route::post('/search', 'SearchController@search');
+        Route::get('/search/graph', 'SearchController@graph');
 
 
     });

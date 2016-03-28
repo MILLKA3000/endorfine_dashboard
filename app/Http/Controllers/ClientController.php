@@ -62,8 +62,7 @@ class ClientController extends Controller
         return redirect('/clients');
     }
 
-    public function show($id)
-    {
+    private function getActiveTraning(){
         $modelEvents = new GetAllCalendarsModel();
         $traning = $modelEvents->getAllEventsOfTrainers([
             'timeMin'=> Carbon::parse("this day")->subMinutes(25)->toRfc3339String(),
@@ -79,6 +78,17 @@ class ClientController extends Controller
             }
         });
 
+        return compact('traningFormated','activeTraning');
+    }
+
+
+    public function show($id)
+    {
+
+        $training = $this->getActiveTraning();
+        $traningFormated = $training['traningFormated'];
+        $activeTraning = $training['activeTraning'];
+
         $statuses = ClientStatuses::all();
         $client = Client::find($id);
         $active = 'activity';
@@ -87,15 +97,23 @@ class ClientController extends Controller
 
     public function joinService(Client $client)
     {
+        $training = $this->getActiveTraning();
+        $traningFormated = $training['traningFormated'];
+        $activeTraning = $training['activeTraning'];
+
         $service = Services::all();
-        return view('client.joinService', compact('client','service'));
+        return view('client.joinService', compact('client','service','traningFormated','activeTraning'));
     }
 
     public function joinTicket(Client $client)
     {
+        $training = $this->getActiveTraning();
+        $traningFormated = $training['traningFormated'];
+        $activeTraning = $training['activeTraning'];
+
         $tickets = Ticket::all()->where('enabled',1);
         $discounts = Discounts::whereIn('status',[2,3])->get();
-        return view('client.joinTicket', compact('client','tickets','discounts'));
+        return view('client.joinTicket', compact('client','tickets','discounts','traningFormated','activeTraning'));
     }
 
     public function saveServiceClient(Request $request, Client $client)
