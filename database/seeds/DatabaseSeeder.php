@@ -53,10 +53,6 @@ class DatabaseSeeder extends Seeder
         $this->call(traning_to_user::class);
         $this->command->info('--------------------------------');
         $this->command->info('The tranings_detail table has been seeded!');
-        $this->call(traning_detailsForOne::class);
-        $this->command->info('--------------------------------');
-        $this->command->info('The tranings_detail table has been seeded!');
-        $this->command->info('--------------------------------');
         $this->command->info('--------------------------------');
         $this->command->info('END');
         $this->command->info('--------------------------------');

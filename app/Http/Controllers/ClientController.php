@@ -8,6 +8,8 @@ use App\ClientToService;
 use App\Discounts;
 use App\Http\Requests\Client\ClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
+use App\Models\Calendar\GetAllCalendarsModel;
+use App\Models\Calendar\GetAllEventsaModel;
 use App\Services;
 use App\StatusesTicket;
 use App\Ticket;
@@ -62,10 +64,25 @@ class ClientController extends Controller
 
     public function show($id)
     {
+        $modelEvents = new GetAllCalendarsModel();
+        $traning = $modelEvents->getAllEventsOfTrainers([
+            'timeMin'=> Carbon::parse("this day")->subMinutes(25)->toRfc3339String(),
+            'timeMax'=> Carbon::parse("this day")->toDateString()."T23:59:59+00:00",
+        ]);
+
+        $traningFormated = $modelEvents->reformatedEvents(true);
+
+        $activeTraning = array_first($traningFormated, function($key, $value)
+        {
+            if(Carbon::parse($value['start']) >= Carbon::parse("this day")->subMinute(50)) {
+                return $value['id'];
+            }
+        });
+
         $statuses = ClientStatuses::all();
         $client = Client::find($id);
         $active = 'activity';
-        return view('client.details_client',compact('client','statuses','active'));
+        return view('client.details_client',compact('client','statuses','active','traningFormated','activeTraning'));
     }
 
     public function joinService(Client $client)

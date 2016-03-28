@@ -12,15 +12,15 @@ class role extends Seeder
     public function run()
     {
         \App\Role::create([
-            'name' => 'Admin',
+            'name' => 'Адмін',
         ]);
 
         \App\Role::create([
-            'name' => 'Manager',
+            'name' => 'Менеджер',
         ]);
 
         \App\Role::create([
-            'name' => 'Trainer',
+            'name' => 'Тренер',
         ]);
     }
 }

@@ -22,6 +22,11 @@
                             <li class="list-group-item">
                                 <b>Загальна кількість занять</b> <a class="pull-right">543</a>
                             </li>
+                            <li class="list-group-item">
+                                <b>Заняття</b> {!! Form::select('ticket',
+                                array_pluck($traningFormated,'title', 'id'), $activeTraning ,array('class' => 'form-control')) !!}</a>
+                            </li>
+                            <a href="#" class="btn btn-primary btn-block"><b>Відмітити</b></a>
                         </ul>
 
                     </div>

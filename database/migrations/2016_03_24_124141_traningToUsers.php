@@ -14,12 +14,14 @@ class TraningToUsers extends Migration
     {
         Schema::create('training_toTrainer', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_training')->nullable();
-            $table->foreign('id_training')->references('id')->on('training_OfWeeks')->onDelete('set null');
+            $table->string('id_events');
             $table->unsignedInteger('id_user')->nullable();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('set null');
-            $table->string('detail');
+            $table->string('name');
+            $table->string('description');
             $table->string('note');
+            $table->dateTime('start');
+            $table->dateTime('end');
             $table->timestamps();
             $table->softDeletes();
         });

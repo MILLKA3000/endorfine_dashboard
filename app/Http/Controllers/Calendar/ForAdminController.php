@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Calendar;
 
+use App\Models\Calendar\GetAllCalendarsModel;
+use App\Models\Calendar\GetAllEventsaModel;
 use App\TraningToTrainer;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -20,75 +22,11 @@ class ForAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $events_to_calendar = [];
-
-        $calendar = new GoogleCalendar;
-
-        $options = [
-            'timeMin' => Carbon::parse("-2 month")->toRfc3339String(),
-            'timeMax' => Carbon::parse("last day of next month")->toRfc3339String(),
-            'maxResults' => 10000,
-            'orderBy' => 'startTime',
-            'singleEvents' => TRUE,
-        ];
-        $calendarId = "natalya.4ekanova@gmail.com";
-
-        $events = $calendar->getEvents($calendarId,$options);
-
-        foreach ($events as $days)
-        {
-
-            if($days->end->dateTime != null )
-                $events_to_calendar[] = [
-                    'title' => (string)$days->summary,
-                    'start' => (string)$days->start->dateTime,
-                    'end' => (string)$days->end->dateTime,
-                    'id' => (string)$days->id,
-                    'textColor' => 'black',
-                    'description' => $days->description,
-                ];
-        }
-
-//dd($events_to_calendar);
-//        $trainers = TraningToTrainer::all();
-//        foreach($trainers as $trainer){
-//            foreach($trainer->getAllTranings as $traning){
-//                for ($i=0; $i<=7; $i++){
-//                    foreach ($this->getDays($i) as $days)
-//                    {
-////                        $calendarLocal = DetailsCalendar::where('training_id',$trainer->id)->get();
-//
-//                        if($traning->numDay == $days->dayOfWeek) {
-//                            $events[] = [
-//                                'title' => $traning->getTrainingDetail->name,
-//                                'start' => $days->toDateString()." ".$traning->start_time,
-//                                'end' => $days->toDateString()." ".$traning->end_time,
-//                                'backgroundColor' => $traning->getTrainingDetail->color,
-//                                'textColor' => 'black',
-//                                'id' => $traning->id,
-//                                'description' => $trainer->detail,
-//                                'detail_description' => $trainer->detail,
-//                                'trainer' => $trainer->getNameTrainer->name,
-//                            ];
-//                        }
-//                    }
-//                }
-//
-//            }
-//        }
-//
-        $events_to_calendar = json_encode($events_to_calendar);
+        $modelEvents = new GetAllCalendarsModel();
+        $modelEvents->getAllEventsOfTrainers();
+        $events = $modelEvents->reformatedEvents();
+        $events_to_calendar = json_encode($events);
         return view('calendar.admin.index', compact('events_to_calendar'));
-    }
-
-
-    public function getDays($day)
-    {
-        return new \DatePeriod(
-            Carbon::parse("first day of this month")->addDay($day),
-            CarbonInterval::week(),
-            Carbon::parse("first day of next month")->addMonth(1)
-        );
     }
 
     /**
