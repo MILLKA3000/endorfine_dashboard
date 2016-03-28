@@ -65,13 +65,13 @@
         <h1>Вас вітає Endirfine</h1>
     </div>
     <div>
-        <input class="form-control input-lg" type="text" placeholder="Ім'я клієнта або номер абонимента">
+        <input class="form-control input-lg" id="search" type="text" placeholder="Ім'я клієнта або номер абонимента">
     </div>
 <br>
     <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-warning">
-            Контент
+                <div class="content-dashboard"></div>
             </div>
         </div>
     </div>
@@ -108,11 +108,8 @@
             </div>
         </div>
         <!-- /.row -->
-        <div>
-            <input class="form-control input-lg" id="search" type="text" placeholder="Ім'я клієнта або номер абонимента">
-        </div>
-</div>
-        <div class="content-dashboard"></div>
+    </div>
+
 @endsection
 
 @section('custom-scripts')
