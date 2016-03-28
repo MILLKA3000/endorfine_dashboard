@@ -28,7 +28,7 @@ Route::model('user', 'App\User');
 
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
-
+    Route::get('/authorize', 'Auth\AuthController@handleProviderCallback');
     Route::group(['middleware' => 'auth'], function () {
 
 

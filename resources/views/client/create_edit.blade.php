@@ -13,7 +13,7 @@
             Створення Клієнта
             <div class="pull-right">
                 <div class="pull-right">
-
+                    <a class="btn btn-sm btn-warning" href="{{ URL::previous() }}">Назад</a>
                 </div>
             </div>
         </h3>
