@@ -84,15 +84,15 @@ class ClientController extends Controller
 
     public function show($id)
     {
-
         $training = $this->getActiveTraning();
         $traningFormated = $training['traningFormated'];
         $activeTraning = $training['activeTraning'];
 
         $statuses = ClientStatuses::all();
         $client = Client::find($id);
+        $hasActiveTikets = $client->getActiveTickets->first();
         $active = 'activity';
-        return view('client.details_client',compact('client','statuses','active','traningFormated','activeTraning'));
+        return view('client.details_client',compact('client','statuses','active','traningFormated','activeTraning','hasActiveTikets'));
     }
 
     public function joinService(Client $client)
@@ -135,18 +135,23 @@ class ClientController extends Controller
         $ticket->client_id = $client->id;
         $ticket->statusTicket_id = 1;
         $ticket->discount_id = $request->discount_id;
-        $ticket->numTicket = $client->getActiveTickets->first()->numTicket;
+        $ticket->numTicket = $client->getNumTickets->numTicket;
         $ticket->save();
 
         return redirect('/clients/'.$client->id);
     }
 
     public function editTicketClient(ClientsToTickets $activeTicket){
+
+        $training = $this->getActiveTraning();
+        $traningFormated = $training['traningFormated'];
+        $activeTraning = $training['activeTraning'];
+
         $discounts = Discounts::whereIn('status',[2,3])->get();
         $client = Client::find($activeTicket->client_id);
         $tickets = Ticket::all()->where('enabled',1);
         $statusTicket = StatusesTicket::all();
-        return view('client.joinTicket', compact('activeTicket','discounts','statusTicket','tickets','client'));
+        return view('client.joinTicket', compact('activeTicket','discounts','statusTicket','tickets','client','traningFormated','activeTraning'));
     }
 
     public function updateTicketClient(Request $request, ClientsToTickets $activeTicket){

@@ -15,12 +15,10 @@ class TraningToTrainer extends Model
      * @var array
      */
     protected $fillable = [
-        'id_training', 'id_user', 'detail'
+        'id_events', 'id_user', 'name', 'start', 'end'
     ];
 
-    public function getAllTranings(){
-        return $this->hasMany('App\TraningToWeek','id','id_training');
-    }
+
     public function getNameTrainer(){
         return $this->hasOne('App\User','id','id_user');
     }

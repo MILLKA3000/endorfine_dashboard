@@ -43,6 +43,7 @@
 
   @include('layouts.global-scripts')
   @yield('custom-scripts')
+  @yield('custom-scripts-sub')
 </body>
 <script>
 

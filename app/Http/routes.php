@@ -118,7 +118,11 @@ Route::group(['middleware' => ['web']], function () {
         # Calendar
         Route::resource('calendar', 'Calendar\ForAdminController');
 
+        #Events
+        Route::post('/event/addEvents', 'EventsController@addEvents');
 
+
+        #Search
         Route::post('/search', 'SearchController@search');
         Route::get('/search/graph', 'SearchController@graph');
 

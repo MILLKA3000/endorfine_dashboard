@@ -11,7 +11,7 @@
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>№ Абонемента</b> <a class="pull-right">{{$client->getActiveTickets->first()->numTicket}}</a>
+                                <b>№ Абонемента</b> <a class="pull-right">{{$client->getNumTickets->numTicket}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Знижка</b> <a class="pull-right"><small class="label label-success">({{$client->getNameStatus->getNameDiscountForClients->percent}}%)</small></a>
@@ -22,11 +22,13 @@
                             <li class="list-group-item">
                                 <b>Загальна кількість занять</b> <a class="pull-right">543</a>
                             </li>
+                            @if(isset($hasActiveTikets))
                             <li class="list-group-item">
                                 <b>Заняття</b> {!! Form::select('ticket',
-                                array_pluck($traningFormated,'title', 'id'), $activeTraning ,array('class' => 'form-control')) !!}</a>
+                                array_pluck($traningFormated,'title', 'id'), $activeTraning ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
                             </li>
-                            <a href="#" class="btn btn-primary btn-block"><b>Відмітити</b></a>
+                                <a href="#" class="btn btn-primary btn-block" id="checkTraning"><b>Відмітити</b></a>
+                            @endif
                         </ul>
 
                     </div>
@@ -60,3 +62,31 @@
                 </div>
                 <!-- /.box -->
             </div>
+@section('custom-scripts-sub')
+    <script>
+        $(function() {
+           $('#checkTraning').on('click',function(){
+               $.ajax({
+                   method: "POST",
+                   timeout: 500,
+                   url: "/event/addEvents",
+                   data: {
+                       "_token": "{{ csrf_token() }}",
+                       "id_event": $('#event-traning').val(),
+                       "id_client": "{{$client->id}}",
+                   }
+               }).done(function (data) {
+                   var tables = $.fn.dataTable.fnTables(true);
+
+                   $(tables).each(function () {
+                       $(this).dataTable().fnClearTable();
+                       $(this).dataTable().fnDestroy();
+                   });
+
+                   $(".table").dataTable();
+
+               })
+           })
+        });
+    </script>
+@endsection

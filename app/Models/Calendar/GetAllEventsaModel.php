@@ -20,7 +20,7 @@ class GetAllEventsaModel extends Model
         $this->idCalendar = $idCalendar;
 
         $this->options = [
-            'timeMin' => Carbon::parse("-2 month")->toRfc3339String(),
+            'timeMin' => Carbon::parse("first day of last month")->toRfc3339String(),
             'timeMax' => Carbon::parse("last day of next month")->toRfc3339String(),
             'maxResults' => $this->maxResults,
             'orderBy' => $this->orderBy,

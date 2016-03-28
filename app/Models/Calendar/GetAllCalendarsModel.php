@@ -2,6 +2,7 @@
 
 namespace App\Models\Calendar;
 
+use App\TraningToTrainer;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -47,8 +48,34 @@ class GetAllCalendarsModel extends Model
                         'textColor' => 'black',
                         'description' => $events->description,
                         'trainer' => $events->organizer->displayName,
+                        'email' => $events->organizer->email,
                     ];
             }
+        $this->saveToDB($events_to_calendar);
+
         return $events_to_calendar;
+    }
+
+    private function saveToDB($events_to_calendar){
+        foreach ($events_to_calendar as $event)
+        {
+            $user_ID = User::where('email',$event['email'])->get()->first();
+            if (isset($user_ID)) {
+                $fromDB = TraningToTrainer::where('id_events', $event['id'])->get()->first();
+                $event = [
+                    'id_events' => $event['id'],
+                    'id_user' => $user_ID->id,
+                    'name' => $event['title'],
+                    'description' => $event['description'],
+                    'start' => $event['start'],
+                    'end' => $event['end']
+                ];
+                if (isset($fromDB)) {
+                    $fromDB->update($event);
+                } else {
+                    TraningToTrainer::create($event);
+                }
+            }
+        }
     }
 }

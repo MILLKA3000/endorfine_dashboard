@@ -296,7 +296,7 @@
 
         });
 
-        $('.table').dataTableHelper({responsive: true});
+        $('.table').dataTable({responsive: true});
         $("#phone").inputmask();
     </script>
 

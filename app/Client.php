@@ -33,6 +33,10 @@ class Client extends Model
     {
         return $this->hasMany('App\ClientsToTickets','client_id','id')->whereIn('statusTicket_id',[1,2]);
     }
+    public function getNumTickets()
+    {
+        return $this->hasOne('App\ClientsToTickets','client_id','id');
+    }
 
     public function getActiveTraning()
     {

@@ -120,6 +120,7 @@
                 $.ajax({
                     method: "POST",
                     url: "/search",
+                    timeout: 500,
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "search": value
@@ -140,6 +141,7 @@
         function getGraph(){
             $.ajax({
                 method: "get",
+                timeout: 500,
                 url: "/search/graph",
             }).done(function (data) {
                 $('.content-dashboard').html(data);
