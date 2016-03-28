@@ -62,6 +62,35 @@
         </div>
         <!-- /.row -->
         <div>
-            <input class="form-control input-lg" type="text" placeholder="Ім'я клієнта або номер абонимента">
+            <input class="form-control input-lg" id="search" type="text" placeholder="Ім'я клієнта або номер абонимента">
         </div>
+        <div class="content-dashboard"></div>
 @endsection
+
+@section('custom-scripts')
+    <script>
+        $('#search').on('keyup', function () {
+
+            var self = this;
+
+            if ($(this).val().length >= 3) {
+
+                $.ajax({
+                    method: "POST",
+                    url: "/search",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "search": $(self).val(),
+                    },
+                }).done(function (data) {
+                    $('.content-dashboard').html(data);
+                })
+            }
+            $('.content-dashboard').html("");
+        })
+
+
+
+    </script>
+@stop
+

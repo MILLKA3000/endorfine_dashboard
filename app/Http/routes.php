@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
         Route::get('/', 'HomeController@index');
+        Route::post('/', 'SearchController@index');
 
         # Users
         Route::get('users/data', 'UsersController@data'); //for ajax table
@@ -116,6 +117,11 @@ Route::group(['middleware' => ['web']], function () {
 
         # Calendar
         Route::resource('calendar', 'Calendar\ForAdminController');
+
+
+        Route::post('/search', 'SearchController@search');
+
+
     });
 });
 
