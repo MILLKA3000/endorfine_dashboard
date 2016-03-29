@@ -3,12 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ClientsToTickets extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'clientsToTickets';
 
     protected $guarded  = array('id');
+
+    protected $dates = ['deleted_at'];
+
+    protected $softDelete = true;
 
     protected $fillable = [
         'ticket_id', 'client_id', 'statusTicket_id', 'discount_id', 'numTicket'
@@ -24,7 +31,7 @@ class ClientsToTickets extends Model
     {
         return $this->hasOne('App\Client','id','client_id');
     }
-    
+
     public function hasEnabled()
     {
         return $this->hasOne('App\Ticket','id','ticket_id')->where('enabled','1');

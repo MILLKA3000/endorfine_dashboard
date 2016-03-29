@@ -11,7 +11,7 @@
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>№ Абонемента</b> <a class="pull-right">{{$client->getNumTickets->numTicket}}</a>
+                                <b>№ Абонемента</b> <a class="pull-right">{{$client->getNumTicket->numTicket}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Знижка</b> <a class="pull-right"><small class="label label-success">({{$client->getNameStatus->getNameDiscountForClients->percent}}%)</small></a>
@@ -20,7 +20,7 @@
                                 <b>День народження</b> <a class="pull-right">{{$client->birthday}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Загальна кількість занять</b> <a class="pull-right">543</a>
+                                <b>Загальна кількість занять</b> <a class="pull-right" id="countAllTicketAccess">{{$client->countAllTicketAccess}}</a>
                             </li>
                             @if(isset($hasActiveTikets))
                             <li class="list-group-item">
@@ -66,9 +66,9 @@
     <script>
         $(function() {
            $('#checkTraning').on('click',function(){
+               var button = $('#checkTraning');
                $.ajax({
                    method: "POST",
-                   timeout: 500,
                    url: "/event/addEvents",
                    data: {
                        "_token": "{{ csrf_token() }}",
@@ -76,7 +76,16 @@
                        "id_client": "{{$client->id}}",
                    }
                }).done(function (data) {
-                   var tables = $.fn.dataTable.fnTables(true);
+                   var obj = jQuery.parseJSON(data);
+                   if(obj.status !== undefined){
+                       toastr["success"](obj.status);
+                   }else{
+                       toastr["error"](obj.error);
+                   }
+                   if(obj.countAllTicketAccess !== undefined) {
+                       $('#countAllTicketAccess').text(obj.countAllTicketAccess);
+                   }
+                       var tables = $.fn.dataTable.fnTables(true);
 
                    $(tables).each(function () {
                        $(this).dataTable().fnClearTable();
