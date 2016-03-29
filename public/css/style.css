@@ -40,11 +40,15 @@
 }
 
 .content-dashboard-footer{
-    padding: 15px;
+    padding: 0 15px 15px 15px;
     margin-right: auto;
     margin-left: auto;
 }
 
+
+.content-dashboard-footer .box {
+    box-shadow: none;
+}
 
 @media (max-width: 992px){
     .box-profile .list-group-item{
@@ -52,8 +56,20 @@
     }
 }
 
+@media (max-height: 1080px){
+    .content-dashboard {
+        max-height: 66vh;
+    }
+}
+
+@media (max-height: 900px){
+    .content-dashboard {
+        max-height: 55.5vh;
+    }
+}
+
 @media (max-height: 768px){
     .content-dashboard {
-        max-height: 40vh;
+        max-height: 47vh;
     }
 }
