@@ -8,6 +8,8 @@ class User extends Authenticatable
 {
     protected $table = 'users';
 
+    protected $dates = ['deleted_at'];
+
     protected $guarded  = array('id');
     /**
      * The attributes that are mass assignable.

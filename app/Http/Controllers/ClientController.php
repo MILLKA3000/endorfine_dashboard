@@ -10,6 +10,7 @@ use App\Http\Requests\Client\ClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Models\Calendar\GetAllCalendarsModel;
 use App\Models\Calendar\GetAllEventsaModel;
+use App\Models\Events\EventModel;
 use App\Services;
 use App\StatusesTicket;
 use App\Ticket;
@@ -50,7 +51,6 @@ class ClientController extends Controller
         $client->save();
         $this->client = $client->id;
         $client->update($this->getPhoto($request->photo));
-
         $ticket = new ClientsToTickets();
         $ticket->ticket_id = $request->ticket;
         $ticket->client_id = $client->id;
@@ -87,9 +87,10 @@ class ClientController extends Controller
         $training = $this->getActiveTraning();
         $traningFormated = $training['traningFormated'];
         $activeTraning = $training['activeTraning'];
-
         $statuses = ClientStatuses::all();
         $client = Client::find($id);
+        $event = new EventModel($client);
+        $client->countAllTicketAccess = $event->countAllTicketAccess();
         $hasActiveTikets = $client->getActiveTickets->first();
         $active = 'activity';
         return view('client.details_client',compact('client','statuses','active','traningFormated','activeTraning','hasActiveTikets'));
@@ -100,7 +101,8 @@ class ClientController extends Controller
         $training = $this->getActiveTraning();
         $traningFormated = $training['traningFormated'];
         $activeTraning = $training['activeTraning'];
-
+        $event = new EventModel($client);
+        $client->countAllTicketAccess = $event->countAllTicketAccess();
         $service = Services::all();
         return view('client.joinService', compact('client','service','traningFormated','activeTraning'));
     }
@@ -110,7 +112,8 @@ class ClientController extends Controller
         $training = $this->getActiveTraning();
         $traningFormated = $training['traningFormated'];
         $activeTraning = $training['activeTraning'];
-
+        $event = new EventModel($client);
+        $client->countAllTicketAccess = $event->countAllTicketAccess();
         $tickets = Ticket::all()->where('enabled',1);
         $discounts = Discounts::whereIn('status',[2,3])->get();
         return view('client.joinTicket', compact('client','tickets','discounts','traningFormated','activeTraning'));
@@ -135,7 +138,7 @@ class ClientController extends Controller
         $ticket->client_id = $client->id;
         $ticket->statusTicket_id = 1;
         $ticket->discount_id = $request->discount_id;
-        $ticket->numTicket = $client->getNumTickets->numTicket;
+        $ticket->numTicket = $client->getNumTicket->numTicket;
         $ticket->save();
 
         return redirect('/clients/'.$client->id);
@@ -146,7 +149,8 @@ class ClientController extends Controller
         $training = $this->getActiveTraning();
         $traningFormated = $training['traningFormated'];
         $activeTraning = $training['activeTraning'];
-
+        $event = new EventModel($client);
+        $client->countAllTicketAccess = $event->countAllTicketAccess();
         $discounts = Discounts::whereIn('status',[2,3])->get();
         $client = Client::find($activeTicket->client_id);
         $tickets = Ticket::all()->where('enabled',1);
@@ -243,7 +247,7 @@ class ClientController extends Controller
 
     public function getAllTickets(Client $client)
     {
-
+        $this->client = $client;
         $tickets = ClientsToTickets::select('clientsToTickets.id', 'ticket_id','ticket_id as qty','ticket_id as activityTime','discount_id','statusTicket_id')
             ->join('tickets', 'clientsToTickets.ticket_id', '=', 'tickets.id')
             ->where('clientsToTickets.client_id',$client->id)
@@ -255,7 +259,8 @@ class ClientController extends Controller
                 return $ticket->getNameTicket->name;
             })
             ->edit_column('qty', function($ticket){
-                return $ticket->getNameTicket->qtySessions;
+                $event = new EventModel($this->client);
+                return $event->countTicketAccess($ticket);
             })
             ->edit_column('activityTime', function($ticket){
                 $dateTime = new Carbon($ticket->created_at);

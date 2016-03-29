@@ -91,7 +91,7 @@
                         <a href="/clients/id">
                             @foreach ($birthdays as $birthday)
                                 <a href="clients/{{$birthday->id}}"><h5 class="widget-user-desc">{{$birthday->birthday}} - {{$birthday->name}}</h5></a>
-                        @endforeach
+                            @endforeach
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -102,9 +102,9 @@
                         </div>
                         <!-- /.widget-user-image -->
                         <a href="/clients/id">
-                            @foreach ($datas as $data)
-                                <a href="clients/{{$birthday->id}}"><h5 class="widget-user-desc">{{$data->enddate}} - {{$data->name}}</h5></a>
-                        @endforeach
+                            @foreach ($endOfDateTickets as $endOfDateTicket)
+                                <a href="clients/{{$endOfDateTicket->getNameClient->id}}"><h5 class="widget-user-desc text-danger">№: {{$endOfDateTicket->numTicket}} [ {{$endOfDateTicket->dateFromReserve}} ] - {{$endOfDateTicket->getNameClient->name}}</h5></a>
+                            @endforeach
                     </div>
                 </div>
         </div>
