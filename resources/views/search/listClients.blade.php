@@ -29,20 +29,5 @@
         </div>
         <!-- /.info-box -->
     </div>
-    {{--<div class="row">--}}
 
-        {{--<div class="col-md-3">{{$clients->photo}}</div>--}}
-        {{--<div class="col-md-9">--}}
-            {{--<div class="row">--}}
-                {{--<div class="col-md-4">Ім'я</div>--}}
-                {{--<div class="col-md-4">День нардження</div>--}}
-                {{--<div class="col-md-4">Телефон</div>--}}
-            {{--</div>--}}
-            {{--<div class="row">--}}
-                {{--<div class="col-md-4" style="color:#ffffff"><span style="background: rgb(68, 68, 68);">{{$clients->name}}</span></div>--}}
-                {{--<div class="col-md-4" style="color:#ffffff"><span style="background: rgb(68, 68, 68);">{{$clients->phone}}</span></div>--}}
-                {{--<div class="col-md-4" style="color:#ffffff"><span style="background: rgb(68, 68, 68);">{{$clients->birthday}}</span></div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 </div>
