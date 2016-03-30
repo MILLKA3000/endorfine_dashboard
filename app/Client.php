@@ -13,7 +13,7 @@ class Client extends Model
 
     protected $guarded  = array('id');
 
-    protected $dates = ['deleted_at'];
+    protected $softDelete = true;
 
     protected $fillable = [
         'name', 'phone', 'photo', 'birthday', 'detail', 'note', 'status_id', 'enabled'
@@ -26,16 +26,12 @@ class Client extends Model
 
     public function getNumTicket()
     {
-        return $this->hasOne('App\ClientsToTickets','client_id','id');
+        return $this->hasOne('App\ClientsToTickets','client_id','id')->withTrashed();
     }
 
     public function getActiveTickets()
     {
         return $this->hasMany('App\ClientsToTickets','client_id','id')->whereIn('statusTicket_id',[1,2]);
-    }
-    public function getNumTickets()
-    {
-        return $this->hasOne('App\ClientsToTickets','client_id','id');
     }
 
     public function getActiveTraning()

@@ -10,6 +10,8 @@ class VisitedClients extends Model
 
     protected $guarded  = array('id');
 
+    protected $dates = ['deleted_at'];
+
     protected $fillable = [
         'ticket_id', 'training_id'
     ];

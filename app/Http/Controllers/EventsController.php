@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\ClientsToTickets;
+use App\Models\Events\EventModel;
 use App\Ticket;
 use App\TraningToTrainer;
 use App\VisitedClients;
@@ -90,67 +92,10 @@ class EventsController extends Controller
 
     public function addEvents(Request $request)
     {
-        $this->eventEventIdFromDB = TraningToTrainer::where('id_events', $request->id_event)->get()->first();
-        $getActiveTickets = ClientsToTickets::where('client_id',$request->id_client)->where('statusTicket_id','<',3)->get();
-        if (isset($getActiveTickets)){
-
-            if($this->ticket = $this->findActivitiesTicket($getActiveTickets,2)){
-                $this->checkAccess();
-
-            }elseif($this->ticket = $this->findActivitiesTicket($getActiveTickets,1)){
-                $this->statusTicketActive();
-                $this->addVisitedTable();
-                if($this->hasVisited() == $this->ticket->getNameTicket->qtySessions-1){
-                    $this->statusTicketLocked();
-                }
-            }
-        }
-        return "ok";
+        $events = new EventModel(Client::find($request->id_client));
+        $response = $events->saveToEvent($request->id_event);
+        return json_encode($response);
     }
 
-//    TO MODELS LATER
 
-    private function findActivitiesTicket($getActiveTickets,$id){
-        $ticket = 0;
-        foreach($getActiveTickets as $getActiveTicket){
-            if($getActiveTicket->statusTicket_id == $id){
-                $ticket = $getActiveTicket;
-                break;
-            }
-        }
-        return $ticket;
-    }
-
-    private function checkAccess(){
-        $countVisited = $this->hasVisited();
-        if($countVisited < $this->ticket->getNameTicket->qtySessions){
-            $this->addVisitedTable();
-            if($countVisited == $this->ticket->getNameTicket->qtySessions-1){
-                $this->statusTicketLocked();
-            }
-        }else{
-            $this->statusTicketLocked();
-        }
-    }
-
-    private function hasVisited(){
-        return VisitedClients::where('ticket_id',$this->ticket->id)->get()->count();
-    }
-
-    private function addVisitedTable(){
-        VisitedClients::create([
-            'training_id' => $this->eventEventIdFromDB->id,
-            'ticket_id' => $this->ticket->id,
-        ]);
-    }
-
-    private function statusTicketLocked(){
-        $this->ticket->statusTicket_id = 3;
-        $this->ticket->update();
-    }
-
-    private function statusTicketActive(){
-        $this->ticket->statusTicket_id = 2;
-        $this->ticket->update();
-    }
 }

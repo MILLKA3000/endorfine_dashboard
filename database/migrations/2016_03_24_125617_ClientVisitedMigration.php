@@ -15,7 +15,7 @@ class ClientVisitedMigration extends Migration
         Schema::create('client_Visited', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('ticket_id')->nullable();
-            $table->foreign('ticket_id')->references('id')->on('clientsToTickets')->onDelete('set null');
+            $table->foreign('ticket_id')->references('id')->on('clientsToTickets')->onDelete('cascade');
             $table->unsignedInteger('training_id')->nullable();
             $table->foreign('training_id')->references('id')->on('training_toTrainer')->onDelete('set null');
             $table->string('note');
