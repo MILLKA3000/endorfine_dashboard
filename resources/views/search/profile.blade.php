@@ -1,28 +1,34 @@
 <div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
 
         <!-- Profile Image -->
         <div class="box box-primary">
             <div class="box-body box-profile">
-                <img class="img-responsive" style="width: 100%" src="http://milkapr/photo/1.png" alt="Фото клієнта">
+                <img class="img-responsive" style="width: 100%" src="{{$numAbonement->getNameClient->photo}}" alt="Фото клієнта">
 
                 <h3 class="profile-username text-center">{{$numAbonement->getNameClient->name}}</h3>
 
                 <p class="text-muted text-center">Кліент</p>
 
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+            <div class="col-md-4">
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
                         <b>№ Абонемента</b> <a class="pull-right">{{$numAbonement->numTicket}}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Знижка</b> <a class="pull-right"><small class="label label-success">(0%)</small></a>
+                        <b>Знижка</b> <a class="pull-right"><small class="label label-success">({{$numAbonement->getNameClient->getNameStatus->getNameDiscountForClients->percent}}%)</small></a>
                     </li>
                     <li class="list-group-item">
-                        <b>День народження</b> <a class="pull-right">2016-03-29</a>
+                        <b>День народження</b> <a class="pull-right">{{$numAbonement->getNameClient->birthday}}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Загальна кількість занять</b> <a class="pull-right">543</a>
+                        <b>Загальна кількість занять</b> <a class="pull-right">0</a>
                     </li>
                     <li class="list-group-item">
                         <b>Заняття</b>
@@ -31,9 +37,10 @@
                 </ul>
 
             </div>
+
             <!-- /.box-body -->
-        </div>
+
 
         <!-- /.box -->
-    </div>
+
 </div>
