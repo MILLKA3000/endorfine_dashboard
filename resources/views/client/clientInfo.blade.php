@@ -3,7 +3,7 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <img class="img-responsive" style="width: 100%" src="{{ URL::to('/photo/'.$client->id.'.png') }}" alt="Фото клієнта">
+                        <img class="img-responsive img-thumbnail" style="width: 100%" src="{{ URL::to($client->photo)}}" alt="Фото клієнта">
 
                         <h3 class="profile-username text-center">{{$client->name}}</h3>
 
@@ -93,9 +93,8 @@
                    });
 
                    $(".table").dataTable();
-
                })
-           })
+           });
         });
     </script>
 @endsection

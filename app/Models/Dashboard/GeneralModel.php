@@ -27,6 +27,7 @@ class GeneralModel extends Model{
         $this->findOutstandingTickets();
         return ClientsToTickets::where('dateFromReserve','<=',Carbon::now()->addDays($this->options['addDays']))
             ->where('statusTicket_id','<',3)
+            ->where('numTicket','!=','')
             ->where('dateFromReserve','!=','0000-00-00')
             ->limit(3)
             ->get();

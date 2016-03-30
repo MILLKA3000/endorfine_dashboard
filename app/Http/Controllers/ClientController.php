@@ -14,6 +14,7 @@ use App\Models\Events\EventModel;
 use App\Services;
 use App\StatusesTicket;
 use App\Ticket;
+use App\VisitedClients;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -40,24 +41,28 @@ class ClientController extends Controller
         $statuses = ClientStatuses::all();
         $tickets = Ticket::all()->where('enabled',1);
         $discounts = Discounts::whereIn('status',[2,3])->get();
-        $lastTicket = (clientsToTickets::get()->last())?clientsToTickets::get()->last()->id+1:1;
+        $lastNumTicket = $this->findEmptyTicket(clientsToTickets::select('numTicket')->orderBy('numTicket','ASC')->get());
+        $lastTicket = (isset($lastNumTicket))?$lastNumTicket:1;
         return view('client.create_edit', compact('statuses','tickets','discounts','lastTicket'));
     }
 
     public function store(ClientRequest $request)
     {
         $client = new Client ();
-        $client->fill($request->toArray());
+        $client->fill(array_merge($request->toArray(),$this->getPhoto($request->photo)));
         $client->save();
         $this->client = $client->id;
-        $client->update($this->getPhoto($request->photo));
-        $ticket = new ClientsToTickets();
-        $ticket->ticket_id = $request->ticket;
-        $ticket->client_id = $client->id;
-        $ticket->statusTicket_id = 1;
-        $ticket->discount_id = $request->discount;
-        $ticket->numTicket = $request->numTicket;
-        $ticket->save();
+        if(isset($client->id)) {
+            $ticket = new ClientsToTickets();
+            $ticket->ticket_id = $request->ticket;
+            $ticket->client_id = $client->id;
+            $ticket->statusTicket_id = 1;
+            $ticket->discount_id = $request->discount;
+            $ticket->numTicket = $request->numTicket;
+            $ticket->save();
+        }else{
+
+        }
 
         return redirect('/clients');
     }
@@ -93,6 +98,7 @@ class ClientController extends Controller
         $client->countAllTicketAccess = $event->countAllTicketAccess();
         $hasActiveTikets = $client->getActiveTickets->first();
         $active = 'activity';
+        $client->calendar = json_encode($event->getAllTrainingOfClient());
         return view('client.details_client',compact('client','statuses','active','traningFormated','activeTraning','hasActiveTikets'));
     }
 
@@ -149,10 +155,10 @@ class ClientController extends Controller
         $training = $this->getActiveTraning();
         $traningFormated = $training['traningFormated'];
         $activeTraning = $training['activeTraning'];
-        $event = new EventModel($client);
-        $client->countAllTicketAccess = $event->countAllTicketAccess();
         $discounts = Discounts::whereIn('status',[2,3])->get();
         $client = Client::find($activeTicket->client_id);
+        $event = new EventModel($client);
+        $client->countAllTicketAccess = $event->countAllTicketAccess();
         $tickets = Ticket::all()->where('enabled',1);
         $statusTicket = StatusesTicket::all();
         return view('client.joinTicket', compact('activeTicket','discounts','statusTicket','tickets','client','traningFormated','activeTraning'));
@@ -166,8 +172,7 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request, Client $client)
     {
         $this->client = $client->id;
-        $request->photo = $this->getPhoto($request->photo)['photo'];
-        $client->update($request->toArray());
+        $client->update(array_merge($request->toArray(),$this->getPhoto($request->photo)));
         return redirect('/clients/'.$client->id);
     }
 
@@ -192,13 +197,16 @@ class ClientController extends Controller
 
     private function getPhoto($im)
     {
-        $path = '/photo/' . $this->client . '.png';
+        $path = '/img/no-user-image.gif';
+
         if(!empty($im)) {
+            $path = '/photo/' . $this->client . '.png';
             $ifp = fopen(public_path() . $path, "wb");
             $data = explode(',', $im);
             fwrite($ifp, base64_decode($data[1]));
             fclose($ifp);
         }
+
         return ['photo'=>$path];
     }
 
@@ -211,9 +219,11 @@ class ClientController extends Controller
                 return $client->getNumTicket->numTicket;
             })
             ->edit_column('status_id', function($client){
-                return $client->getNameStatus->name;
+                $event = new EventModel($client);
+                return $event->countAllTicketAccess();
             })
             ->edit_column('detail', function($client){
+
                 $tickets = '';
                 $client->discount = $client->getNameStatus->getNameDiscountForClients;
                 foreach($client->getActiveTickets as $ticket){
@@ -222,7 +232,7 @@ class ClientController extends Controller
                         $client->discountTicket = $ticket->getNameDiscountForTicket;
                     }
                 }
-                return $tickets;
+                 return $tickets;
             })
             ->edit_column('discount', function($client){
                 $discounts = '';
@@ -235,7 +245,7 @@ class ClientController extends Controller
                 return $discounts .= '<small class="label label-success"> Загальна: '.($client->discount->percent + ((isset($client->discountTicket))?$client->discountTicket->percent:0)).'%</small>';
             })
             ->edit_column('photo', function($client){
-                return "<img class='photo_mic' src='/photo/$client->id.png' width='50'>";
+                return "<img class='photo_mic' src='$client->photo' width='50'>";
             })
             ->edit_column('enabled', '@if ($enabled=="1") <span class=\'glyphicon text-green glyphicon-ok\'></span> @else <span class=\'glyphicon text-red glyphicon-remove\'></span> @endif')
 
@@ -293,5 +303,16 @@ class ClientController extends Controller
             ->add_column('actions', '<a href="{{{ URL::to(\'clients/\' . $id . \'/destroyServiceClient\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
             ->remove_column('id')
             ->make();
+    }
+
+    private function findEmptyTicket($tickets){
+        $arrayTickets = [];
+        foreach($tickets as $ticket){
+            if($ticket->numTicket != '') $arrayTickets[$ticket->numTicket] = true;
+        }
+        for($i=1;$i<=count($arrayTickets);$i++){
+            if(isset($arrayTickets[$i])==false) return $i;
+        }
+        return false;
     }
 }

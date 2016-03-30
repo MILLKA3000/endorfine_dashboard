@@ -39,4 +39,8 @@ class Client extends Model
         return $this->hasMany('App\ClientsToTickets','client_id','id')->whereIn('statusTicket_id',[1,2]);
     }
 
+    public function getAllTickets()
+    {
+        return $this->hasMany('App\ClientsToTickets','client_id','id');
+    }
 }

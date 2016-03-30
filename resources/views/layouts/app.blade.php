@@ -1,6 +1,6 @@
 @include('layouts.header')
 @yield('custom-style')
-<body class="skin-red">
+<body class="skin-purple">
 <div class="wrapper">
 
     @if (!Auth::guest())

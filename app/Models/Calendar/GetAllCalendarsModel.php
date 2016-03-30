@@ -70,7 +70,7 @@ class GetAllCalendarsModel extends Model
                     'start' => $event['start'],
                     'end' => $event['end']
                 ];
-                if (isset($fromDB)) {
+                if (!empty($fromDB)) {
                     $fromDB->update($event);
                 } else {
                     TraningToTrainer::create($event);

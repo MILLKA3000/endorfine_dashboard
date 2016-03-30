@@ -51,4 +51,9 @@ class ClientsToTickets extends Model
     {
         return $this->hasOne('App\Discounts','id','discount_id');
     }
+
+    public function getTrainings()
+    {
+        return $this->hasMany('App\VisitedClients','ticket_id','id');
+    }
 }

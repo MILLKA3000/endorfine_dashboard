@@ -15,4 +15,9 @@ class VisitedClients extends Model
     protected $fillable = [
         'ticket_id', 'training_id'
     ];
+
+    public function getDetailTraining()
+    {
+        return $this->hasOne('App\TraningToTrainer','id','training_id');
+    }
 }

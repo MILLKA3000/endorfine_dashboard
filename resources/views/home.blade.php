@@ -42,7 +42,6 @@
                             <img class="img-circle" src="/img/ticket-icon_1.png" alt="User Avatar">
                         </div>
                         <!-- /.widget-user-image -->
-                        <a href="/clients/id">
                             @foreach ($endOfDateTickets as $endOfDateTicket)
                                 <a href="clients/{{$endOfDateTicket->getNameClient->id}}"><h5 class="widget-user-desc text-danger">№: {{$endOfDateTicket->numTicket}} [ {{$endOfDateTicket->dateFromReserve}} ] - {{$endOfDateTicket->getNameClient->name}}</h5></a>
                             @endforeach

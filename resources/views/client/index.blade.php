@@ -31,7 +31,7 @@
             <th data-sortable="true" data-filterable="text" width="10%">Телефон</th>
             <th data-sortable="true" width="20%">Абонементи</th>
             <th data-sortable="true" width="20%">Знижка</th>
-            <th data-sortable="true" data-filterable="select" width="10%">Статус</th>
+            <th data-sortable="true" data-filterable="select" width="10%">Заняття</th>
             <th data-sortable="true">Активний</th>
             <th width="10%">Дія</th>
         </tr>

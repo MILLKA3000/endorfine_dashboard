@@ -186,4 +186,22 @@ class EventModel
         $this->ticket->dateFromReserve = Carbon::now()->addDays($this->ticket->getNameTicket->activityTime);
         $this->ticket->update();
     }
+
+    public function getAllTrainingOfClient(){
+        $trainings = [];
+        foreach($this->client->getAllTickets as $ticket){
+            foreach($ticket->getTrainings as $training){
+                $trainings[] = [
+                    'title' => $training->getDetailTraining->name,
+                    'start' => $training->getDetailTraining->start,
+                    'end' => $training->getDetailTraining->end,
+                    'id' => $training->getDetailTraining->id_events,
+                    'description' => $training->getDetailTraining->description,
+                    'trainer' => $training->getDetailTraining->getNameTrainer->name
+                ];
+            }
+
+        }
+        return $trainings;
+    }
 }

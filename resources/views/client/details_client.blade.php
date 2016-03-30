@@ -1,5 +1,9 @@
 @extends('layouts.app')
 {{-- Content --}}
+@section('custom-style')
+    <link rel="stylesheet" href="{{ asset ("/bower_components/AdminLTE/plugins/fullcalendar/fullcalendar.min.css") }}"/>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.css"/>
+@endsection
 @section('content')
 
         <div class="row">
@@ -10,7 +14,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#activity" data-toggle="tab">Абонементи</a></li>
                         <li><a href="#service" data-toggle="tab">Додаткові послуги</a></li>
-                        <li><a href="#timeline" data-toggle="tab">Календар</a></li>
+                        <li><a href="#timeline" id="calendar-active" data-toggle="tab">Календар</a></li>
                         <li><a href="#settings" data-toggle="tab">Профіль</a></li>
                     </ul>
                     <div class="tab-content">
@@ -77,7 +81,7 @@
                         </div>
                         {{--CALENDAR--}}
                         <div class="tab-pane" id="timeline">
-
+                            <div id="calendar"></div>
                         </div>
                         {{--OPTIONS--}}
                         <div class="tab-pane" id="settings">
@@ -212,6 +216,9 @@
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js") }}"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js") }}"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jquery.webcam.js") }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="{{ asset ("/bower_components/AdminLTE/plugins/fullcalendar/fullcalendar.min.js") }}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.js"></script>
 
     <script>
         $(function() {
@@ -227,6 +234,38 @@
             }
 
             $('[href=#'+getParameterByName('active')+']').tab('show');
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $('#calendar').fullCalendar({
+                    firstDay: 1,
+                    timeFormat: 'H:mm',
+                    editable: true,
+                    'fixedWeekCount': false,
+                    header: {
+                        left: 'promptResource today prev,next',
+                        center: 'title',
+                        right: 'agendaWeek,month'
+                    },
+                    events: {!!$client->calendar!!},
+                    eventRender: function (event, element) {
+                    element.qtip({
+                    content: {
+                        title: {text: event.title},
+                        text: event.description + '<br><br> <b> ТРЕНЕР: ' + event.trainer + '</b>'
+                    },
+                    style: {
+                        width: 200,
+                        padding: 5,
+                        color: 'black',
+                        border: {
+                            width: 1,
+                            radius: 3
+                        },
+                        tip: 'topLeft'
+                    }
+                    });
+                }
+                });
+            });
 
             var pos = 0, ctx = null, saveCB, image = [];
 
@@ -295,7 +334,6 @@
             });
 
         });
-
         $('.table').dataTable({responsive: true});
         $("#phone").inputmask();
     </script>
