@@ -61,6 +61,7 @@
                     </li>
                 </ul>
             </li>
+            <li class="active">{{link_to('/options', $title = 'Система')}}</li>
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

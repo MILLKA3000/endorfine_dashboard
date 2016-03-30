@@ -35,14 +35,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/', 'HomeController@index');
         Route::post('/', 'SearchController@index');
 
-        # Users
+        #Users
         Route::get('users/data', 'UsersController@data'); //for ajax table
         Route::get('users/{user}/show', 'UsersController@show');
         Route::get('users/{user}/edit', 'UsersController@edit');
         Route::get('users/{user}/delete', 'UsersController@delete');
         Route::resource('users', 'UsersController');
 
-        # Roles
+        #Roles
         Route::get('role/data', 'RolesController@data'); //for ajax table
         Route::get('role/{role}/show', 'RolesController@show');
         Route::get('role/{role}/edit', 'RolesController@edit');
@@ -50,7 +50,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('role/{role}/destroy', 'RolesController@destroy');
         Route::resource('role', 'RolesController');
 
-        # Services
+        #Services
         Route::get('services/data', 'ServicesController@data'); //for ajax table
         Route::get('services/{status}/show', 'ServicesController@show');
         Route::get('services/{status}/edit', 'ServicesController@edit');
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('services/{status}/destroy', 'ServicesController@destroy');
         Route::resource('services', 'ServicesController');
 
-        # StatusTickets
+        #StatusTickets
         Route::get('tickets/statuses/data', 'StatusTicketController@data'); //for ajax table
         Route::get('tickets/statuses/{status}/show', 'StatusTicketController@show');
         Route::get('tickets/statuses/{status}/edit', 'StatusTicketController@edit');
@@ -66,7 +66,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('tickets/statuses/{status}/destroy', 'StatusTicketController@destroy');
         Route::resource('tickets/statuses', 'StatusTicketController');
 
-        # StatusClient
+        #StatusClient
         Route::get('clients/statuses/data', 'ClientStatusController@data'); //for ajax table
         Route::get('clients/statuses/{status}/show', 'ClientStatusController@show');
         Route::get('clients/statuses/{status}/edit', 'ClientStatusController@edit');
@@ -99,14 +99,14 @@ Route::group(['middleware' => ['web']], function () {
 
 //        Route::post('photoPut', 'ClientController@getPhoto');
 
-        # Discounts
+        #Discounts
         Route::get('discounts/data', 'DiscountsController@data'); //for ajax table
         Route::get('discounts/{discount}/edit', 'DiscountsController@edit');
         Route::put('discounts/{discount}/edit', 'DiscountsController@update');
         Route::get('discounts/{discount}/destroy', 'DiscountsController@destroy');
         Route::resource('discounts', 'DiscountsController');
 
-        # Tickets
+        #Tickets
         Route::get('tickets/data', 'TicketsController@data'); //for ajax table
         Route::get('tickets/{ticket}/show', 'TicketsController@show');
         Route::get('tickets/{ticket}/edit', 'TicketsController@edit');
@@ -115,7 +115,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('tickets', 'TicketsController');
 
 
-        # Calendar
+        #Calendar
         Route::resource('calendar', 'Calendar\ForAdminController');
 
         #Events
@@ -126,6 +126,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/search', 'SearchController@search');
         Route::get('/search/graph', 'SearchController@graph');
 
+        #System options
+        Route::resource('options/', 'OptionsController');
 
     });
 });
