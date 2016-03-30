@@ -56,7 +56,7 @@
     <script>
         $('#search').on('keyup', function () {
             var value = $(this).val();
-            if (value.length>=3) {
+            if ((value.length>=3)||((value[0]!='0')&&(value[0]!='+')&&($.isNumeric(value)))) {
                 $.ajax({
                     method: "POST",
                     url: "/search",

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Client;
+use App\ClientsToTickets;
 use Illuminate\Database\Eloquent\Model;
 
 class Search extends Model
@@ -15,23 +16,48 @@ class Search extends Model
 
     public function searchResult(){
         $result = null;
-        if (is_integer($this->enteredText)){
-            if (strlen($this->enteredText)>5){
-                $result = Client:: where('phone', 'like', "%$this->enteredText%")->get();
-            }else {
-//                $result = Client:: where('name', 'like', "%$this->enteredText%")->get();
+
+        if (is_numeric($this->enteredText)) {
+
+            if (strlen($this->enteredText) > 5) {
+                $clients = Client:: where('phone', 'like', "%$this->enteredText%")->get();
+                if (count($clients) > 1) {
+                    foreach ($clients as $client) {
+                        $result .= $this->makeListClients($client);
+                    }
+                }
+
+                if (count($clients) == 1) {
+
+                    $numPhone = Client:: where('phone', $this->enteredText)->get();
+                    $result = $this->makeProfile($numPhone);
+                }
+            } else {
+                $numAbonement = ClientsToTickets:: where('numTicket', $this->enteredText)->get()->first();
+                $clients = Client::where('name', 'like', "%$this->enteredText%")->get();
+                $result = $this->makeProfile($numAbonement);
             }
-        } else{
-            $clients = Client:: where('name', 'like', "%$this->enteredText%")->get();
-            if(count($clients)>1){
-                foreach ($clients as $client){
+
+        } else {
+
+            $clients = Client::where('name', 'like', "%$this->enteredText%")->get();
+            if (count($clients) > 1) {
+                foreach ($clients as $client) {
                     $result .= $this->makeListClients($client);
                 }
             }
+
+            if (count($clients) == 1) {
+                $numAbonement = ClientsToTickets:: where('client_id', $clients->first()->id)->get()->first();
+                $result = $this->makeProfile($numAbonement);
+            }
+
         }
         return $result;
     }
-
+    private function makeProfile($numAbonement){
+        return view('search.profile',compact('numAbonement', 'client'));
+    }   
 
     private function makeListClients($clients){
         return view('search.listClients',compact('clients'));
