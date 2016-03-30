@@ -54,6 +54,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('--------------------------------');
         $this->command->info('The tranings_detail table has been seeded!');
         $this->command->info('--------------------------------');
+        $this->call(options::class);
+        $this->command->info('--------------------------------');
+        $this->command->info('The options table has been seeded!');
+        $this->command->info('--------------------------------');
         $this->command->info('END');
         $this->command->info('--------------------------------');
     }
