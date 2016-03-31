@@ -16,11 +16,13 @@ class Search extends Model
 
     public function searchResult(){
         $result = null;
-
+//        echo ($this->enteredText);
         if (is_numeric($this->enteredText)) {
 
-            if (strlen($this->enteredText) > 5) {
-                $clients = Client:: where('phone', 'like', "%$this->enteredText%")->get();
+            if (strlen($this->enteredText) > 5 and ($this->enteredText[0]!='+')) {
+                $phone = $this->phoneValidation($this->enteredText);
+                $clients = Client:: where('phone', 'like', "%$phone%")->get();
+                echo($phone);
                 if (count($clients) > 1) {
                     foreach ($clients as $client) {
                         $result .= $this->makeListClients($client);
@@ -29,13 +31,15 @@ class Search extends Model
 
                 if (count($clients) == 1) {
 
-                    $numPhone = Client:: where('phone', $this->enteredText)->get();
-                    $result = $this->makeProfile($numPhone);
+                    $numAbonement = ClientsToTickets:: where('client_id', $clients->first()->id)->get()->first();
+                    $result = $this->makeProfile($numAbonement);
                 }
             } else {
                 $numAbonement = ClientsToTickets:: where('numTicket', $this->enteredText)->get()->first();
-                $clients = Client::where('name', 'like', "%$this->enteredText%")->get();
-                $result = $this->makeProfile($numAbonement);
+//                $clients = Client::where('name', 'like', "%$this->enteredText%")->get();
+                if(count($numAbonement)==1) {
+                    $result = $this->makeProfile($numAbonement);
+                }
             }
 
         } else {
@@ -61,5 +65,22 @@ class Search extends Model
 
     private function makeListClients($clients){
         return view('search.listClients',compact('clients'));
+    }
+
+    public function phoneValidation($phone){
+        $validPhone='(';
+        for($i=0; $i<strlen($phone); $i++){
+            if ($i==3) {
+                $validPhone.=') ';
+            }
+            if ($i==6) {
+                $validPhone.='-';
+            }
+            if ($i==8) {
+                $validPhone.='-';
+            }
+            $validPhone.= $phone[$i];
+        }
+        return $validPhone;
     }
 }
