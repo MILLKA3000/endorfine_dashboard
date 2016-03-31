@@ -1,5 +1,18 @@
 @extends('layouts.app')
-
+@section('custom-style')
+    <style>
+        .tools-block div,
+        .tools-block-end-ticket div{
+            color: #333;
+            display: none;
+            font-weight: bold;
+        }
+        .tools-block div:first-child,
+        .tools-block-end-ticket div:first-child{
+            display: block;
+        }
+    </style>
+@endsection
 @section('content')
 
     <div>
@@ -29,10 +42,21 @@
                             <img class="img-circle" src="/img/birthday-cake1.jpg" alt="User Avatar">
                         </div>
                         <!-- /.widget-user-image -->
-                        <a href="/clients/id">
-                            @foreach ($birthdays as $birthday)
-                                <a href="clients/{{$birthday->id}}"><h5 class="widget-user-desc">{{$birthday->birthday}} - {{$birthday->name}}</h5></a>
-                            @endforeach
+                        <div class="tools-block">
+                            @for ($i=0;$i<count($birthdays);$i=$i+3)
+
+                                    <div>
+                                        <a href="clients/{{$birthdays[$i]->id}}"><h5 class="widget-user-desc">{{$birthdays[$i]->birthday}} - {{$birthdays[$i]->name}}</h5></a>
+                                        @if($i+1<count($birthdays))
+                                            <a href="clients/{{$birthdays[$i+1]->id}}"><h5 class="widget-user-desc">{{$birthdays[$i+1]->birthday}} - {{$birthdays[$i+1]->name}}</h5></a>
+                                        @endif
+                                        @if($i+2<count($birthdays))
+                                            <a href="clients/{{$birthdays[$i+2]->id}}"><h5 class="widget-user-desc">{{$birthdays[$i+2]->birthday}} - {{$birthdays[$i+2]->name}}</h5></a>
+                                        @endif
+                                    </div>
+
+                            @endfor
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -42,9 +66,20 @@
                             <img class="img-circle" src="/img/ticket-icon_1.png" alt="User Avatar">
                         </div>
                         <!-- /.widget-user-image -->
-                            @foreach ($endOfDateTickets as $endOfDateTicket)
-                                <a href="clients/{{$endOfDateTicket->getNameClient->id}}"><h5 class="widget-user-desc text-danger">№: {{$endOfDateTicket->numTicket}} [ {{$endOfDateTicket->dateFromReserve}} ] - {{$endOfDateTicket->getNameClient->name}}</h5></a>
-                            @endforeach
+                        <div class="tools-block-end-ticket">
+                            @for ($i=0;$i<count($endOfDateTickets);$i=$i+3)
+                                <div>
+                                    <a href="clients/{{$endOfDateTickets[$i]->getNameClient->id}}"><h5 class="widget-user-desc">№ {{$endOfDateTickets[$i]->numTicket}} [ {{$endOfDateTickets[$i]->dateFromReserve}} ] - {{$endOfDateTickets[$i]->getNameClient->name}}</h5></a>
+                                    @if($i+1<count($endOfDateTickets))
+                                        <a href="clients/{{$endOfDateTickets[$i+1]->getNameClient->id}}"><h5 class="widget-user-desc">№ {{$endOfDateTickets[$i+1]->numTicket}} [ {{$endOfDateTickets[$i+1]->dateFromReserve}} ] - {{$endOfDateTickets[$i+1]->getNameClient->name}}</h5></a>
+                                    @endif
+                                    @if($i+2<count($endOfDateTickets))
+                                        <a href="clients/{{$endOfDateTickets[$i+2]->getNameClient->id}}"><h5 class="widget-user-desc">№ {{$endOfDateTickets[$i+2]->numTicket}} [ {{$endOfDateTickets[$i+2]->dateFromReserve}} ] - {{$endOfDateTickets[$i+2]->getNameClient->name}}</h5></a>
+                                    @endif
+                                </div>
+                            @endfor
+                        </div>
+
                     </div>
                 </div>
         </div>
@@ -93,6 +128,30 @@
                 $('.content-dashboard').html(data);
             })
         }
+
+        $(document).ready(function(){
+
+            $(".tools-block div:first").css("display", "block");
+            $(".tools-block-end-ticket div:first").css("display", "block");
+
+            jQuery.fn.timer = function() {
+                if($(this).children('div').length > 1)
+                    if(!$(this).children("div:last-child").is(":visible")){
+                        $(this).children("div:visible").fadeOut(500, function () {
+                            $(this).next("div").fadeIn(500);
+                        });
+                    }
+                    else{
+                        $(this).children("div:visible").hide().end().children("div:first").fadeIn(500);
+                    }
+            }
+
+            window.setInterval(function() {
+                $(".tools-block").timer();
+                $(".tools-block-end-ticket").timer();
+            }, 5000);
+
+        });
 
     </script>
 

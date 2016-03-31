@@ -41,8 +41,10 @@ class ClientController extends Controller
         $statuses = ClientStatuses::all();
         $tickets = Ticket::all()->where('enabled',1);
         $discounts = Discounts::whereIn('status',[2,3])->get();
-        $lastNumTicket = $this->findEmptyTicket(clientsToTickets::select('numTicket')->orderBy('numTicket','ASC')->get());
-        $lastTicket = ($lastNumTicket)?$lastNumTicket:1;
+        $lastNUMFromDB = clientsToTickets::select('numTicket')->orderBy('numTicket','DESC')->get();
+        $lastNumTicket = $this->findEmptyTicket($lastNUMFromDB);
+
+        $lastTicket = ($lastNumTicket)?$lastNumTicket:$lastNUMFromDB->first()->numTicket+1;
         return view('client.create_edit', compact('statuses','tickets','discounts','lastTicket'));
     }
 
