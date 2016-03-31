@@ -127,6 +127,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/search/graph', 'SearchController@graph');
 
         #System options
+        Route::post('options/save', 'OptionsController@save');
         Route::resource('options/', 'OptionsController');
 
     });
