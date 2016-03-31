@@ -9,8 +9,8 @@
             @if (isset($option->tag))
                 @include('system_options.inputs.'.$option->tag)
             @endif
+            <br>
         @endforeach
-        <br>
         <input type="submit">
     {!! Form::close() !!}
 @stop
