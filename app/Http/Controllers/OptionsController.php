@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Options;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 
 class OptionsController extends Controller
 {
@@ -37,9 +38,14 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function save(Request $request)
     {
-        //
+        $options = $request->except('_token');
+        foreach ($options as $key => $value){
+
+            Options::where('key', $key)->update(['value' => $value]);
+        }
+        return redirect('/options');
     }
 
 }

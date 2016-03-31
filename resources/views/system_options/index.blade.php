@@ -4,11 +4,15 @@
 @stop
 {{-- Content --}}
 @section('content')
-
-    @foreach($options as $option)
-        @include('system_options.inputs.'.$option->tag)
-    @endforeach
-
+    {!! Form::open(array('url' => '/options/save', 'method' => 'post')) !!}
+        @foreach($options as $option)
+            @if (isset($option->tag))
+                @include('system_options.inputs.'.$option->tag)
+            @endif
+        @endforeach
+        <br>
+        <input type="submit">
+    {!! Form::close() !!}
 @stop
 
 {{-- Scripts --}}
