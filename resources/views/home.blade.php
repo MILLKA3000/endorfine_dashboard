@@ -94,7 +94,7 @@
                 var value = $(this).val();
                 if ((value.length>=3)||((value[0]!='0')&&(value[0]!='+')&&($.isNumeric(value)))) {
 
-                    if ((value.length>=5)&&(value[0] ='+')){
+                    if ((value.length>=5)&&(value[0] =='+')){
                         value = value.substr(3);
     //                    console.log(value);
                     }
