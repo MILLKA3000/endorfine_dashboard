@@ -89,47 +89,48 @@
 @section('custom-scripts')
 
     <script>
-        $('#search').on('keyup', function () {
-            var value = $(this).val();
-            if ((value.length>=3)||((value[0]!='0')&&(value[0]!='+')&&($.isNumeric(value)))) {
+        $(document).ready(function(){
+            $('#search').on('keyup', function () {
+                var value = $(this).val();
+                if ((value.length>=3)||((value[0]!='0')&&(value[0]!='+')&&($.isNumeric(value)))) {
 
-                if ((value.length>=5)&&(value[0] ='+')){
-                    value = value.substr(3);
-//                    console.log(value);
+                    if ((value.length>=5)&&(value[0] ='+')){
+                        value = value.substr(3);
+    //                    console.log(value);
+                    }
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/search",
+                        timeout: 500,
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "search": value
+                        }
+                    }).done(function (data) {
+                        if(data) {
+                            $('.content-dashboard').html(data);
+                        }else{
+                            getGraph();
+                        }
+                    })
+                }else{
+                    getGraph();
                 }
 
+            });
+
+            function getGraph(){
                 $.ajax({
-                    method: "POST",
-                    url: "/search",
+                    method: "get",
                     timeout: 500,
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "search": value
-                    }
+                    url: "/search/graph",
                 }).done(function (data) {
-                    if(data) {
-                        $('.content-dashboard').html(data);
-                    }else{
-                        getGraph();
-                    }
+                    $('.content-dashboard').html(data);
                 })
-            }else{
-                getGraph();
             }
 
-        });
 
-        function getGraph(){
-            $.ajax({
-                method: "get",
-                timeout: 500,
-                url: "/search/graph",
-            }).done(function (data) {
-                $('.content-dashboard').html(data);
-            })
-        }
-
-        $(document).ready(function(){
 
             $(".tools-block div:first").css("display", "block");
             $(".tools-block-end-ticket div:first").css("display", "block");

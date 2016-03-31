@@ -4,15 +4,15 @@ namespace App\Models;
 
 use App\Client;
 use App\ClientsToTickets;
-use Illuminate\Database\Eloquent\Model;
 
-class Search extends Model
+class Search
 {
     protected $enteredText;
-   public function __construct($text)
-   {
-      $this->enteredText = $text;
-   }
+
+    public function __construct($text)
+    {
+        $this->enteredText = $text;
+    }
 
     public function searchResult(){
         $result = null;
