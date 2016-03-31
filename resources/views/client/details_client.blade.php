@@ -131,7 +131,7 @@
                                     <div class="form-group  {{ $errors->has('status_id') ? 'has-error' : '' }}">
                                         {!! Form::label('status_id', 'Статус кліента', array('class' => 'control-label')) !!}
                                         <div class="controls">
-                                            {!! Form::select('status_id', $statuses->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                                            {!! Form::select('status_id', $client->statuses->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
                                             <span class="help-block">{{ $errors->first('status_id', ':message') }}</span>
                                         </div>
                                     </div>
@@ -211,7 +211,6 @@
 @endsection
 {{-- Scripts --}}
 @section('custom-scripts')
-    <script src="{{ asset('js/dataTablesSelect.js') }}"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.js") }}"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.phone.extensions.js") }}"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js") }}"></script>

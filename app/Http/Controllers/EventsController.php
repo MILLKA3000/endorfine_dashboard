@@ -92,8 +92,10 @@ class EventsController extends Controller
 
     public function addEvents(Request $request)
     {
+
         $events = new EventModel(Client::find($request->id_client));
         $response = $events->saveToEvent($request->id_event);
+        $response['calendar'] = $events->getAllTrainingOfClient();
         return json_encode($response);
     }
 

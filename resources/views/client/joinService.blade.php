@@ -27,7 +27,7 @@
                                             <div class="form-group col-xs-8 {{ $errors->has('service') ? 'has-error' : '' }}">
                                                 {!! Form::label('service', 'Виберіть додаткову послугу', array('class' => 'control-label')) !!}
                                                 <div class="controls">
-                                                    {!! Form::select('service', $service->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                                                    {!! Form::select('service', $client->service->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
                                                     <span class="help-block">{{ $errors->first('service', ':message') }}</span>
                                                 </div>
                                             </div>

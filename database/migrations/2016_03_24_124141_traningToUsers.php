@@ -18,7 +18,7 @@ class TraningToUsers extends Migration
             $table->unsignedInteger('id_user')->nullable();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('set null');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('note');
             $table->dateTime('start');
             $table->dateTime('end');

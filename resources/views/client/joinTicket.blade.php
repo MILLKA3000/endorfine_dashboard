@@ -32,7 +32,7 @@
                                         <div class="form-group col-xs-8 {{ $errors->has('ticket_id') ? 'has-error' : '' }}">
                                             {!! Form::label('ticket_id', 'Абонемент', array('class' => 'control-label')) !!}
                                             <div class="controls">
-                                                {!! Form::select('ticket_id', $tickets->lists('name', 'id'), (isset($activeTicket))?$activeTicket->ticket_id:'' ,array('class' => 'form-control')) !!}
+                                                {!! Form::select('ticket_id', $client->tickets->lists('name', 'id'), (isset($activeTicket))?$activeTicket->ticket_id:'' ,array('class' => 'form-control')) !!}
                                                 <span class="help-block">{{ $errors->first('ticket_id', ':message') }}</span>
                                             </div>
                                         </div>
@@ -40,7 +40,7 @@
                                         <div class="form-group col-xs-8 {{ $errors->has('discount_id') ? 'has-error' : '' }}">
                                             {!! Form::label('discount_id', 'Знижка', array('class' => 'control-label')) !!}
                                             <div class="controls">
-                                                {!! Form::select('discount_id', $discounts->lists('name', 'id'), (isset($activeTicket))?$activeTicket->discount_id:'',array('class' => 'form-control')) !!}
+                                                {!! Form::select('discount_id', $client->discounts->lists('name', 'id'), (isset($activeTicket))?$activeTicket->discount_id:'',array('class' => 'form-control')) !!}
                                                 <span class="help-block">{{ $errors->first('discount_id', ':message') }}</span>
                                             </div>
                                         </div>
@@ -50,7 +50,7 @@
                                             <div class="form-group col-xs-8 {{ $errors->has('discount') ? 'has-error' : '' }}">
                                                 {!! Form::label('statusTicket_id', 'Статус абонемента', array('class' => 'control-label')) !!}
                                                 <div class="controls">
-                                                    {!! Form::select('statusTicket_id', $statusTicket->lists('name', 'id'), (isset($activeTicket))?$activeTicket->statusTicket_id:'',array('class' => 'form-control')) !!}
+                                                    {!! Form::select('statusTicket_id', $client->statusTicket->lists('name', 'id'), (isset($activeTicket))?$activeTicket->statusTicket_id:'',array('class' => 'form-control')) !!}
                                                     <span class="help-block">{{ $errors->first('discount', ':message') }}</span>
                                                 </div>
                                             </div>

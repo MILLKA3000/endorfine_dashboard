@@ -17,15 +17,15 @@
                                 <b>Знижка</b> <a class="pull-right"><small class="label label-success">({{$client->getNameStatus->getNameDiscountForClients->percent}}%)</small></a>
                             </li>
                             <li class="list-group-item">
-                                <b>День народження</b> <a class="pull-right">{{$client->birthday}}</a>
+                                <b>День народження клієнта</b> <a class="pull-right">{{$client->birthday}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Загальна кількість занять</b> <a class="pull-right" id="countAllTicketAccess">{{$client->countAllTicketAccess}}</a>
                             </li>
-                            @if(isset($hasActiveTikets))
+                            @if(isset($client->hasActiveTikets))
                             <li class="list-group-item">
                                 <b>Заняття</b> {!! Form::select('ticket',
-                                array_pluck($traningFormated,'title', 'id'), $activeTraning ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
+                                array_pluck($client->traningFormated,'title', 'id'), $client->activeTraning ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
                             </li>
                                 <a href="#" class="btn btn-primary btn-block" id="checkTraning"><b>Відмітити</b></a>
                             @endif
@@ -93,6 +93,10 @@
                    });
 
                    $(".table").dataTable();
+                   $('#calendar').fullCalendar('removeEvents');
+                   $('#calendar').fullCalendar( 'addEventSource', obj.calendar);
+                   $('#calendar').fullCalendar('refetchEvents');
+
                })
            });
         });
