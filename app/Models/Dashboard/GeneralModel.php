@@ -6,6 +6,7 @@ use App\Client;
 use App\ClientsToTickets;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class GeneralModel extends Model{
 
@@ -29,7 +30,7 @@ class GeneralModel extends Model{
             ->where('statusTicket_id','<',3)
             ->where('numTicket','!=','')
             ->where('dateFromReserve','!=','0000-00-00')
-            ->limit(3)
+//            ->limit(3)
             ->get();
     }
 
@@ -45,8 +46,7 @@ class GeneralModel extends Model{
     }
 
     public function getBirthDayClient(){
-        return Client::raw("SELECT name , birthday FROM client_info ORDER BY DAYOFYEAR(birthday) < DAYOFYEAR(CURDATE()), DAYOFYEAR(birthday)")->limit(3)->get();
-
+        return DB::select(DB::raw("SELECT id,name,birthday FROM ( SELECT id,name,birthday,MONTH(birthday) AS m, DAY(birthday) As d FROM client_info) AS tmp ORDER BY (m,d) < ( MONTH(CURDATE()), DAY(CURDATE()) ), m , d LIMIT 4"));
     }
 
 }
