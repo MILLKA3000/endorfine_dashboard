@@ -44,7 +44,7 @@ class ClientController extends Controller
         $lastNUMFromDB = clientsToTickets::select('numTicket')->orderBy('numTicket','DESC')->get();
         $lastNumTicket = $this->findEmptyTicket($lastNUMFromDB);
 
-        $lastTicket = ($lastNumTicket)?$lastNumTicket:$lastNUMFromDB->first()->numTicket+1;
+        $lastTicket = ($lastNumTicket)?$lastNumTicket: ($lastNUMFromDB->first()) ? $lastNUMFromDB->first()->numTicket+1:1;
         return view('client.create_edit', compact('statuses','tickets','discounts','lastTicket'));
     }
 
