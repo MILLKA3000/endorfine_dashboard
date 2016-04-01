@@ -14,4 +14,14 @@ toastr.options = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+};
+
+function resize() {
+    $('.tickets-accordion ul').height($('.content-dashboard').height() - 135);
 }
+
+resize()
+
+$(window).resize(function(){
+    resize()
+});

@@ -4,6 +4,7 @@ namespace App\Models\Calendar;
 
 use App\TraningToTrainer;
 use App\User;
+use App\VisitedClients;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,6 +57,32 @@ class GetAllCalendarsModel extends Model
         return $events_to_calendar;
     }
 
+    public function getAllTrainingThisDay(){
+
+        $fromDBEvents = $this->getCalendarEventsFromDB();
+
+        if(!empty($fromDBEvents->first)){
+            $training = $this->loadFromDB($fromDBEvents);
+        }else{
+            $this->getAllEventsOfTrainers([
+                'timeMin'=> Carbon::parse("this day")->toDateString()."T00:00:00+00:00",
+                'timeMax'=> Carbon::parse("this day")->toDateString()."T23:59:59+00:00",
+            ]);
+            $this->reformatedEvents();
+            $training = $this->loadFromDB($this->getCalendarEventsFromDB());
+        }
+
+
+        return $training;
+    }
+
+    private function getCalendarEventsFromDB(){
+        return TraningToTrainer::where('start','>',Carbon::parse("this day")->toDateString()." 00:00:00")
+            ->where('start','<',Carbon::parse("next day")->toDateString()." 00:00:00")
+            ->orderBy('start','ASC')
+            ->get();
+    }
+
     private function saveToDB($events_to_calendar){
         foreach ($events_to_calendar as $event)
         {
@@ -77,5 +104,21 @@ class GetAllCalendarsModel extends Model
                 }
             }
         }
+    }
+
+    private function loadFromDB($events_to_calendar){
+        $events = [];
+        foreach ($events_to_calendar as $event){
+                $events[] = [
+                    'id' => $event['id_events'],
+                    'trainer' => User::where('id',$event['id_user'])->get()->first()->name,
+                    'title' => $event['name'],
+                    'description' => $event['description'],
+                    'start' => $event['start'],
+                    'end' => $event['end'],
+                    'clients' => VisitedClients::where('training_id',$event['id'])->get()
+                ];
+        }
+        return $events;
     }
 }

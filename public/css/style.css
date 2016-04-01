@@ -49,6 +49,97 @@
     box-shadow: none;
 }
 
+#pbar_innertext{
+    z-index: 3;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    font-size: 20pt;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(0, 0, 0, 1);
+}
+
+#pbar_innerdiv{
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    background-color: #f39c12;
+    position: absolute;
+}
+
+#pbar_outerdiv{
+    width: 100%;
+    height: 40px;
+    z-index: 1;
+    position: relative;
+    background-color: #FFF ;
+}
+
+.tickets-accordion{
+    margin-top: 2px;
+    padding: 40px 0;
+}
+
+.tickets-accordion ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tickets-accordion ul {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.tickets-accordion li .inner{
+    font-size: 18px;
+}
+.tickets-accordion li{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-transition: -webkit-box-flex 500ms ease-out;
+    -webkit-transition: -webkit-flex 500ms ease-out;
+    transition: -webkit-box-flex 500ms ease-out;
+    transition: -ms-flex 500ms ease-out;
+    transition: flex 500ms ease-out;
+    z-index: 5;
+    border: 3px solid #fff;
+    border-radius: 5px;
+    padding: 0 10px 10px 10px;
+}
+
+
+.tickets-accordion li:hover,
+.hover{
+    -webkit-box-flex: 3;
+    -webkit-flex: 3;
+    -ms-flex: 3;
+    flex: 3!important;
+    z-index: 500!important;
+    box-shadow: 14px 0px 30px rgba(0,0,0,0.7);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.hover{
+    margin: -40px 0 -40px 0;
+}
+
+.tickets-accordion li.event-acordion { background-color: #00a65a !important;color:white!important; }
+.tickets-accordion li.event-acordion-last.hover { background-color: #f39c12  !important;color:white!important; }
+.tickets-accordion li.event-acordion-last { background: #dd4b39!important;color:white!important; }
+
+.tickets-accordion .small-box {
+     box-shadow: none;
+}
+
+
 @media (max-width: 992px){
     .box-profile .list-group-item{
         height: 60px;
@@ -57,18 +148,70 @@
 
 @media (max-height: 1080px){
     .content-dashboard {
-        max-height: 66vh;
+        max-height: 63vh;
+        height: 63vh;
     }
 }
 
 @media (max-height: 900px){
     .content-dashboard {
         max-height: 55.5vh;
+        height: 55.5vh;
     }
 }
 
 @media (max-height: 768px){
     .content-dashboard {
-        max-height: 47vh;
+        max-height: 53vh;
+        height: 53vh;
     }
+}
+@media (min-height: 768px){
+    .tickets-accordion .hover .clients,
+    .tickets-accordion li:hover .clients{
+        display: block!important;
+    }
+}
+
+@media (min-height: 300px){
+    .tickets-accordion .hover .btn,
+    .tickets-accordion li:hover .btn{
+        display: block!important;
+    }
+}
+
+
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border: 7px none #ffffff;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+    background: #000000;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+    border: 9px none #ffffff;
+    border-radius: 7px;
+}
+::-webkit-scrollbar-track:hover {
+    background: transparent;
+}
+::-webkit-scrollbar-track:active {
+    background: #333333;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
 }
