@@ -87,7 +87,7 @@
 @endsection
 
 @section('custom-scripts')
-
+    <script src="{{ asset ("/js/dashboard/footer-transform-blocks.js") }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             $('#search').on('keyup', function () {
@@ -102,7 +102,6 @@
                     $.ajax({
                         method: "POST",
                         url: "/search",
-                        timeout: 500,
                         data: {
                             "_token": "{{ csrf_token() }}",
                             "search": value
@@ -123,35 +122,12 @@
             function getGraph(){
                 $.ajax({
                     method: "get",
-                    timeout: 500,
                     url: "/search/graph",
                 }).done(function (data) {
                     $('.content-dashboard').html(data);
+                    resize();
                 })
             }
-
-
-
-            $(".tools-block div:first").css("display", "block");
-            $(".tools-block-end-ticket div:first").css("display", "block");
-
-            jQuery.fn.timer = function() {
-                if($(this).children('div').length > 1)
-                    if(!$(this).children("div:last-child").is(":visible")){
-                        $(this).children("div:visible").fadeOut(500, function () {
-                            $(this).next("div").fadeIn(500);
-                        });
-                    }
-                    else{
-                        $(this).children("div:visible").hide().end().children("div:first").fadeIn(500);
-                    }
-            }
-
-            window.setInterval(function() {
-                $(".tools-block").timer();
-                $(".tools-block-end-ticket").timer();
-            }, 5000);
-
         });
 
     </script>

@@ -20,4 +20,9 @@ class VisitedClients extends Model
     {
         return $this->hasOne('App\TraningToTrainer','id','training_id');
     }
+
+    public function getTicket()
+    {
+        return $this->hasOne('App\ClientsToTickets','id','ticket_id');
+    }
 }
