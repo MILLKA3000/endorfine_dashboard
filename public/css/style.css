@@ -64,7 +64,7 @@
 #pbar_innerdiv{
     z-index: 2;
     height: 100%;
-    width: 97%;
+    width: 100%;
     background-color: #f39c12;
     position: absolute;
 }
