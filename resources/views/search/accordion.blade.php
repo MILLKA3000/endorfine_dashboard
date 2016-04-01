@@ -28,7 +28,7 @@
                                     @if(count($training['clients'])>0)
                                         <p>
                                             @foreach($training['clients'] as $client)
-                                                <span class="label label-success">{{$client->getTicket->getNameClient->name}}</span>
+                                                <span class="label">{{$client->getTicket->getNameClient->name}}</span>
                                             @endforeach
                                         </p>
 

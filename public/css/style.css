@@ -162,8 +162,8 @@ li {
 
 @media (max-height: 768px){
     .content-dashboard {
-        max-height: 47vh;
-        height: 47vh;
+        max-height: 53vh;
+        height: 53vh;
     }
 }
 @media (min-height: 768px){
