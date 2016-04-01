@@ -1,7 +1,7 @@
 <div>
     <div class="col-md-12 col-sm-12 col-xs-12 responsive">
         <div class="info-box bg-yellow">
-            <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+            <span class="info-box-icon"><img class="img-responsive" style="width: 100%" src="{{$numAbonement->getNameClient->photo}}" alt="Фото клієнта"></span>
 
             <div class="info-box-content">
                 <div class="col-md-3">
