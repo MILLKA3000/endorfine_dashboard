@@ -23,7 +23,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-warning">
                 <div class="content-dashboard">
-                    @include('search.graph')
+                    <div id="accordion-details-trainings">@include('search.graph')</div>
+                    <div id="result-search" class="hidden"></div>
                 </div>
             </div>
         </div>
@@ -90,43 +91,45 @@
     <script src="{{ asset ("/js/dashboard/footer-transform-blocks.js") }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
+            timer = 0;
             $('#search').on('keyup', function () {
                 var value = $(this).val();
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(function(){
                 if ((value.length>=3)||((value[0]!='0')&&(value[0]!='+')&&($.isNumeric(value)))) {
 
-                    if ((value.length>=5)&&(value[0] =='+')){
-                        value = value.substr(3);
-    //                    console.log(value);
+                        if ((value.length>=5)&&(value[0] =='+')){
+                            value = value.substr(3);
+                        }
+                            $.ajax({
+                                method: "POST",
+                                url: "/search",
+                                async: true,
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    "search": value
+                                },
+                                success: function (data) {
+                                    if(data) {
+                                        console.log('content');
+                                        $('#accordion-details-trainings').addClass('hidden');
+                                        $('#result-search').removeClass('hidden').html(data);
+                                    }else{
+                                        getGraph();
+                                    }
+                                }
+                            })
+                    }else{
+                        getGraph();
                     }
-
-                    $.ajax({
-                        method: "POST",
-                        url: "/search",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "search": value
-                        }
-                    }).done(function (data) {
-                        if(data) {
-                            $('.content-dashboard').html(data);
-                        }else{
-                            getGraph();
-                        }
-                    })
-                }else{
-                    getGraph();
-                }
-
+                }, 200);
             });
 
             function getGraph(){
-                $.ajax({
-                    method: "get",
-                    url: "/search/graph",
-                }).done(function (data) {
-                    $('.content-dashboard').html(data);
-                    resize();
-                })
+                $('#accordion-details-trainings').removeClass('hidden');
+                $('#result-search').addClass('hidden')
             }
         });
 
