@@ -1,4 +1,4 @@
-<div>
+<a href="#" class="click-to-detail" data-id="{{$clients->getNumTicket->numTicket}}">
     <div class="col-md-12 col-sm-12 col-xs-12 responsive">
         <div class="info-box bg-warning">
             {{--<div class="box-body box-profile"> <img class="img-responsive" style="width: 100%" src="{{$numAbonement->getNameClient->photo}}" alt="Фото клієнта"></div>--}}
@@ -33,4 +33,4 @@
         <!-- /.info-box -->
     </div>
 
-</div>
+</a>

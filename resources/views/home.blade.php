@@ -116,6 +116,7 @@
                                         console.log('content');
                                         $('#accordion-details-trainings').addClass('hidden');
                                         $('#result-search').removeClass('hidden').html(data);
+                                        initSubFunctional();
                                     }else{
                                         getGraph();
                                     }
@@ -124,13 +125,19 @@
                     }else{
                         getGraph();
                     }
-                }, 200);
+                }, 50);
             });
 
-            function getGraph(){
+            function getGraph() {
                 $('#accordion-details-trainings').removeClass('hidden');
                 $('#result-search').addClass('hidden')
             }
+            function initSubFunctional(){
+                $('.click-to-detail').on('click',function(){
+                    $('#search').val($(this).attr('data-id')).keyup();
+                })
+            }
+
         });
 
     </script>
