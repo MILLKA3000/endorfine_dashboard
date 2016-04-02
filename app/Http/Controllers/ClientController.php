@@ -173,7 +173,7 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request, Client $client)
     {
         $this->client = $client->id;
-        $client->update(array_merge($request->toArray(),$this->getPhoto($request->photo)));
+        $client->update(array_merge($request->toArray(),(!empty($request->photo))?$this->getPhoto($request->photo):['photo'=>$client->photo]));
         return redirect('/clients/'.$client->id);
     }
 

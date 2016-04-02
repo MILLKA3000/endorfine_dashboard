@@ -12,19 +12,19 @@
                     @foreach($trainings as $training)
 
                         <li id="{{$training['id']}}" class="event-acordion">
-                            <div class="small-box">
+                            <div class="small-box vertical">
                                 <div class="inner">
                                     <div class="">
                                         <h4 class="widget-user-desc text-bold text-center">{{date("H:i", strtotime($training['start']))}}</h4>
                                         <h4 class="widget-user-desc text-bold text-center">{{$training['title']}}</h4>
-                                        <h4 class="widget-user-desc">Тренер: {{$training['trainer']}}</h4>
-                                        <h4 class="widget-user-desc">Клієнтів: {{count($training['clients'])}}</h4>
+                                        <h5 class="widget-user-desc details">Тренер: {{$training['trainer']}}</h4>
+                                        <h5 class="widget-user-desc details">Клієнтів: {{count($training['clients'])}}</h4>
                                     </div>
                                 </div>
-                                <a href="#" class="icon">
+                                <a href="#" class="icon details">
                                     <i class="fa fa-arrow-circle-right"></i>
                                 </a>
-                                <div class="clients hidden">
+                                <div class="clients details">
                                     @if(count($training['clients'])>0)
                                         <p>
                                             @foreach($training['clients'] as $client)

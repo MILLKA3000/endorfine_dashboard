@@ -17,7 +17,7 @@ function initDashboardAcordion(options) {
 
     function animateUpdate() {
         clearTimeout(timer);
-        $(activeElement).hover(function() {$(this).addClass("hover");});
+        $(activeElement).hover(function() {$(this).addClass("hover").find('.small-box').removeClass("vertical");});
         $(activeElement).mouseenter();
         var now = new Date().getTime();
         var perc = Math.round(((now - start_training)/(end_training - start_training))*100);
@@ -26,7 +26,7 @@ function initDashboardAcordion(options) {
             updateClock();
             setTimeout(animateUpdate, 1000);
         }else{
-            $('.tickets-accordion li').removeClass("hover");
+            $('.tickets-accordion li').removeClass("hover").find('.small-box').addClass("vertical");
             timeTimer();
         }
     }
@@ -53,5 +53,5 @@ function initDashboardAcordion(options) {
         timer = setTimeout(timeTimer, 1000);
     }
 
-    console.log('wwwww');
+
 }
