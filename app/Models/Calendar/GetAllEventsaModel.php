@@ -16,7 +16,7 @@ class GetAllEventsaModel extends Model
     protected $idCalendar;
     protected $options = [];
 
-    public function __construct($idCalendar,$options){
+    public function __construct($idCalendar,$options=[]){
         $this->idCalendar = $idCalendar;
 
         $this->options = [

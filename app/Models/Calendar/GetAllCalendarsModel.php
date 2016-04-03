@@ -106,12 +106,13 @@ class GetAllCalendarsModel extends Model
         }
     }
 
-    private function loadFromDB($events_to_calendar){
+    public function loadFromDB($events_to_calendar){
         $events = [];
         foreach ($events_to_calendar as $event){
                 $events[] = [
                     'id' => $event['id_events'],
                     'trainer' => User::where('id',$event['id_user'])->get()->first()->name,
+                    'trainer_id' => $event['id_user'],
                     'title' => $event['name'],
                     'description' => $event['description'],
                     'start' => $event['start'],

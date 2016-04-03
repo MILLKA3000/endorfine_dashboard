@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('custom-style')
     <link rel="stylesheet" href="{{ asset ("/bower_components/AdminLTE/plugins/fullcalendar/fullcalendar.min.css") }}"/>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.css"/>
@@ -27,30 +26,31 @@
                     center: 'title',
                     right: 'agendaWeek,month'
                 },
-                titleFormat: 'Графік всіх тренувань',
-                events: {!!$events_to_calendar!!},
+                titleFormat: 'Тренер: {!!$trainer->name!!}',
+                events: {!!$trainer->events!!},
                 eventRender: function (event, element) {
+                    element.find('.fc-title').html( event.title + '<span class="pull-right"> Клієнтів: ' + event.clients.length + '</span>' );
                     element.qtip({
                         content: {
                             title: {text: event.title},
-                            text: event.description + '<br><br> <b> ТРЕНЕР: ' + event.trainer + '</b>'
+                            text: 'Кількість клієнтів : ' + event.clients.length + '</b>'
                         },
                         position: {
                             my: 'top center',  // Position my top left...
                             at: 'bottom center', // at the bottom right of...
                         }
-                    });
+                        });
                 },
                 eventClick: function(event) {
                     // opens events in a popup window
-                    window.open(event.url, 'gcalevent', 'width=700,height=600');
+                    window.location.replace('/training/detail/'+event.id);
                     return false;
                 },
 
                 loading: function(bool) {
                     $('#loading').toggle(bool);
                 }
-            });
+                });
 
         });
 
