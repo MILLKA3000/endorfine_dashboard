@@ -130,6 +130,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('options/save', 'OptionsController@save');
         Route::resource('options/', 'OptionsController');
 
+        #Training
+        Route::get('/training/detail/{event}', 'TrainingController@detailEvent');
+        Route::get('/training/trainer/{trainer}', 'TrainingController@detailTrainer');
+
+
     });
 });
 

@@ -244,6 +244,7 @@
                         center: 'title',
                         right: 'agendaWeek,month'
                     },
+                    titleFormat: 'Архів тренувань',
                     events: {!!$client->calendar!!},
                     eventRender: function (event, element) {
                     element.qtip({
@@ -251,15 +252,9 @@
                         title: {text: event.title},
                         text: event.description + '<br><br> <b> ТРЕНЕР: ' + event.trainer + '</b>'
                     },
-                    style: {
-                        width: 200,
-                        padding: 5,
-                        color: 'black',
-                        border: {
-                            width: 1,
-                            radius: 3
-                        },
-                        tip: 'topLeft'
+                    position: {
+                        my: 'top center',  // Position my top left...
+                        at: 'bottom center', // at the bottom right of...
                     }
                     });
                 }
