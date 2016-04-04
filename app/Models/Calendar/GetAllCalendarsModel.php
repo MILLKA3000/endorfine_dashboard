@@ -124,12 +124,19 @@ class GetAllCalendarsModel extends Model
     }
 
     public function getActiveTraning(){
-        $this->getAllEventsOfTrainers([
-            'timeMin'=> Carbon::parse("this day")->subMinutes(25)->toRfc3339String(),
-            'timeMax'=> Carbon::parse("this day")->toDateString()."T23:59:59+00:00",
-        ]);
 
-        $traningFormated = $this->reformatedEvents(true);
+        $fromDBEvents = $this->getCalendarEventsFromDB();
+
+        if(count($fromDBEvents)>0){
+            $traningFormated = $this->loadFromDB($fromDBEvents);
+        }else{
+            $this->getAllEventsOfTrainers([
+                'timeMin'=> Carbon::parse("this day")->toDateString()."T00:00:00+00:00",
+                'timeMax'=> Carbon::parse("this day")->toDateString()."T23:59:59+00:00",
+            ]);
+            $this->reformatedEvents();
+            $traningFormated = $this->loadFromDB($this->getCalendarEventsFromDB());
+        }
 
         $activeTraning = array_first($traningFormated, function($key, $value)
         {
