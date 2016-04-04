@@ -15,7 +15,7 @@ class options extends Seeder
             'key' => 'title',
             'name' => 'Назва сайту',
             'description' => 'Введіть назву клубу',
-            'value' => '',
+            'value' => 'Endorfine',
             'tag' => 'options-input'
         ]);
         \App\Options::create([
@@ -26,19 +26,22 @@ class options extends Seeder
             'tag' => 'options-uploader'
         ]);
         \App\Options::create([
-            'key' => 'footer',
-            'name' => 'Інфа',
-            'description' => 'Вкл.-викл. футера',
-            'value' => '',
-            'tag' => 'options-switch'
-        ]);
-        \App\Options::create([
             'key' => 'themes',
             'name' => 'Кольорова тема',
             'description' => 'Вибір кольорової схеми',
-            'value' => '',
+            'value' => '1',
             'tag' => 'options-select',
-            'options' => '{[\'id\':1, \'name\':\'skin-red\'], [\'id\':2, \'name\':\'skin-red-light\']}'
+            'options' => '[
+                {"id":1, "name":"skin-red"}, 
+                {"id":2, "name":"skin-red-light"}
+                ]'
+        ]);
+        \App\Options::create([
+            'key' => 'footer',
+            'name' => 'Інфа',
+            'description' => 'Вкл.-викл. футера',
+            'value' => 'on',
+            'tag' => 'options-switch'
         ]);
     }
 }

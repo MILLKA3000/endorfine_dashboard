@@ -1,6 +1,5 @@
-{{--<div class="box-header with-border">--}}
-    {{--<h3 class="box-title">{{$option->name}}</h3>--}}
-{{--</div>--}}
-{{--<div>--}}
-    {{--<input type="file">--}}
-{{--</div>--}}
+<div class="box-header with-border">
+    <label><h3 class="box-title">{{$option->name}}</h3></label>
+    <input type="file">
+    ____________________________________________
+</div>
