@@ -69,31 +69,12 @@ class ClientController extends Controller
         return redirect('/clients');
     }
 
-    public function getActiveTraning(){
-        $modelEvents = new GetAllCalendarsModel();
-        $traning = $modelEvents->getAllEventsOfTrainers([
-            'timeMin'=> Carbon::parse("this day")->subMinutes(25)->toRfc3339String(),
-            'timeMax'=> Carbon::parse("this day")->toDateString()."T23:59:59+00:00",
-        ]);
-
-        $traningFormated = $modelEvents->reformatedEvents(true);
-
-        $activeTraning = array_first($traningFormated, function($key, $value)
-        {
-            if(Carbon::parse($value['start']) >= Carbon::parse("this day")->subMinute(50)) {
-                return $value['id'];
-            }
-        });
-
-        return compact('traningFormated','activeTraning');
-    }
-
-
     public function show($id)
     {
         $client = Client::find($id);
         $event = new EventModel($client);
-        $client->training = $this->getActiveTraning();
+        $calendar = new GetAllCalendarsModel();
+        $client->training = $calendar->getActiveTraning();
         $client->statuses = ClientStatuses::all();
         $client->traningFormated = $client->training['traningFormated'];
         $client->activeTraning = $client->training['activeTraning'];

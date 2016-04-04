@@ -40,12 +40,19 @@ class OptionsController extends Controller
      */
     public function save(Request $request)
     {
+        dd($request);
+        if ($request->hasFile('logo')) {
+            dd(1);
+        }
         $options = $request->except('_token');
         foreach ($options as $key => $value){
-
-            Options::where('key', $key)->update(['value' => $value]);
+            !empty($value) ? Options::where('key', $key)->update(['value' => $value]) : '';
         }
         return redirect('/options');
     }
 
+    public function fileUpload()
+    {
+        dd();
+    }
 }

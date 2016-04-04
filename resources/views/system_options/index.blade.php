@@ -4,7 +4,7 @@
 @stop
 {{-- Content --}}
 @section('content')
-    {!! Form::open(array('url' => '/options/save', 'method' => 'post')) !!}
+    {!! Form::open(array('url' => '/options/save', 'method' => 'post', 'files' => true)) !!}
         @foreach($options as $option)
             @if (isset($option->tag))
                 @include('system_options.inputs.'.$option->tag)

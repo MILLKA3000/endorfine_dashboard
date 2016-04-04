@@ -107,7 +107,9 @@
                             $.ajax({
                                 method: "POST",
                                 url: "/search",
+                                dataType: 'html',
                                 async: false,
+                                type: 'post',
                                 data: {
                                     "_token": "{{ csrf_token() }}",
                                     "search": value
