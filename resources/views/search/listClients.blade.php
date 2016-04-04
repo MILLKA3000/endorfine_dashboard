@@ -5,7 +5,7 @@
 
             <div class="info-box-content search-list-item">
                 <div class="col-md-1 search-list-item">
-                   
+
                     <span class="info-box-text tickets-list-item">{{$clients->getNumTicket->numTicket}}</span>
                 </div>
                 <div class="col-md-1">
@@ -31,7 +31,7 @@
                         {{$clients->event->countAllTicketAccess()}}
                     </div>
                     <span class="progress-description">
-                            70% Increase in 30 Days
+
                     </span>
                 </div>
             </div>

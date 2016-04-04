@@ -125,7 +125,7 @@
                     }else{
                         getGraph();
                     }
-                }, 200);
+                }, 50);
             });
 
             function getGraph() {
