@@ -98,11 +98,25 @@ li {
 .tickets-accordion li .inner{
     font-size: 18px;
 }
+
+.tickets-accordion li .vertical{
+    transform: rotate(270deg);
+    float: left;
+    margin: auto;
+    transition: flex 2000ms ease-out;
+}
+
+.tickets-accordion li .vertical .details{
+    display: none;
+}
+
 .tickets-accordion li{
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
+    width: inherit;
+    display: flex;
+    -webkit-box-flex: 0.5;
+    -webkit-flex: 0.5;
+    -ms-flex: 0.5;
+    flex: 0.5;
     -webkit-transition: -webkit-box-flex 500ms ease-out;
     -webkit-transition: -webkit-flex 500ms ease-out;
     transition: -webkit-box-flex 500ms ease-out;
@@ -127,6 +141,23 @@ li {
     overflow-x: hidden;
 }
 
+.tickets-accordion li:hover .vertical,
+.hover .vertical{
+    -webkit-box-flex: 3;
+    -webkit-flex: 3;
+    -ms-flex: 3;
+    flex: 3!important;
+    z-index: 500!important;
+    transform: rotate(360deg);
+    float: left;
+    top: 0;
+    width: 100%;
+}
+
+.tickets-accordion li:hover .details{
+    display: block;
+}
+
 .hover{
     margin: -40px 0 -40px 0;
 }
@@ -136,9 +167,14 @@ li {
 .tickets-accordion li.event-acordion-last { background: #dd4b39!important;color:white!important; }
 
 .tickets-accordion .small-box {
-     box-shadow: none;
+    box-shadow: none;
+    width: 100%;
+    margin: auto;
 }
 
+.box-body.no-padding{
+    overflow: hidden;
+}
 
 @media (max-width: 992px){
     .box-profile .list-group-item{
@@ -182,36 +218,36 @@ li {
 
 
 
-::-webkit-scrollbar {
+.tickets-accordion ::-webkit-scrollbar {
     width: 12px;
     height: 12px;
 }
-::-webkit-scrollbar-button {
+.tickets-accordion ::-webkit-scrollbar-button {
     width: 0px;
     height: 0px;
 }
-::-webkit-scrollbar-thumb {
+.tickets-accordion ::-webkit-scrollbar-thumb {
     background: #ffffff;
     border: 7px none #ffffff;
     border-radius: 50px;
 }
-::-webkit-scrollbar-thumb:hover {
+.tickets-accordion ::-webkit-scrollbar-thumb:hover {
     background: #ffffff;
 }
-::-webkit-scrollbar-thumb:active {
+.tickets-accordion ::-webkit-scrollbar-thumb:active {
     background: #000000;
 }
-::-webkit-scrollbar-track {
+.tickets-accordion ::-webkit-scrollbar-track {
     background: transparent;
     border: 9px none #ffffff;
     border-radius: 7px;
 }
-::-webkit-scrollbar-track:hover {
+.tickets-accordion ::-webkit-scrollbar-track:hover {
     background: transparent;
 }
-::-webkit-scrollbar-track:active {
+.tickets-accordion ::-webkit-scrollbar-track:active {
     background: #333333;
 }
-::-webkit-scrollbar-corner {
+.tickets-accordion ::-webkit-scrollbar-corner {
     background: transparent;
 }

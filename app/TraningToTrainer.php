@@ -22,4 +22,8 @@ class TraningToTrainer extends Model
     public function getNameTrainer(){
         return $this->hasOne('App\User','id','id_user');
     }
+
+    public function getVisitedClients(){
+        return $this->hasMany('App\VisitedClients','training_id','id');
+    }
 }

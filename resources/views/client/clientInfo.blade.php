@@ -3,7 +3,12 @@
                 <!-- Profile Image -->
                 <div class="box box-primary">
                     <div class="box-body box-profile">
-                        <img class="img-responsive img-thumbnail" style="width: 100%" src="{{ URL::to($client->photo)}}" alt="Фото клієнта">
+                        <div style="position: relative; left: 0; top: 0;">
+                            <img class="img-responsive img-thumbnail" style="width: 100%" src="{{ URL::to($client->photo)}}" alt="Фото клієнта">
+                            @if( $client->birthday == date('Y-m-d') )
+                                <img class="img-responsive" style="position: absolute; top: -20px; left: -20px; width: 40%" src="/img/birthday-surp.png">
+                            @endif
+                        </div>
 
                         <h3 class="profile-username text-center">{{$client->name}}</h3>
 
