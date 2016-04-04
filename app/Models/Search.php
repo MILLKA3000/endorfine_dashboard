@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Client;
 use App\ClientsToTickets;
 use App\Models\Events\EventModel;
+use App\Ticket;
 
 class Search
 {
@@ -72,7 +73,8 @@ class Search
     }   
 
     private function makeListClients($clients){
-        
+        $clients->event = new EventModel($clients);
+//        $clients->abonement = $clients->getNumTicket;
         return view('search.listClients',compact('clients'));
     }
 

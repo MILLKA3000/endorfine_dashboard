@@ -179,6 +179,15 @@ li {
 .search-list-item:hover{
     background-color: #00b3ee;
     color: #FFF;
+    }
+.search-list-item{
+    padding-left: 0px;
+    margin: 0px;
+    }
+
+.tickets-list-item{
+    font-size: 36px;
+    text-align: center;
 }
 
 @media (max-width: 992px){
