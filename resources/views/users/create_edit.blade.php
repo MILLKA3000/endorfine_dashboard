@@ -34,7 +34,6 @@
                 <span class="help-block">{{ $errors->first('email', ':message') }}</span>
             </div>
         </div>
-
         <div class="form-group  {{ $errors->has('role_id') ? 'has-error' : '' }}">
             {!! Form::label('role_id', 'Роль', array('class' => 'control-label')) !!}
             <div class="controls">
