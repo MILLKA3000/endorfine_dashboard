@@ -27,21 +27,21 @@
                     <span class="info-box-text">{{$clients->phone}}</span>
                 </div>
                 <div class="col-md-11">
-                    <div>
+                    <div class="col-md-1">
 
                         {{$clients->event->countAllTicketAccess()}}
                     </div>
 
                     @if ($clients->event->countAllTicketAccess() <= 500)
-                        <div>
-                            {{--@for($i=1; $i=$clients->event->countAllTicketAccess(); $i++)--}}
-                                <div class="trening-box responsive">1</div>
-                            {{--@endfor--}}
+                        <div class="col-md-11">
+                            @for($i = 1; $i <= $clients->event->countAllTicketAccess(); $i++)
+                                <div class="trening-box responsive col-md-1">1</div>
+                            @endfor
 
                          </div>
 
-                    {{--@else--}}
-                        {{--<span class="info-box-text">∞</span>--}}
+                    @else
+                        <span class="info-box-text">∞</span>
                     @endif
 
                 </div>
