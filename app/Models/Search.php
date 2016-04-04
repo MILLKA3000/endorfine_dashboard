@@ -20,7 +20,6 @@ class Search
         $result = null;
 //        echo ($this->enteredText);
         if (is_numeric($this->enteredText)) {
-
             if (strlen($this->enteredText) >= 5 and ($this->enteredText[0]!='+')) {
                 $phone = $this->phoneValidation($this->enteredText);
                 $clients = Client:: where('phone', 'like', "%$phone%")->get();
