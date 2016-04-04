@@ -88,6 +88,7 @@
 @endsection
 
 @section('custom-scripts')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
     <script src="{{ asset ("/js/dashboard/footer-transform-blocks.js") }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
@@ -106,14 +107,13 @@
                             $.ajax({
                                 method: "POST",
                                 url: "/search",
-                                async: true,
+                                async: false,
                                 data: {
                                     "_token": "{{ csrf_token() }}",
                                     "search": value
                                 },
                                 success: function (data) {
                                     if(data) {
-                                        console.log('content');
                                         $('#accordion-details-trainings').addClass('hidden');
                                         $('#result-search').removeClass('hidden').html(data);
                                         initSubFunctional();
@@ -125,7 +125,7 @@
                     }else{
                         getGraph();
                     }
-                }, 50);
+                }, 200);
             });
 
             function getGraph() {
