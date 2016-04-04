@@ -72,6 +72,7 @@ class Search
     }   
 
     private function makeListClients($clients){
+        
         return view('search.listClients',compact('clients'));
     }
 
