@@ -2,7 +2,7 @@
   'app' => 
   array (
     'env' => 'local',
-    'debug' => false,
+    'debug' => true,
     'url' => 'http://localhost',
     'timezone' => 'Europe/Kiev',
     'locale' => 'en',
@@ -163,7 +163,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\storage\\framework/cache',
+        'path' => 'E:\\OpenServer\\domains\\endorfine\\storage\\framework/cache',
       ),
       'memcached' => 
       array (
@@ -204,14 +204,14 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\database\\database.sqlite',
+        'database' => 'E:\\OpenServer\\domains\\endorfine\\database\\database.sqlite',
         'prefix' => '',
       ),
       'mysql' => 
       array (
         'driver' => 'mysql',
         'host' => 'localhost',
-        'database' => 'endorfine_fitness',
+        'database' => 'endorfine',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -223,7 +223,7 @@
       array (
         'driver' => 'pgsql',
         'host' => 'localhost',
-        'database' => 'endorfine_fitness',
+        'database' => 'endorfine',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -234,7 +234,7 @@
       array (
         'driver' => 'sqlsrv',
         'host' => 'localhost',
-        'database' => 'endorfine_fitness',
+        'database' => 'endorfine',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -277,7 +277,7 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\storage\\app',
+        'root' => 'E:\\OpenServer\\domains\\endorfine\\storage\\app',
       ),
       'ftp' => 
       array (
@@ -403,7 +403,7 @@
     'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\storage\\framework/sessions',
+    'files' => 'E:\\OpenServer\\domains\\endorfine\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'lottery' => 
@@ -420,9 +420,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\OpenServer\\domains\\DashboardEndorfine\\resources\\views',
+      0 => 'E:\\OpenServer\\domains\\endorfine\\resources\\views',
     ),
-    'compiled' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\storage\\framework\\views',
+    'compiled' => 'E:\\OpenServer\\domains\\endorfine\\storage\\framework\\views',
   ),
   'excel' => 
   array (
@@ -440,7 +440,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\storage\\cache',
+      'dir' => 'E:\\OpenServer\\domains\\endorfine\\storage\\cache',
     ),
     'properties' => 
     array (
@@ -505,7 +505,7 @@
       ),
       'store' => 
       array (
-        'path' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\storage\\exports',
+        'path' => 'E:\\OpenServer\\domains\\endorfine\\storage\\exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -515,15 +515,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\vendor/dompdf/dompdf/',
+            'path' => 'E:\\OpenServer\\domains\\endorfine\\vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\vendor/tecnick.com/tcpdf/',
+            'path' => 'E:\\OpenServer\\domains\\endorfine\\vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'D:\\OpenServer\\domains\\DashboardEndorfine\\vendor/mpdf/mpdf/',
+            'path' => 'E:\\OpenServer\\domains\\endorfine\\vendor/mpdf/mpdf/',
           ),
         ),
       ),
