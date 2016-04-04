@@ -20,7 +20,7 @@ class EventModel
 
     protected $getActiveTickets;
 
-    protected $thisTrainingNoAccess = 'Клієнт був відмічений на це заняття !!!';
+    protected $thisTrainingNoAccess = 'Клієнт був відмічений на це заняття';
 
     protected $notTicket = 'Клієнт немає доступних абонементів';
 

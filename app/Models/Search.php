@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Client;
 use App\ClientsToTickets;
+use App\Models\Calendar\GetAllCalendarsModel;
 use App\Models\Events\EventModel;
 
 class Search
@@ -68,6 +69,8 @@ class Search
     private function makeProfile($numAbonement){
         $numAbonement->client = Client::find($numAbonement->getNameClient->id);
         $numAbonement->event = new EventModel($numAbonement->client);
+        $calendar = new GetAllCalendarsModel();
+        $numAbonement->training = $calendar->getActiveTraning();
         return view('search.profile',compact('numAbonement'));
     }   
 

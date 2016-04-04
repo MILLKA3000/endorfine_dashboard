@@ -73,40 +73,32 @@
 @section('custom-scripts-sub')
     <script>
         $(function() {
-           $('#checkTraning').on('click',function(){
-               var button = $('#checkTraning');
-               $.ajax({
-                   method: "POST",
-                   url: "/event/addEvents",
-                   data: {
-                       "_token": "{{ csrf_token() }}",
-                       "id_event": $('#event-traning').val(),
-                       "id_client": "{{$client->id}}",
-                   }
-               }).done(function (data) {
-                   var obj = jQuery.parseJSON(data);
-                   if(obj.status !== undefined){
-                       toastr["success"](obj.status);
-                   }else{
-                       toastr["error"](obj.error);
-                   }
-                   if(obj.countAllTicketAccess !== undefined) {
-                       $('#countAllTicketAccess').text(obj.countAllTicketAccess);
-                   }
-                       var tables = $.fn.dataTable.fnTables(true);
+            $('#checkTraning').on('click',function(){
+                send = checkEvent("{{ csrf_token() }}",{{$client->id}},$('#event-traning').val());
+                send.done(function (data) {
+                    var obj = jQuery.parseJSON(data);
+                    if(obj.countAllTicketAccess !== undefined) {
+                        $('#countAllTicketAccess').text(obj.countAllTicketAccess);
+                    }
+                    if(obj.status !== undefined){
+                        toastr["success"](obj.status);
+                    }else{
+                        toastr["error"](obj.error);
+                    }
 
-                   $(tables).each(function () {
-                       $(this).dataTable().fnClearTable();
-                       $(this).dataTable().fnDestroy();
-                   });
+                    var tables = $.fn.dataTable.fnTables(true);
 
-                   $(".table").dataTable();
-                   $('#calendar').fullCalendar('removeEvents');
-                   $('#calendar').fullCalendar( 'addEventSource', obj.calendar);
-                   $('#calendar').fullCalendar('refetchEvents');
+                    $(tables).each(function () {
+                        $(this).dataTable().fnClearTable();
+                        $(this).dataTable().fnDestroy();
+                    });
 
-               })
-           });
+                    $(".table").dataTable();
+                    $('#calendar').fullCalendar('removeEvents');
+                    $('#calendar').fullCalendar( 'addEventSource', obj.calendar);
+                    $('#calendar').fullCalendar('refetchEvents');
+                });
+            });
         });
     </script>
 @endsection

@@ -38,9 +38,9 @@ function initDashboardAcordion(options) {
     function timeTimer(){
         var now = new Date().getTime();
         option.forEach(function(date){
-            var start = new Date(date.start).getTime();
-            var end = new Date(date.end).getTime();
-            if (start < now) $('#'+date.id).addClass('event-acordion-last');
+            var start = moment(date.start).valueOf();
+            var end = moment(date.end).valueOf();
+            if (start < now) {$('#'+date.id).addClass('event-acordion-last');}
             if (start <= now && now <=end) {
                 start_training = start;
                 end_training = end;

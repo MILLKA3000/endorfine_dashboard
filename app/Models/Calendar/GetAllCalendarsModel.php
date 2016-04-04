@@ -122,4 +122,23 @@ class GetAllCalendarsModel extends Model
         }
         return $events;
     }
+
+    public function getActiveTraning(){
+        $this->getAllEventsOfTrainers([
+            'timeMin'=> Carbon::parse("this day")->subMinutes(25)->toRfc3339String(),
+            'timeMax'=> Carbon::parse("this day")->toDateString()."T23:59:59+00:00",
+        ]);
+
+        $traningFormated = $this->reformatedEvents(true);
+
+        $activeTraning = array_first($traningFormated, function($key, $value)
+        {
+            if(Carbon::parse($value['start']) >= Carbon::parse("this day")->subMinute(50)) {
+                return $value['id'];
+            }
+        });
+
+        return compact('traningFormated','activeTraning');
+    }
+
 }
