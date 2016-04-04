@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
+use ErrorException;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -46,6 +48,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+//        if ($e instanceof ErrorException) {
+//            return response()->view('exeptions.all');
+//        }
+//
+//        if ($e instanceof ModelNotFoundException) {
+//            return response()->view('exeptions.all');
+//        }
+
         if($this->isHttpException($e))
         {
             switch ($e->getStatusCode())

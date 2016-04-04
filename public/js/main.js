@@ -16,6 +16,18 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 
+function checkEvent(token,client_id,event){
+    return $.ajax({
+        method: "POST",
+        url: "/event/addEvents",
+        data: {
+            "_token": token,
+            "id_event": event,
+            "id_client": client_id,
+        }
+    });
+}
+
 function resize() {
     $('.tickets-accordion ul').height($('.content-dashboard').height() - 135);
 }

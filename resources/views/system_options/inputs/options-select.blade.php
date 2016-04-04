@@ -1,9 +1,9 @@
-<div class="box-header with-border">
-    <h3 class="box-title">{{$option->name}}</h3>
+<div class="box-header">
+    <label><h3 class="box-title">{{$option->name}}</h3></label>
+            <select name="{{$option->key}}" class="form-control">
+        @foreach(json_decode($option->options) as $key => $value)
+            <option {{$value->id == $option->value ? 'selected' : ''}} value="{{$value->id}}">{{$value->name}}</option>
+        @endforeach
+    </select>
+    ____________________________________________
 </div>
-<select name="carlist" form="carform">
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
-</select>

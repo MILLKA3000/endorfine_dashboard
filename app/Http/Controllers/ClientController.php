@@ -69,7 +69,7 @@ class ClientController extends Controller
         return redirect('/clients');
     }
 
-    private function getActiveTraning(){
+    public function getActiveTraning(){
         $modelEvents = new GetAllCalendarsModel();
         $traning = $modelEvents->getAllEventsOfTrainers([
             'timeMin'=> Carbon::parse("this day")->subMinutes(25)->toRfc3339String(),
