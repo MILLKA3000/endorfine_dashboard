@@ -5,7 +5,7 @@
                     <div class="box-body box-profile">
                         <div style="position: relative; left: 0; top: 0;">
                             <img class="img-responsive img-thumbnail" style="width: 100%" src="{{ URL::to($client->photo)}}" alt="Фото клієнта">
-                            @if( $client->birthday == date('Y-m-d') )
+                            @if( stristr($client->birthday,date('m-d')) )
                                 <img class="img-responsive" style="position: absolute; top: -20px; left: -20px; width: 40%" src="/img/birthday-surp.png">
                             @endif
                         </div>
@@ -17,6 +17,9 @@
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
                                 <b>№ Абонемента</b> <a class="pull-right">{{$client->getNumTicket->numTicket}}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Телефон</b> <a class="pull-right">{{$client->phone}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Знижка</b> <a class="pull-right"><small class="label label-success">({{$client->getNameStatus->getNameDiscountForClients->percent}}%)</small></a>

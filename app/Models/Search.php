@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Client;
 use App\ClientsToTickets;
+use App\Models\Events\EventModel;
 
 class Search
 {
@@ -59,8 +60,15 @@ class Search
         }
         return $result;
     }
+
+    /**
+     * @param $numAbonement
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     private function makeProfile($numAbonement){
-        return view('search.profile',compact('numAbonement', 'client'));
+        $numAbonement->client = Client::find($numAbonement->getNameClient->id);
+        $numAbonement->event = new EventModel($numAbonement->client);
+        return view('search.profile',compact('numAbonement'));
     }   
 
     private function makeListClients($clients){
