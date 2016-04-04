@@ -26,13 +26,24 @@
                     <span class="info-box-text">Телефон</span>
                     <span class="info-box-text">{{$clients->phone}}</span>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div>
+
                         {{$clients->event->countAllTicketAccess()}}
                     </div>
-                    <span class="progress-description">
 
-                    </span>
+                    @if ($clients->event->countAllTicketAccess() <= 500)
+                        <div>
+                            {{--@for($i=1; $i=$clients->event->countAllTicketAccess(); $i++)--}}
+                                <div class="trening-box responsive">1</div>
+                            {{--@endfor--}}
+
+                         </div>
+
+                    {{--@else--}}
+                        {{--<span class="info-box-text">∞</span>--}}
+                    @endif
+
                 </div>
             </div>
             <!-- /.info-box-content -->
