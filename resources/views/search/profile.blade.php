@@ -44,7 +44,24 @@
         </ul>
 
     </div>
-
+    <div class="col-md-5 responsive">
+        <a href="#" data-toggle="modal" style="margin-bottom: 5px" data-target="#Modal" data-remote="false" class="pull-right btn btn-primary">Добавити абонемент</a>
+        <table id="ticket-table" class="table responsive no-wrap table-bordered table-hover dataTable"
+               data-global-search="false"
+               data-paging="true"
+               data-info="false"
+               data-length-change="false"
+               data-ajax="/clients/getAllTickets/{{$numAbonement->client->id}}/active"
+               data-page-length="4" >
+            <thead>
+            <tr>
+                <th data-sortable="true">Активні абонементи</th>
+                <th data-sortable="true">Статус</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
             <!-- /.box-body -->
 
 
@@ -52,7 +69,9 @@
 
 </div>
 <script>
+
     $(function() {
+        $('.table').dataTable({responsive: true,bFilter: false,"sDom": '<"top"i>rt<"bottom"flp><"clear">'});
         $('#checkTraning').on('click',function(){
             if(send = checkEvent("{{ csrf_token() }}",{{$numAbonement->client->id}},$('#event-traning').val())){
                 send.done(function (data) {
@@ -69,5 +88,32 @@
 
             };
         });
+
+
+        $("#Modal").on("show.bs.modal", function(e) {
+            self = $(this).find(".modal-body").html('');
+            $(this).find("#myModalLabel").html('Добавити користувачу абонемент');
+            $.ajax({
+                method: "get",
+                url: "/clients/{{$numAbonement->client->id}}/joinTicket",
+                success: function(page){
+                    console.log(page);
+                    self.html(page);
+                    $('.btn-success').on('click',function(e){
+                        e.preventDefault();
+                        $.ajax({
+                            method: "PUT",
+                            url: "/clients/{{$numAbonement->client->id}}/saveTicketClient",
+                            data: $('form').serialize()
+                        }).done(function(){
+                            $("#Modal").modal('hide');
+                            $('#search').val({{$numAbonement->numTicket}}).keyup();
+                        });
+                    })
+                }
+            })
+
+        });
+
     });
 </script>
