@@ -15,7 +15,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->model_dashboard = new GeneralModel(['addDays'=>7]);
+        $this->model_dashboard = new GeneralModel(['addDays'=>10]);
         $this->middleware('auth');
     }
 
