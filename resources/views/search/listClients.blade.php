@@ -35,7 +35,7 @@
                         @endif
                     </div>
 
-                    <div class="col-md-3 col-sm-3 col-xs-3 line-vertical responsive">
+                    <div class="col-md-3 col-sm-3 col-xs-3 tickets-list-training line-vertical responsive">
                         <span>{{$clients->event->countAllTicketAccess()}}</span>
                     </div>
                 </div>
