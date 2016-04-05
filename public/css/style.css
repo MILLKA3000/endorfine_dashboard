@@ -198,6 +198,11 @@ li {
     font-family: cursive;
 }
 
+.line-vertical{
+    border-left: 1px solid darkgrey;
+    height: 100%;
+}
+
 .trening-box{
     background-color: rgba(128, 225, 16, 0.82);
     margin-right: 5px;

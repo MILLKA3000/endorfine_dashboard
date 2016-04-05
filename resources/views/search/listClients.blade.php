@@ -14,7 +14,7 @@
                     @endif
                 </div>
 
-                <div class="col-md-4 col-sm-4 col-xs-4">
+                <div class="col-md-4 col-sm-1 col-xs-4">
                     <span class="info-box-text">Ім'я: <span class="pull-right">{{$clients->name}}</span></span>
                     <span class="info-box-text">День нардження: <span class="pull-right">{{$clients->birthday}}</span></span>
                     <span class="info-box-text">Телефон: <span class="pull-right">{{$clients->phone}}</span></span>
@@ -34,8 +34,8 @@
                             <span class="info-box-text infinity">∞</span>
                         @endif
                     </div>
-                    <div class="line-vertical"></div>
-                    <div class="col-md-3 col-sm-3 col-xs-3">
+
+                    <div class="col-md-3 col-sm-3 col-xs-3 line-vertical responsive">
                         <span>{{$clients->event->countAllTicketAccess()}}</span>
                     </div>
                 </div>
