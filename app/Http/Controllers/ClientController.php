@@ -88,7 +88,8 @@ class ClientController extends Controller
     public function joinService(Client $client)
     {
         $event = new EventModel($client);
-        $client->training = $this->getActiveTraning();
+        $calendar = new GetAllCalendarsModel();
+        $client->training =  $calendar->getActiveTraning();
         $client->traningFormated = $client->training['traningFormated'];
         $client->activeTraning = $client->training['activeTraning'];
         $client->countAllTicketAccess = $event->countAllTicketAccess();
@@ -96,15 +97,17 @@ class ClientController extends Controller
         return view('client.joinService', compact('client'));
     }
 
-    public function joinTicket(Client $client)
+    public function joinTicket(Client $client, Request $request)
     {
         $event = new EventModel($client);
-        $client->training = $this->getActiveTraning();
+        $calendar = new GetAllCalendarsModel();
+        $client->training =  $calendar->getActiveTraning();
         $client->traningFormated = $client->training['traningFormated'];
         $client->activeTraning = $client->training['activeTraning'];
         $client->countAllTicketAccess = $event->countAllTicketAccess();
         $client->tickets = Ticket::all()->where('enabled',1);
         $client->discounts = Discounts::whereIn('status',[2,3])->get();
+        if($request->ajax())  return view('client.joinTicketSingle', compact('client'));
         return view('client.joinTicket', compact('client'));
     }
 
@@ -116,7 +119,6 @@ class ClientController extends Controller
         $service->service_id = $request->service;
         $service->endDateForUse = $dateTime->addDays(Services::find($service->service_id)->activityTime);
         $service->save();
-
         return redirect('/clients/'.$client->id.'?active=service');
     }
 
@@ -129,14 +131,15 @@ class ClientController extends Controller
         $ticket->discount_id = $request->discount_id;
         $ticket->numTicket = $client->getNumTicket->numTicket;
         $ticket->save();
-
+        if($request->ajax())  return 'success';
         return redirect('/clients/'.$client->id);
     }
 
     public function editTicketClient(ClientsToTickets $activeTicket){
         $client = Client::find($activeTicket->client_id);
         $event = new EventModel($client);
-        $client->training = $this->getActiveTraning();
+        $calendar = new GetAllCalendarsModel();
+        $client->training =  $calendar->getActiveTraning();
         $client->traningFormated = $client->training['traningFormated'];
         $client->activeTraning = $client->training['activeTraning'];
         $client->discounts = Discounts::whereIn('status',[2,3])->get();
@@ -266,6 +269,28 @@ class ClientController extends Controller
             })
             ->add_column('actions', '<a href="{{{ URL::to(\'clients/\' . $id.\'/updateTicketClient\' ) }}}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
                     <a href="{{{ URL::to(\'clients/\' . $id . \'/destroyTicketClient\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
+            ->remove_column('id')
+            ->make();
+    }
+
+    public function getAllTicketsActive(Client $client)
+    {
+        $this->client = $client;
+        $tickets = ClientsToTickets::select('clientsToTickets.id', 'ticket_id', 'statusTicket_id')
+            ->join('tickets', 'clientsToTickets.ticket_id', '=', 'tickets.id')
+            ->where('clientsToTickets.client_id',$client->id)
+            ->where('clientsToTickets.statusTicket_id','<=',2)
+            ->where('tickets.enabled',1)
+            ->orderBy('statusTicket_id','Desc')
+            ->get();
+
+        return Datatables::of($tickets)
+            ->edit_column('ticket_id', function($ticket){
+                return $ticket->getNameTicket->name;
+            })
+            ->edit_column('statusTicket_id', function($ticket){
+                return $ticket->getStatusTicket->name;
+            })
             ->remove_column('id')
             ->make();
     }

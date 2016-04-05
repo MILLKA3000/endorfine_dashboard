@@ -24,14 +24,15 @@ class GeneralModel extends Model{
      * Витягає абонементи які будуть просрочені через 'addDays'=>7
      * @return mixed
      */
-    public function getEndOfDateTickets(){
+    public function getEndOfDateTickets($client=false){
         $this->findOutstandingTickets();
-        return ClientsToTickets::where('dateFromReserve','<=',Carbon::now()->addDays($this->options['addDays']))
+        $clients = ClientsToTickets::where('dateFromReserve','<=',Carbon::now()->addDays($this->options['addDays']))
             ->where('statusTicket_id','<',3)
             ->where('numTicket','!=','')
-            ->where('dateFromReserve','!=','0000-00-00')
-//            ->limit(3)
-            ->get();
+            ->where('dateFromReserve','!=','0000-00-00');
+        if ($client) $clients->where('client_id',$client);
+        $clients = $clients->get();
+        return $clients;
     }
 
     /**

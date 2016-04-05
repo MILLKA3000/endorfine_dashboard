@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Search;
 use Illuminate\Database\Seeder;
 
 class clientsSeederMustBeDeleted extends Seeder
@@ -18,7 +19,7 @@ class clientsSeederMustBeDeleted extends Seeder
             {
                 \App\Client::create([
                     'name' => 'Руслан Міськів',
-                    'phone' => '(111) 111-11-11',
+                    'phone' => '('.rand(100, 999).') '.rand(100, 999).'-11-11',
                     'photo' => '/img/no-user-image.gif',
                     'birthday' => date('Y-m-d', strtotime('+' . mt_rand(0, 100) . ' days')),
                     'status_id' => rand(1, 4),
@@ -29,7 +30,7 @@ class clientsSeederMustBeDeleted extends Seeder
             {
                 \App\Client::create([
                     'name' => 'Сергій Чеканов',
-                    'phone' => '(222) 222-22-22',
+                    'phone' => '('.rand(100, 999).') '.rand(100, 999).'-11-11',
                     'photo' => '/img/no-user-image.gif',
                     'birthday' => date('Y-m-d', strtotime('+' . mt_rand(0, 100) . ' days')),
                     'status_id' => rand(1, 4),
@@ -40,7 +41,7 @@ class clientsSeederMustBeDeleted extends Seeder
             {
                 \App\Client::create([
                     'name' => 'Дмитро Чернецький',
-                    'phone' => '(333) 333-33-33',
+                    'phone' => '('.rand(100, 999).') '.rand(100, 999).'-11-11',
                     'photo' => '/img/no-user-image.gif',
                     'birthday' => date('Y-m-d', strtotime('+' . mt_rand(0, 100) . ' days')),
                     'status_id' => rand(1, 4),

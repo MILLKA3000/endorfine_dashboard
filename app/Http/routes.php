@@ -76,6 +76,7 @@ Route::group(['middleware' => ['web']], function () {
         #Clients
         Route::get('clients/data', 'ClientController@data'); //for ajax table
         Route::get('clients/getAllTickets/{client}', 'ClientController@getAllTickets'); //for ajax table
+        Route::get('clients/getAllTickets/{client}/active', 'ClientController@getAllTicketsActive'); //for ajax table
         Route::get('clients/getAllService/{client}', 'ClientController@getAllService'); //for ajax table
         Route::put('clients/{client}/edit', 'ClientController@update');
 
