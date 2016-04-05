@@ -37,7 +37,7 @@
             @if(!empty($numAbonement->client->getActiveTickets->first()))
                 <li class="list-group-item">
                     <b>Заняття</b> {!! Form::select('ticket',
-                    array_pluck($numAbonement->training['traningFormated'],'title', 'id'), $numAbonement->training['activeTraning'] ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
+                    array_pluck($numAbonement->training['traningFormated'],'title', 'id'), $numAbonement->training['activeTraning']['id'] ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
                 </li>
                 <a href="#" class="btn btn-primary btn-block" id="checkTraning"><b>Відмітити</b></a>
             @endif
@@ -55,8 +55,8 @@
                data-page-length="4" >
             <thead>
             <tr>
-                <th data-sortable="true">Активні абонементи</th>
-                <th data-sortable="true">Статус</th>
+                <th>Активні абонементи</th>
+                <th>Статус</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -71,7 +71,12 @@
 <script>
 
     $(function() {
-        $('.table').dataTable({responsive: true,bFilter: false,"sDom": '<"top"i>rt<"bottom"flp><"clear">'});
+        $('.table').dataTable({
+            responsive: true,
+            bSort:false,
+            bFilter: false,
+            "sDom": '<"top"i>rt<"bottom"flp><"clear">'
+        });
         $('#checkTraning').on('click',function(){
             if(send = checkEvent("{{ csrf_token() }}",{{$numAbonement->client->id}},$('#event-traning').val())){
                 send.done(function (data) {

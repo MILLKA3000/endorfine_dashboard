@@ -281,6 +281,7 @@ class ClientController extends Controller
             ->where('clientsToTickets.client_id',$client->id)
             ->where('clientsToTickets.statusTicket_id','<=',2)
             ->where('tickets.enabled',1)
+            ->orderBy('statusTicket_id','Desc')
             ->get();
 
         return Datatables::of($tickets)
