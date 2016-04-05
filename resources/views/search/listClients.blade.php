@@ -5,7 +5,7 @@
 
             <div class="info-box-content search-list-item">
                 <div class="row">
-                    <div class="col-md-1 col-sm-1 col-xs-1 search-list-item">
+                    <div class="col-md-1 col-sm-1 col-xs-1">
                         <span class="info-box-text tickets-list-item">{{$clients->getNumTicket->numTicket}}</span>
                     </div>
 
@@ -16,12 +16,12 @@
                         @endif
                     </div>
 
-                    <div class="col-md-3 col-sm-3 col-xs-3 search-list-item">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
                         <span class="info-box-text">Ім'я</span>
                         <span class="info-box-text">{{$clients->name}}</span>
                     </div>
 
-                    <div class="col-md-3 col-sm-3 col-xs-3 search-list-item">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
                         <span class="info-box-text">День нардження</span>
                         <span class="info-box-text">{{$clients->birthday}}</span>
                     </div>
@@ -33,18 +33,20 @@
                 </div>
                 <div class="row">
 
-                        @if ($clients->event->countAllTicketAccess() <= 500)
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                @for($i = 1; $i <= $clients->event->countAllTicketAccess(); $i++)
-                                    <div class="trening-box responsive col-md-1 col-sm-1 col-xs-1">{{$i}}</div>
-                                @endfor
-                             </div>
-                        @else
-                            <span class="info-box-text">∞</span>
-                        @endif
-                        @if ($clients->event->countAllTicketAccess() <= 2)
-
-                        @endif
+                    @if ($clients->event->countAllTicketAccess() <= 500)
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            @for($i = 1; $i <= $clients->event->countAllTicketAccess(); $i++)
+                                <div class="trening-box responsive col-md-1 col-sm-1 col-xs-1">{{$i}}</div>
+                            @endfor
+                         </div>
+                    @else
+                        <span class="info-box-text">∞</span>
+                    @endif
+                    @if ($clients->event->countAllTicketAccess() <= 3)
+                        <script>
+                           document.getElementsByClassName("search-list-item").style.backgroundColor = "red";
+                        </script>
+                    @endif
 
                  </div>
             </div>
