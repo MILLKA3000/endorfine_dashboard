@@ -31,7 +31,7 @@
                                 <div class="trening-box responsive"></div>
                             @endfor
                         @else
-                            <span class="info-box-text">∞</span>
+                            <span class="info-box-text infinity">∞</span>
                         @endif
                     </div>
                     <div class="line-vertical"></div>
