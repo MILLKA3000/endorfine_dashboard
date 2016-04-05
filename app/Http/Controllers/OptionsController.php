@@ -40,7 +40,6 @@ class OptionsController extends Controller
      */
     public function save(Request $request)
     {
-        dd($request);
         if ($request->hasFile('logo')) {
             dd(1);
         }
@@ -55,4 +54,5 @@ class OptionsController extends Controller
     {
         dd();
     }
+    
 }
