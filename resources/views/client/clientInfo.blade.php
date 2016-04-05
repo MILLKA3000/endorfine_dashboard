@@ -33,7 +33,7 @@
                             @if(isset($client->hasActiveTikets))
                             <li class="list-group-item">
                                 <b>Заняття</b> {!! Form::select('ticket',
-                                array_pluck($client->traningFormated,'title', 'id'), $client->activeTraning ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
+                                array_pluck($client->traningFormated,'title', 'id'), $client->activeTraning['id'] ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
                             </li>
                                 <a href="#" class="btn btn-primary btn-block" id="checkTraning"><b>Відмітити</b></a>
                             @endif

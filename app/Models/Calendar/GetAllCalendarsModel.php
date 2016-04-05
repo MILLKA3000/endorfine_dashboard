@@ -78,7 +78,7 @@ class GetAllCalendarsModel extends Model
 
     private function getCalendarEventsFromDB(){
         return TraningToTrainer::where('start','>',Carbon::parse("this day")->toDateString()." 00:00:00")
-            ->where('start','<',Carbon::parse("next day")->toDateString()." 00:00:00")
+            ->where('start','<',Carbon::parse("this day")->toDateString()." 23:59:59")
             ->orderBy('start','ASC')
             ->get();
     }
@@ -144,7 +144,6 @@ class GetAllCalendarsModel extends Model
                 return $value['id'];
             }
         });
-
         return compact('traningFormated','activeTraning');
     }
 

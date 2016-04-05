@@ -1,6 +1,6 @@
 @include('layouts.header')
 @yield('custom-style')
-<body class="skin-purple">
+<body class="{{Cache::get('themes')}}">
 <div class="wrapper">
 
     @if (!Auth::guest())
