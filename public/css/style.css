@@ -194,10 +194,14 @@ li {
 .trening-box{
     background-color: rgba(128, 225, 16, 0.82);
     margin-right: 5px;
-    width: 2%;
-    height: 25px;
+    margin-bottom: 5px;
+    float: left;
+    width: 10px;
+    height: 10px;
     text-align: center;
 }
+
+
 
 @media (max-width: 992px){
     .box-profile .list-group-item{
@@ -238,8 +242,6 @@ li {
         display: block!important;
     }
 }
-
-
 
 .tickets-accordion ::-webkit-scrollbar {
     width: 12px;
