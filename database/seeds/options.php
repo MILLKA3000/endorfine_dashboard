@@ -13,7 +13,7 @@ class options extends Seeder
     {
         \App\Options::create([
             'key' => 'title',
-            'name' => 'Назва сайту',
+            'name' => 'Назва клубу',
             'description' => 'Введіть назву клубу',
             'value' => 'Endorfine',
             'tag' => 'options-input'
@@ -29,11 +29,21 @@ class options extends Seeder
             'key' => 'themes',
             'name' => 'Кольорова тема',
             'description' => 'Вибір кольорової схеми',
-            'value' => '1',
+            'value' => 'skin-green',
             'tag' => 'options-select',
             'options' => '[
-                {"id":1, "name":"skin-red"}, 
-                {"id":2, "name":"skin-red-light"}
+                {"name":"skin-black"}, 
+                {"name":"skin-black-light"},
+                {"name":"skin-blue"},
+                {"name":"skin-blue-light"},
+                {"name":"skin-green"},
+                {"name":"skin-green-light"},
+                {"name":"skin-purple"},
+                {"name":"skin-purple-light"},
+                {"name":"skin-red"},
+                {"name":"skin-red-light"},
+                {"name":"skin-yellow"},
+                {"name":"skin-yellow-light"}
                 ]'
         ]);
         \App\Options::create([
