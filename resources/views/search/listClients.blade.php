@@ -4,47 +4,49 @@
             {{--<div class="box-body box-profile"> <img class="img-responsive" style="width: 100%" src="{{$numAbonement->getNameClient->photo}}" alt="Фото клієнта"></div>--}}
 
             <div class="info-box-content search-list-item">
-                <div class="col-md-1 search-list-item">
-
-                    <span class="info-box-text tickets-list-item">{{$clients->getNumTicket->numTicket}}</span>
-                </div>
-                <div class="col-md-1">
-                    <img class="img-responsive" src="{{$clients->photo}}" alt="Фото клієнта">
-                    @if( stristr($clients->birthday, date('m-d')) )
-                        <img class="img-responsive" style="position: absolute; top: -20px; left: -20px; width: 40%" src="/img/birthday-surp.png">
-                    @endif
-                </div>
-                <div class="col-md-3 search-list-item">
-                    <span class="info-box-text">Ім'я</span>
-                    <span class="info-box-text">{{$clients->name}}</span>
-                </div>
-                <div class="col-md-3 search-list-item">
-                    <span class="info-box-text">День нардження</span>
-                    <span class="info-box-text">{{$clients->birthday}}</span>
-                </div>
-                <div class="col-md-3">
-                    <span class="info-box-text">Телефон</span>
-                    <span class="info-box-text">{{$clients->phone}}</span>
-                </div>
-                <div class="col-md-11">
-                    <div class="col-md-1">
-
-                        {{$clients->event->countAllTicketAccess()}}
+                <div class="row">
+                    <div class="col-md-1 col-sm-1 col-xs-1 search-list-item">
+                        <span class="info-box-text tickets-list-item">{{$clients->getNumTicket->numTicket}}</span>
                     </div>
 
-                    @if ($clients->event->countAllTicketAccess() <= 500)
-                        <div class="col-md-11">
-                            @for($i = 1; $i <= $clients->event->countAllTicketAccess(); $i++)
-                                <div class="trening-box responsive col-md-1">1</div>
-                            @endfor
+                    <div class="col-md-1 col-sm-1 col-xs-1">
+                        <img class="img-responsive" src="{{$clients->photo}}" alt="Фото клієнта">
+                        @if( stristr($clients->birthday, date('m-d')) )
+                            <img class="img-responsive" style="position: absolute; top: -20px; left: -20px; width: 40%" src="/img/birthday-surp.png">
+                        @endif
+                    </div>
 
-                         </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3 search-list-item">
+                        <span class="info-box-text">Ім'я</span>
+                        <span class="info-box-text">{{$clients->name}}</span>
+                    </div>
 
-                    @else
-                        <span class="info-box-text">∞</span>
-                    @endif
+                    <div class="col-md-3 col-sm-3 col-xs-3 search-list-item">
+                        <span class="info-box-text">День нардження</span>
+                        <span class="info-box-text">{{$clients->birthday}}</span>
+                    </div>
 
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <span class="info-box-text">Телефон</span>
+                        <span class="info-box-text">{{$clients->phone}}</span>
+                    </div>
                 </div>
+                <div class="row">
+
+                        @if ($clients->event->countAllTicketAccess() <= 500)
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @for($i = 1; $i <= $clients->event->countAllTicketAccess(); $i++)
+                                    <div class="trening-box responsive col-md-1 col-sm-1 col-xs-1">{{$i}}</div>
+                                @endfor
+                             </div>
+                        @else
+                            <span class="info-box-text">∞</span>
+                        @endif
+                        @if ($clients->event->countAllTicketAccess() <= 2)
+
+                        @endif
+
+                 </div>
             </div>
             <!-- /.info-box-content -->
         </div>
