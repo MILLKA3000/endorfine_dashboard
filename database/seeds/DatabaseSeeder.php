@@ -58,6 +58,14 @@ class DatabaseSeeder extends Seeder
         $this->command->info('--------------------------------');
         $this->command->info('The options table has been seeded!');
         $this->command->info('--------------------------------');
+        $this->call(clientsSeederMustBeDeleted::class);
+        $this->command->info('--------------------------------');
+        $this->command->info('The clients table has been seeded! For delete');
+        $this->command->info('--------------------------------');
+        $this->call(clientToTicketsMustBeDeleted::class);
+        $this->command->info('--------------------------------');
+        $this->command->info('The clientToTickets table has been seeded! For delete');
+        $this->command->info('--------------------------------');
         $this->command->info('END');
         $this->command->info('--------------------------------');
     }
