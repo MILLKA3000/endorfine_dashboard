@@ -26,6 +26,13 @@ class options extends Seeder
             'tag' => 'options-uploader'
         ]);
         \App\Options::create([
+            'key' => 'logo_switcher',
+            'name' => 'Включення логл',
+            'description' => 'лого або текст',
+            'value' => 'off',
+            'tag' => 'options-switch'
+        ]);
+        \App\Options::create([
             'key' => 'themes',
             'name' => 'Кольорова тема',
             'description' => 'Вибір кольорової схеми',

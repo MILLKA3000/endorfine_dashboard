@@ -218,8 +218,6 @@ li {
     text-align: center;
 }
 
-
-
 @media (max-width: 992px){
     .box-profile .list-group-item{
         height: 60px;
@@ -292,4 +290,13 @@ li {
 }
 .tickets-accordion ::-webkit-scrollbar-corner {
     background: transparent;
+}
+.main-header .logo{
+    padding: 0px;
+}
+.logoinclude{
+    background-image: url("/img/logo.png");
+    background-size: 230px 50px;
+    height: 50px;
+    width: 230px;
 }
