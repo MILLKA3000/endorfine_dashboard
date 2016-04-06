@@ -9,12 +9,10 @@ use App\Discounts;
 use App\Http\Requests\Client\ClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Models\Calendar\GetAllCalendarsModel;
-use App\Models\Calendar\GetAllEventsaModel;
 use App\Models\Events\EventModel;
 use App\Services;
 use App\StatusesTicket;
 use App\Ticket;
-use App\VisitedClients;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

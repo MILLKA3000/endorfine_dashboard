@@ -1,5 +1,5 @@
 <section class="content-dashboard-footer">
-    <div class="box box-primary content-box">
+    <div class="box box-primary content-box" style="height: 95px;">
 
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="box box-widget widget-user-2 widget-user-header dashboard_footer">

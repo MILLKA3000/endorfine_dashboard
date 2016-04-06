@@ -19,7 +19,7 @@ class GetAllCalendarsModel extends Model
     }
 
     private function getAllTrainer(){
-        return User::where('role_id',3)->get();
+        return User::getTrainers();
     }
 
 

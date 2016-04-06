@@ -134,6 +134,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/training/detail/{event}', 'TrainingController@detailEvent');
         Route::get('/training/trainer/{trainer}', 'TrainingController@detailTrainer');
 
+        #Trainers
+        Route::get('/trainers/getAllTrainers', 'TrainerController@getAllTrainers');
+        Route::resource('/trainers', 'TrainerController');
 
     });
 });
