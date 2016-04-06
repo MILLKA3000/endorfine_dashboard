@@ -176,15 +176,46 @@ li {
     overflow: hidden;
 }
 
-.search-list-item:hover{
-    background-color: rgba(183, 252, 255, 0.69);
-    color: #FFF;
-    }
-
 .search-list-item{
     padding-left: 0px;
     margin: 0px;
+    color: #222d32;
     }
+
+.search-list-red{
+
+    background-color: rgba(255, 154, 142, 0.42);
+
+}
+
+.search-list-grey{
+    background-color: rgba(145, 145, 145, 0.22);
+
+}
+
+.search-list-default{
+    background-color: rgba(255, 255, 255, 1);
+
+}
+
+.search-list-red:hover{
+    background-color: rgba(221, 75, 57, 0.73);
+
+}
+
+.search-list-grey:hover{
+    background-color: rgba(17, 17, 17, 0.38);
+
+}
+
+.search-list-vip{
+    border: #f39c12 solid 2px;
+}
+
+.search-list-default:hover{
+    background-color: rgb(90, 214, 244);
+    color: #FFFFff;
+}
 
 .tickets-list-item{
     font-size: 32px;
@@ -192,7 +223,7 @@ li {
 }
 
 .tickets-list-training{
-    font-size: 24px;
+    font-size: 22px;
     text-align: center;
 }
 
@@ -201,12 +232,12 @@ li {
     text-align: center;
     color: #80e110;
     font-family: cursive;
+    line-height: 30px;
 }
 
 .line-vertical{
     border-left: 1px solid darkgrey;
-    height: auto;
-}
+  }
 
 .trening-box{
     background-color: rgba(128, 225, 16, 0.82);
