@@ -10,9 +10,9 @@
             </h3>
         </div>
         @if (isset($activeTicket))
-            {!! Form::model($activeTicket, array('url' => URL::to('/clients') . '/' .$activeTicket->id. '/updateTicketClient', 'method' => 'PUT', 'class' => 'bf', 'files'=> true)) !!}
+            {!! Form::model($activeTicket, array('url' => URL::to('/clients') . '/' .$activeTicket->id. '/updateTicketClient', 'method' => 'PUT', 'class' => 'bf new-ticket', 'files'=> true)) !!}
         @else
-            {!! Form::open(array('url' => URL::to('/clients') . '/' . $client->id .'/saveTicketClient', 'method' => 'PUT', 'class' => 'bf', 'files'=> true)) !!}
+            {!! Form::open(array('url' => URL::to('/clients') . '/' . $client->id .'/saveTicketClient', 'method' => 'PUT', 'class' => 'bf new-ticket', 'files'=> true)) !!}
             @endif<!-- Tabs Content -->
         <div class="tab-content">
             <!-- General tab -->

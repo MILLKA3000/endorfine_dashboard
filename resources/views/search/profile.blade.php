@@ -67,6 +67,7 @@
 <script>
 
     $(function() {
+        var modal = $("#Modal");
         $('.table').dataTable({
             responsive: true,
             bSort:false,
@@ -88,31 +89,31 @@
             };
         });
 
-
-        $("#Modal").on("show.bs.modal", function(e) {
-            self = $(this).find(".modal-body").html('');
+        modal.unbind();
+        modal.on("show.bs.modal", function(e) {
             $(this).find("#myModalLabel").html('Добавити користувачу абонемент');
             $.ajax({
                 method: "get",
                 url: "/clients/{{$numAbonement->client->id}}/joinTicket",
                 success: function(page){
-                    console.log(page);
-                    self.html(page);
-                    $('.btn-success').on('click',function(e){
+                    $(".modal-body").html(page);
+                    $('.new-ticket').submit(function(e){
                         e.preventDefault();
                         $.ajax({
                             method: "PUT",
                             url: "/clients/{{$numAbonement->client->id}}/saveTicketClient",
-                            data: $('form').serialize()
+                            data: $('.new-ticket').serialize()
                         }).done(function(){
                             $("#Modal").modal('hide');
                             $('#search').val({{$numAbonement->numTicket}}).keyup();
                         });
                     })
                 }
-            })
+            });
 
-        });
+        }).on('hide.bs.modal', function (e) {
+            $("#Modal").unbind();
+        })
 
     });
 </script>
