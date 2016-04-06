@@ -1,7 +1,7 @@
 <a href="#" class="click-to-detail" data-id="{{$clients->getNumTicket->numTicket}}">
     <div class="col-md-12 col-sm-12 col-xs-12 responsive">
-        <div class="info-box search-list-item">
-            <div class="info-box-content search-list-item">
+        <div class="info-box search-list-item {{($clients->event->countAllTicketAccess() == 0)?('search-list-grey'):(($clients->event->countAllTicketAccess() <= 2)?('search-list-red'):('search-list-default'))}} {{(($clients->status_id > 1)&&($clients->event->countAllTicketAccess() > 0))?('search-list-vip'):('')}}">
+            <div class="info-box-content search-list-item ">
 
                 <div class="col-md-1 col-sm-1 col-xs-1">
                     <span class="info-box-text tickets-list-item">{{$clients->getNumTicket->numTicket}}</span>

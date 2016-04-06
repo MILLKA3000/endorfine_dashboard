@@ -28,7 +28,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
+        $roles = Role::getAdminAndManager();
         return view('users.create_edit', compact('roles'));
     }
 
