@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Options;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class OptionsController extends Controller
 {
+    private $logoFile;
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +43,8 @@ class OptionsController extends Controller
     public function save(Request $request)
     {
         if ($request->hasFile('logo')) {
-            dd(1);
+            $this->logoFile=$request->file('logo');
+            $this->fileUpload();
         }
         $options = $request->except('_token');
         foreach ($options as $key => $value){
@@ -52,7 +55,18 @@ class OptionsController extends Controller
 
     public function fileUpload()
     {
-        dd();
+        $input = ['logo' => $this->logoFile];
+        $rules = ['logo' => 'image|max:15500'];
+        $validation = Validator::make($input, $rules);
+        if($validation->fails())
+        {
+        }
+        else
+        {
+            $this->logoFile->move(public_path() . DIRECTORY_SEPARATOR .'img', 'logo.png');
+        }
+
+
     }
     
 }
