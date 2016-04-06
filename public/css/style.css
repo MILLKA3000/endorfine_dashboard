@@ -184,12 +184,12 @@ li {
 
 .search-list-red{
 
-    background-color: #e98a7e;
+    background-color: rgba(255, 154, 142, 0.42);
 
 }
 
 .search-list-grey{
-    background-color: rgba(101, 101, 101, 0.38);
+    background-color: rgba(145, 145, 145, 0.22);
 
 }
 
@@ -199,7 +199,7 @@ li {
 }
 
 .search-list-red:hover{
-    background-color: #dd4b39;
+    background-color: rgba(221, 75, 57, 0.73);
 
 }
 
