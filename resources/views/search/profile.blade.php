@@ -62,10 +62,6 @@
             <tbody></tbody>
         </table>
     </div>
-            <!-- /.box-body -->
-
-
-        <!-- /.box -->
 
 </div>
 <script>
@@ -81,9 +77,7 @@
             if(send = checkEvent("{{ csrf_token() }}",{{$numAbonement->client->id}},$('#event-traning').val())){
                 send.done(function (data) {
                     var obj = jQuery.parseJSON(data);
-                    if(obj.countAllTicketAccess !== undefined) {
-                        $('#countAllTicketAccess').text(obj.countAllTicketAccess);
-                    }
+                    $('#search').val({{$numAbonement->numTicket}}).keyup();
                     if(obj.status !== undefined){
                         toastr["success"](obj.status);
                     }else{

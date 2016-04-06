@@ -35,4 +35,8 @@ class User extends Authenticatable
         return $this->hasOne('App\Role','id','role_id');
     }
 
+    static public function getTrainers()
+    {
+        return self::select('id','name','email')->where('role_id',3)->where('enabled',1)->get();
+    }
 }
