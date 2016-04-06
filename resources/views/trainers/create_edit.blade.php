@@ -104,8 +104,13 @@
 
         <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-3" style="display: none">
             {!! Form::label('array', 'Дана ставка рахується за допомогою можливих кількох градацій', array('class' => 'control-label')) !!}
-            <div class="controls">
-                {!! Form::text('array',null, array('class' => 'form-control')) !!}
+            <div class="list-group-item-success">
+                <div class="controls col-md-2">
+                    {!! Form::text('array[]',null, array('class' => 'form-control')) !!}
+                </div>
+                <div class="controls col-md-2">
+                    {!! Form::text('array[]',null, array('class' => 'form-control')) !!}
+                </div>
             </div>
             <span class="help-block">Наприклад (до 5 абонементів сумма за кожен 5, від 6 до 10 сумма за кожен 10)</span>
         </div>
