@@ -184,12 +184,12 @@ li {
 
 .search-list-red{
 
-    background-color: rgba(255, 154, 142, 0.42);
+    border-left: 5px #ff0b00 solid
 
 }
 
 .search-list-grey{
-    background-color: rgba(145, 145, 145, 0.22);
+    border-left: 5px gray solid
 
 }
 
@@ -199,7 +199,7 @@ li {
 }
 
 .search-list-red:hover{
-    background-color: rgba(221, 75, 57, 0.73);
+    background-color: rgba(255, 11, 0, 0.35)
 
 }
 
@@ -209,7 +209,11 @@ li {
 }
 
 .search-list-vip{
-    border: #f39c12 solid 2px;
+    border-right: 5px gold solid
+}
+
+.search-list-vip.search-list-red{
+    border-left: 5px #ff0b00 solid
 }
 
 .search-list-default:hover{
