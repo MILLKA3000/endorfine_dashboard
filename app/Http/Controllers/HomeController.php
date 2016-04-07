@@ -8,6 +8,7 @@ use App\Models\Calendar\GetAllCalendarsModel;
 use App\Models\Dashboard\GeneralModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,8 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->model_dashboard = new GeneralModel(['addDays'=>10]);
+        parent::__construct();
+        $this->model_dashboard = new GeneralModel(['addDays'=>Cache::get('outstanding_tickets')]);
         $this->middleware('auth');
     }
 

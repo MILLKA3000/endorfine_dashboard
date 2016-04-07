@@ -7,13 +7,17 @@
     {!! Form::open(array('url' => '/options/save', 'method' => 'post', 'files' => true)) !!}
         @foreach($options as $option)
             @if (isset($option->tag))
-                @include('system_options.inputs.'.$option->tag)
+
+                <div class="col-md-{{$option->columns}}">
+                    @include('system_options.inputs.'.$option->tag)
+                </div>
+
             @endif
         @endforeach
         <input type="submit">
+        <p></p>
     {!! Form::close() !!}
 @stop
-
 {{-- Scripts --}}
 @section('custom-scripts')
     <script src="{{ asset ("/bower_components/AdminLTE/plugins/iCheck/icheck.js") }}" type="text/javascript"></script>

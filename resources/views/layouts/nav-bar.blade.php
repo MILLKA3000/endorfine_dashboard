@@ -2,7 +2,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="/" class="logo"><b>{!! Cache::get('onlogo') == 'on' ? '<div class="logoinclude"></div>' : Cache::get('title')!!}</b></a>
+    <a href="/" class="logo"><b>{!! Cache::get('logo_switcher') == 'on' ? '<div class="logoinclude"></div>' : Cache::get('title')!!}</b></a>
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
