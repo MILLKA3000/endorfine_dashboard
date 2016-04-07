@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "5.2.*",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "google/apiclient": "^1.1"
+        "google/apiclient": "^1.1",
+        "dingo/api": "1.0.x@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

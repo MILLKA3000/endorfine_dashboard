@@ -139,6 +139,13 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('/trainers', 'TrainerController');
 
     });
+
+//    Route::api('v1', function () {
+//        Route::post('login', [
+//            'uses'      => 'AuthenticateController@authenticate',
+//            'as'        => 'api.login'
+//        ]);
+//    });
 });
 
 

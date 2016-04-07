@@ -1601,7 +1601,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 class Application extends Container implements ApplicationContract, HttpKernelInterface
 {
-    const VERSION = '5.2.26';
+    const VERSION = '5.2.29';
     protected $basePath;
     protected $hasBeenBootstrapped = false;
     protected $booted = false;
@@ -2598,9 +2598,7 @@ trait ResetsPasswords
     {
         $this->validate($request, array('email' => 'required|email'));
         $broker = $this->getBroker();
-        $response = Password::broker($broker)->sendResetLink($request->only('email'), function (Message $message) {
-            $message->subject($this->getEmailSubject());
-        });
+        $response = Password::broker($broker)->sendResetLink($request->only('email'), $this->resetEmailBuilder());
         switch ($response) {
             case Password::RESET_LINK_SENT:
                 return $this->getSendResetLinkEmailSuccessResponse($response);
@@ -2608,6 +2606,12 @@ trait ResetsPasswords
             default:
                 return $this->getSendResetLinkEmailFailureResponse($response);
         }
+    }
+    protected function resetEmailBuilder()
+    {
+        return function (Message $message) {
+            $message->subject($this->getEmailSubject());
+        };
     }
     protected function getEmailSubject()
     {
@@ -3310,7 +3314,7 @@ class Request
     public static function createFromGlobals()
     {
         $server = $_SERVER;
-        if ('cli-server' === php_sapi_name()) {
+        if ('cli-server' === PHP_SAPI) {
             if (array_key_exists('HTTP_CONTENT_LENGTH', $_SERVER)) {
                 $server['CONTENT_LENGTH'] = $_SERVER['HTTP_CONTENT_LENGTH'];
             }
@@ -3588,6 +3592,7 @@ class Request
             }
             if (!filter_var($clientIp, FILTER_VALIDATE_IP)) {
                 unset($clientIps[$key]);
+                continue;
             }
             if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
                 unset($clientIps[$key]);
@@ -3799,14 +3804,18 @@ class Request
     }
     public function getFormat($mimeType)
     {
+        $canonicalMimeType = null;
         if (false !== ($pos = strpos($mimeType, ';'))) {
-            $mimeType = substr($mimeType, 0, $pos);
+            $canonicalMimeType = substr($mimeType, 0, $pos);
         }
         if (null === static::$formats) {
             static::initializeFormats();
         }
         foreach (static::$formats as $format => $mimeTypes) {
             if (in_array($mimeType, (array) $mimeTypes)) {
+                return $format;
+            }
+            if (null !== $canonicalMimeType && in_array($canonicalMimeType, (array) $mimeTypes)) {
                 return $format;
             }
         }
@@ -6402,7 +6411,7 @@ class Arr
     }
     public static function get($array, $key, $default = null)
     {
-        if (!$array) {
+        if (!static::accessible($array)) {
             return value($default);
         }
         if (is_null($key)) {
@@ -6685,7 +6694,7 @@ class Str
         }
         if (!ctype_lower($value)) {
             $value = preg_replace('/\\s+/', '', $value);
-            $value = strtolower(preg_replace('/(.)(?=[A-Z])/', '$1' . $delimiter, $value));
+            $value = static::lower(preg_replace('/(.)(?=[A-Z])/', '$1' . $delimiter, $value));
         }
         return static::$snakeCache[$key] = $value;
     }
@@ -8442,8 +8451,14 @@ class Route
         if (is_string($middleware)) {
             $middleware = array($middleware);
         }
-        $this->action['middleware'] = array_merge((array) Arr::get($this->action, 'middleware', array()), $middleware);
+        $this->action['middleware'] = array_unique(array_merge((array) Arr::get($this->action, 'middleware', array()), $middleware));
         return $this;
+    }
+    protected function controllerMiddleware()
+    {
+        list($class, $method) = explode('@', $this->action['uses']);
+        $controller = $this->container->make($class);
+        return (new ControllerDispatcher($this->router, $this->container))->getMiddleware($controller, $method);
     }
     public function signatureParameters($subClass = null)
     {
@@ -9336,7 +9351,7 @@ class ControllerDispatcher
             return $this->router->prepareResponse($request, $this->call($instance, $route, $method));
         });
     }
-    protected function getMiddleware($instance, $method)
+    public function getMiddleware($instance, $method)
     {
         $results = new Collection();
         foreach ($instance->getMiddleware() as $name => $options) {
@@ -12567,6 +12582,10 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     {
         return new static(array_combine($this->all(), $this->getArrayableItems($values)));
     }
+    public function union($items)
+    {
+        return new static($this->items + $this->getArrayableItems($items));
+    }
     public function min($key = null)
     {
         return $this->reduce(function ($result, $item) use($key) {
@@ -13059,7 +13078,7 @@ class Encrypter extends BaseEncrypter implements EncrypterContract
     public function encrypt($value)
     {
         $iv = random_bytes($this->getIvSize());
-        $value = openssl_encrypt(serialize($value), $this->cipher, $this->key, 0, $iv);
+        $value = \openssl_encrypt(serialize($value), $this->cipher, $this->key, 0, $iv);
         if ($value === false) {
             throw new EncryptException('Could not encrypt the data.');
         }
@@ -13074,7 +13093,7 @@ class Encrypter extends BaseEncrypter implements EncrypterContract
     {
         $payload = $this->getJsonPayload($payload);
         $iv = base64_decode($payload['iv']);
-        $decrypted = openssl_decrypt($payload['value'], $this->cipher, $this->key, 0, $iv);
+        $decrypted = \openssl_decrypt($payload['value'], $this->cipher, $this->key, 0, $iv);
         if ($decrypted === false) {
             throw new DecryptException('Could not decrypt the data.');
         }
@@ -14298,6 +14317,8 @@ class Factory implements FactoryContract
     protected $composers = array();
     protected $sections = array();
     protected $sectionStack = array();
+    protected $pushes = array();
+    protected $pushStack = array();
     protected $renderCount = 0;
     public function __construct(EngineResolver $engines, ViewFinderInterface $finder, Dispatcher $events)
     {
@@ -14534,11 +14555,50 @@ class Factory implements FactoryContract
         $sectionContent = str_replace('@@parent', '--parent--holder--', $sectionContent);
         return str_replace('--parent--holder--', '@parent', str_replace('@parent', '', $sectionContent));
     }
+    public function startPush($section, $content = '')
+    {
+        if ($content === '') {
+            if (ob_start()) {
+                $this->pushStack[] = $section;
+            }
+        } else {
+            $this->extendPush($section, $content);
+        }
+    }
+    public function stopPush()
+    {
+        if (empty($this->pushStack)) {
+            throw new InvalidArgumentException('Cannot end a section without first starting one.');
+        }
+        $last = array_pop($this->pushStack);
+        $this->extendPush($last, ob_get_clean());
+        return $last;
+    }
+    protected function extendPush($section, $content)
+    {
+        if (!isset($this->pushes[$section])) {
+            $this->pushes[$section] = array();
+        }
+        if (!isset($this->pushes[$section][$this->renderCount])) {
+            $this->pushes[$section][$this->renderCount] = $content;
+        } else {
+            $this->pushes[$section][$this->renderCount] .= $content;
+        }
+    }
+    public function yieldPushContent($section, $default = '')
+    {
+        if (!isset($this->pushes[$section])) {
+            return $default;
+        }
+        return implode(array_reverse($this->pushes[$section]));
+    }
     public function flushSections()
     {
         $this->renderCount = 0;
         $this->sections = array();
         $this->sectionStack = array();
+        $this->pushes = array();
+        $this->pushStack = array();
     }
     public function flushSectionsIfDoneRendering()
     {
@@ -15370,6 +15430,10 @@ class BladeCompiler extends Compiler implements CompilerInterface
         $empty = '$__empty_' . $this->forelseCounter--;
         return "<?php endforeach; if ({$empty}): ?>";
     }
+    protected function compileHasSection($expression)
+    {
+        return "<?php if (! empty(trim(\$__env->yieldContent{$expression}))): ?>";
+    }
     protected function compileWhile($expression)
     {
         return "<?php while{$expression}: ?>";
@@ -15433,15 +15497,15 @@ class BladeCompiler extends Compiler implements CompilerInterface
     }
     protected function compileStack($expression)
     {
-        return "<?php echo \$__env->yieldContent{$expression}; ?>";
+        return "<?php echo \$__env->yieldPushContent{$expression}; ?>";
     }
     protected function compilePush($expression)
     {
-        return "<?php \$__env->startSection{$expression}; ?>";
+        return "<?php \$__env->startPush{$expression}; ?>";
     }
     protected function compileEndpush($expression)
     {
-        return '<?php $__env->appendSection(); ?>';
+        return '<?php $__env->stopPush(); ?>';
     }
     protected function stripParentheses($expression)
     {
@@ -16395,11 +16459,16 @@ abstract class FilterIterator extends \FilterIterator
         $iterator = $this;
         while ($iterator instanceof \OuterIterator) {
             $innerIterator = $iterator->getInnerIterator();
-            if ($innerIterator instanceof \FilesystemIterator) {
+            if ($innerIterator instanceof RecursiveDirectoryIterator) {
+                if ($innerIterator->isRewindable()) {
+                    $innerIterator->next();
+                    $innerIterator->rewind();
+                }
+            } elseif ($innerIterator instanceof \FilesystemIterator) {
                 $innerIterator->next();
                 $innerIterator->rewind();
             }
-            $iterator = $iterator->getInnerIterator();
+            $iterator = $innerIterator;
         }
         parent::rewind();
     }
