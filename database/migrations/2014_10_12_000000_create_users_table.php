@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->boolean('confirmed')->default(false);
             $table->string('confirmation_code');
+            $table->string('api_token', 60)->unique();
             $table->unsignedInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
             $table->integer('enabled');

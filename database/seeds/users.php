@@ -17,6 +17,7 @@ class users extends Seeder
             'password' => bcrypt('admin'),
             'confirmed' => 1,
             'role_id' => 1,
+            'api_token' => str_random(60),
             'confirmation_code' => md5(microtime() . env('APP_KEY')),
             'enabled' => true
         ]);
@@ -27,6 +28,7 @@ class users extends Seeder
             'password' => bcrypt('admin'),
             'confirmed' => 1,
             'role_id' => 3,
+            'api_token' => str_random(60),
             'confirmation_code' => md5(microtime() . env('APP_KEY')),
             'enabled' => true
         ]);
@@ -37,6 +39,7 @@ class users extends Seeder
             'password' => bcrypt('admin'),
             'confirmed' => 1,
             'role_id' => 3,
+            'api_token' => str_random(60),
             'confirmation_code' => md5(microtime() . env('APP_KEY')),
             'enabled' => true
         ]);

@@ -140,12 +140,11 @@ Route::group(['middleware' => ['web']], function () {
 
     });
 
-//    Route::api('v1', function () {
-//        Route::post('login', [
-//            'uses'      => 'AuthenticateController@authenticate',
-//            'as'        => 'api.login'
-//        ]);
-//    });
 });
 
-
+Route::group(['middleware' => ['api'],'prefix' => 'api'], function () {
+    Route::post('login', 'APIController@login');
+    Route::group(['middleware' => 'jwt-auth'], function () {
+        Route::post('get_user_details', 'APIController@get_user_details');
+    });
+});
