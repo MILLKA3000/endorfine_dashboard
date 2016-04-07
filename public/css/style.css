@@ -184,17 +184,18 @@ li {
 
 .search-list-red{
 
-    border-left: 5px #ff0b00 solid
-
+    border-left: 5px #ff0b00 solid;
+    border-right: 5px white solid;
 }
 
 .search-list-grey{
-    border-left: 5px gray solid
-
+    border-left: 5px gray solid;
+    border-right: 5px white solid;
 }
 
 .search-list-default{
     background-color: rgba(255, 255, 255, 1);
+    border-right: 5px white solid;
 
 }
 
@@ -251,6 +252,10 @@ li {
     width: 10px;
     height: 10px;
     text-align: center;
+}
+
+.info-box-text {
+    white-space: normal;
 }
 
 @media (max-width: 992px){

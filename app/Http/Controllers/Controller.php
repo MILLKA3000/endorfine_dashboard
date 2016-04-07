@@ -15,6 +15,7 @@ class Controller extends BaseController
 
     public function __construct()
     {
+        Cache::flush();
         $options = Options::all();
         foreach ($options as $option)
         {

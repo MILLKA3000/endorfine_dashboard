@@ -6,6 +6,7 @@ use App\Client;
 use App\ClientsToTickets;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class GeneralModel extends Model{
@@ -47,7 +48,8 @@ class GeneralModel extends Model{
     }
 
     public function getBirthDayClient(){
-        return DB::select(DB::raw("SELECT id,name,birthday FROM ( SELECT id,name,birthday,MONTH(birthday) AS m, DAY(birthday) As d FROM client_info) AS tmp ORDER BY (m,d) < ( MONTH(CURDATE()), DAY(CURDATE()) ), m , d LIMIT 4"));
+        $daysForNextBirthdays = Cache::get('next_birthdays');
+        return DB::select(DB::raw("SELECT id,name,birthday FROM ( SELECT id,name,birthday,MONTH(birthday) AS m, DAY(birthday) As d FROM client_info) AS tmp ORDER BY (m,d) < ( MONTH(CURDATE()), DAY(CURDATE()) ), m , d LIMIT ".$daysForNextBirthdays));
     }
 
 }

@@ -40,7 +40,7 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function save(Request $request)
+    public function save(Requests\Options $request)
     {
         if ($request->hasFile('logo')) {
             $this->logoFile=$request->file('logo');
@@ -55,18 +55,7 @@ class OptionsController extends Controller
 
     public function fileUpload()
     {
-        $input = ['logo' => $this->logoFile];
-        $rules = ['logo' => 'image|max:15500'];
-        $validation = Validator::make($input, $rules);
-        if($validation->fails())
-        {
-        }
-        else
-        {
-            $this->logoFile->move(public_path() . DIRECTORY_SEPARATOR .'img', 'logo.png');
-        }
-
-
+        $this->logoFile->move(public_path() . DIRECTORY_SEPARATOR .'img', 'logo.png');
     }
     
 }

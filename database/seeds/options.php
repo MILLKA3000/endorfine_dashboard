@@ -16,21 +16,27 @@ class options extends Seeder
             'name' => 'Назва клубу',
             'description' => 'Введіть назву клубу',
             'value' => 'Endorfine',
-            'tag' => 'options-input'
+            'tag' => 'options-input',
+            'group' => '1',
+            'columns' => '4'
         ]);
         \App\Options::create([
             'key' => 'logo',
             'name' => 'Ваше лого',
             'description' => 'Завантажте ваше лого',
-            'value' => '',
-            'tag' => 'options-uploader'
+            'value' => 'off',
+            'tag' => 'options-uploader',
+            'group' => '1',
+            'columns' => '4'
         ]);
         \App\Options::create([
             'key' => 'logo_switcher',
             'name' => 'Включення логл',
             'description' => 'лого або текст',
             'value' => 'off',
-            'tag' => 'options-switch'
+            'tag' => 'options-switch',
+            'group' => '1',
+            'columns' => '4'
         ]);
         \App\Options::create([
             'key' => 'themes',
@@ -51,14 +57,36 @@ class options extends Seeder
                 {"name":"skin-red-light"},
                 {"name":"skin-yellow"},
                 {"name":"skin-yellow-light"}
-                ]'
+                ]',
+            'group' => '2',
+            'columns' => '3'
         ]);
         \App\Options::create([
             'key' => 'footer',
             'name' => 'Інфа',
             'description' => 'Вкл.-викл. футера',
             'value' => 'on',
-            'tag' => 'options-switch'
+            'tag' => 'options-switch',
+            'group' => '2',
+            'columns' => '3'
+        ]);
+        \App\Options::create([
+            'key' => 'next_birthdays',
+            'name' => 'Наступні ДН',
+            'description' => 'Кількість днів для наступних ДН',
+            'value' => '3',
+            'tag' => 'options-input',
+            'group' => '2',
+            'columns' => '3'
+        ]);
+        \App\Options::create([
+            'key' => 'outstanding_tickets',
+            'name' => 'Абонементи що скоро закінчуються',
+            'description' => 'Днів до закінчення абонементів',
+            'value' => '7',
+            'tag' => 'options-input',
+            'group' => '2',
+            'columns' => '3'
         ]);
     }
 }

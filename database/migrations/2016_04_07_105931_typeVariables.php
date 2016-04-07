@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionsTable extends Migration
+class TypeVariables extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,9 @@ class CreateOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('options', function (Blueprint $table) {
+        Schema::create('typeVariables', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->string('key');
-            $table->string('value');
-            $table->string('tag');
-            $table->integer('group');
-            $table->integer('columns');
-            $table->string('options', 1000)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +27,6 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('options');
+        Schema::drop('typeVariables');
     }
 }
