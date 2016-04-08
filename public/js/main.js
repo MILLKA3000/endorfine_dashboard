@@ -29,10 +29,18 @@ function checkEvent(token,client_id,event){
 }
 
 function resize() {
-    $('.tickets-accordion ul').height($('.content-dashboard').height() - 135);
+    $('.tickets-accordion ul').height($('.content-dashboard').height() - 200);
 }
 
-resize()
+$('.dropdown select').on("click", function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    $(this).change(function(){
+        document.location.href="/changeChapters/"+$(this).val();
+    });
+});
+
+resize();
 
 $(window).resize(function(){
     resize()

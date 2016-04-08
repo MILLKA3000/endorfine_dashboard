@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Chapter;
 use App\Client;
+use App\Models\CacheController;
 use App\Options;
+use App\Room;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -14,14 +17,32 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    private $chapter;
+
     public function __construct()
     {
-        Cache::flush();
         $options = Options::all();
         foreach ($options as $option)
         {
+            Cache::forget($option->key);
             Cache::put($option->key, $option->value, 100);
         }
         Cache::put('countBirthday', count(Client::getAllBirthdayNow()),1000);
+
+        Cache::put('chapters',Chapter::all(), 1000);
+
+        Cache::put('rooms',Room::whereChapterId(Cache::get('chapterActive'))->get()->lists('name','id'), 1000);
     }
+
+    private function changeChapter(){
+        CacheController::putKey('chapterActive', $this->chapter);
+    }
+
+    public function setChapter($chapter){
+        $this->chapter = $chapter;
+        $this->changeChapter();
+        return redirect()->back();
+    }
+
+
 }

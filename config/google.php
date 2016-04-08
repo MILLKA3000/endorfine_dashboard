@@ -10,7 +10,7 @@ return [
     | The Client ID can be found in the OAuth Credentials under Service Account
     |
     */
-    'client_id' => '967256523443-jdboegor2t4j6jn1o97g0a1durlme5g7.apps.googleusercontent.com',
+    'client_id' => '112547777399740338996',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return [
     | OAuth Credentials under Service Account
     |
     */
-    'service_account_name' => '967256523443-compute@developer.gserviceaccount.com',
+    'service_account_name' => '112547777399740338996',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,5 +31,5 @@ return [
     | This is the location of the .p12 file from the Laravel root directory
     |
     */
-    'key_file_location' => '/resources/assets/google/Endorfine-077977a638a7.p12',
+    'key_file_location' => '/resources/assets/google/Endorfine-8cfe7306d87e.p12',
 ];

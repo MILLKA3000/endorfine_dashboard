@@ -28,6 +28,8 @@
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
     Route::get('/authorize', 'Auth\AuthController@handleProviderCallback');
+
+    Route::get('/changeChapters/{id}', 'Controller@setChapter');
     Route::group(['middleware' => 'auth'], function () {
 
 
@@ -139,8 +141,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('/trainers', 'TrainerController');
 
 		#BirthDay
-        Route::get('/today-birthdays', 'TodayBirthdayController@index');        #—hapters
-        Route::get('/chapters/getAll—hapters', 'ChapterController@getAll—hapters');
+        Route::get('/today-birthdays', 'TodayBirthdayController@index');
+
+        #Chapters
+        Route::get('/chapters/getAll–°hapters', 'ChapterController@getAll–°hapters');
         Route::get('/chapters/{id}/destroy', 'ChapterController@destroy');
         Route::resource('/chapters', 'ChapterController');
 

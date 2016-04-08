@@ -37,17 +37,20 @@ function initDashboardAcordion(options) {
 
     function timeTimer(){
         var now = new Date().getTime();
-        option.forEach(function(date){
-            var start = moment(date.start).valueOf();
-            var end = moment(date.end).valueOf();
-            if (start < now) {$('#'+date.id).addClass('event-acordion-last');}
-            if (start <= now && now <=end) {
-                start_training = start;
-                end_training = end;
-                activeElement = '#'+date.id;
-                animateUpdate()
-            }
-            updateClock();
+        console.log(option);
+        $.each(option, function(index, room) {
+            room.forEach(function(date){
+                var start = moment(date.start).valueOf();
+                var end = moment(date.end).valueOf();
+                if (start < now) {$('#'+date.id).addClass('event-acordion-last');}
+                if (start <= now && now <=end) {
+                    start_training = start;
+                    end_training = end;
+                    activeElement = '#'+date.id;
+                    animateUpdate()
+                }
+                updateClock();
+            });
         });
 
         timer = setTimeout(timeTimer, 1000);

@@ -15,7 +15,7 @@ class TraningToTrainer extends Model
      * @var array
      */
     protected $fillable = [
-        'id_events', 'id_user', 'name', 'start', 'end','description'
+        'id_events', 'id_user', 'name', 'start', 'end','description','note'
     ];
 
 
@@ -25,5 +25,9 @@ class TraningToTrainer extends Model
 
     public function getVisitedClients(){
         return $this->hasMany('App\VisitedClients','training_id','id');
+    }
+
+    public function getTrainersFromChapter(){
+        return $this->hasManyThrough('App\Chapter','training_id','trainer_id');
     }
 }

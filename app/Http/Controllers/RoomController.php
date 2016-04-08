@@ -45,7 +45,7 @@ class RoomController extends Controller
         foreach($request->trainerAllowed as $trainer){
             $trainer = User::find($trainer);
             $calendar_service = new GoogleCalendar();
-            $calendar = $calendar_service->setNewCalendar($trainer->name."-".$room->getNameChapter->name.":".$room->name);
+            $calendar = $calendar_service->setNewCalendar($trainer->name."-".$room->getNameChapter->name.":".$room->name,$trainer);
             if($calendar) {
                 JoinTrainerToRoom::create([
                     'room_id' => $room->id,

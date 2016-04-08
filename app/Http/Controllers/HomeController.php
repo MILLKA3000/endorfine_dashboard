@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Chapter;
 use App\Client;
 use App\Http\Requests;
 use App\Models\Calendar\GetAllCalendarsModel;

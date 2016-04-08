@@ -78,6 +78,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('--------------------------------');
         $this->command->info('The clientToTickets table has been seeded! For delete');
         $this->command->info('--------------------------------');
+        $this->call(JoinTrainerToRoom::class);
+        $this->command->info('--------------------------------');
+        $this->command->info('The clientToTickets table has been seeded! For delete');
+        $this->command->info('--------------------------------');
         $this->command->info('END');
         $this->command->info('--------------------------------');
     }
