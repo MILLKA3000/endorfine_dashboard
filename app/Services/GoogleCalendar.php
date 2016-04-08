@@ -1,5 +1,6 @@
 <?php namespace App\Services;
 
+use Google_Service_Calendar_Calendar;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
@@ -50,5 +51,14 @@ class GoogleCalendar {
     {
         $results = $this->service->calendars->get($calendarId);
         return ($results);
+    }
+
+    public function setNewCalendar($name)
+    {
+        $calendar = new Google_Service_Calendar_Calendar();
+        $calendar->setSummary($name);
+        $calendar->setDescription($name);
+        $createdCalendar = $this->service->calendars->insert($calendar);
+        return ($createdCalendar->getId());
     }
 }

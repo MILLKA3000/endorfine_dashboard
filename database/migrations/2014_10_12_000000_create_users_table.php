@@ -20,6 +20,15 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('chapter_list', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('address');
+            $table->string('info',2000);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -30,6 +39,8 @@ class CreateUsersTable extends Migration
             $table->string('api_token', 60)->unique();
             $table->unsignedInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
+            $table->unsignedInteger('chapter_id')->nullable();
+            $table->foreign('chapter_id')->references('id')->on('chapter_list')->onDelete('set null');
             $table->integer('enabled');
             $table->rememberToken();
             $table->timestamps();
@@ -47,5 +58,6 @@ class CreateUsersTable extends Migration
 
         Schema::drop('users');
         Schema::drop('roles');
+        Schema::drop('chapter_list');
     }
 }

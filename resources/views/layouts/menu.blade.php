@@ -33,6 +33,13 @@
             <li class="active">{{link_to('/', $title = 'Головна')}}</li>
             {{--<li><a href="#"><span>Another Link</span></a></li>--}}
             <li class="treeview">
+                <a href="#"><span>Філія</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li>{{link_to('/chapters', $title = 'База філій')}}</li>
+                    <li>{{link_to('/rooms', $title = 'Управління Залами')}}</li>
+                </ul>
+            </li>
+            <li class="treeview">
                 <a href="#"><span>Клієнт</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li>{{link_to('/clients', $title = 'База клієнтів')}}</li>

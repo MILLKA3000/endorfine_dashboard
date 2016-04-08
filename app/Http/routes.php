@@ -138,6 +138,16 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/trainers/getAllTrainers', 'TrainerController@getAllTrainers');
         Route::resource('/trainers', 'TrainerController');
 
+        #Сhapters
+        Route::get('/chapters/getAllСhapters', 'ChapterController@getAllСhapters');
+        Route::get('/chapters/{id}/destroy', 'ChapterController@destroy');
+        Route::resource('/chapters', 'ChapterController');
+
+        #Rooms
+        Route::get('/rooms/getAllRooms', 'RoomController@getAllRooms');
+        Route::get('/rooms/{id}/destroy', 'RoomController@destroy');
+        Route::resource('/rooms', 'RoomController');
+
     });
 
 });
