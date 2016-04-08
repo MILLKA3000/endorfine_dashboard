@@ -138,8 +138,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/trainers/getAllTrainers', 'TrainerController@getAllTrainers');
         Route::resource('/trainers', 'TrainerController');
 
-        #–°hapters
-        Route::get('/chapters/getAll–°hapters', 'ChapterController@getAll–°hapters');
+		#BirthDay
+        Route::get('/today-birthdays', 'TodayBirthdayController@index');        #—hapters
+        Route::get('/chapters/getAll—hapters', 'ChapterController@getAll—hapters');
         Route::get('/chapters/{id}/destroy', 'ChapterController@destroy');
         Route::resource('/chapters', 'ChapterController');
 

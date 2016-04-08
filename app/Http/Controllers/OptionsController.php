@@ -19,7 +19,12 @@ class OptionsController extends Controller
     public function index()
     {
         $options = Options::get();
-        return view('system_options.index', compact('options'));
+        $optionsGroupArray = [];
+        foreach ($options as $optionsArray)
+        {
+            $optionsGroupArray[$optionsArray->group][] = $optionsArray;
+        }
+        return view('system_options.index', compact('optionsGroupArray'));
     }
 
     /**

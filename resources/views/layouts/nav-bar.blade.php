@@ -50,22 +50,22 @@
                 <li class="dropdown notifications-menu">
                     <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
+                        <i class="fa fa-birthday-cake"></i>
+                        <span class="label label-warning">{!! Cache::get('countBirthday') !!}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 10 notifications</li>
+                        <li class="header">Привітати сьогодні :)</li>
                         <li>
                             <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
                                 <li><!-- start notification -->
                                     <a href="#">
-                                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        <i class="fa fa-users"></i> Сьогодні день народження у {!! Cache::get('countBirthday') !!}
                                     </a>
                                 </li><!-- end notification -->
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">View all</a></li>
+                        <li class="footer">{{link_to('/today-birthdays', $title = 'Переглянути всіх')}}</li>
                     </ul>
                 </li>
                 <!-- Tasks Menu -->
@@ -115,7 +115,7 @@
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image" />
+                            <img src="{{ asset("/bower_components/AdminLTE/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image"/>
                             <p>
                                 Alexander Pierce - Web Developer
                                 <small>Member since Nov. 2012</small>
