@@ -5,14 +5,16 @@
 {{-- Content --}}
 @section('content')
     {!! Form::open(array('url' => '/options/save', 'method' => 'post', 'files' => true)) !!}
-        @foreach($options as $option)
-            @if (isset($option->tag))
-
-                <div class="col-md-{{$option->columns}}">
-                    @include('system_options.inputs.'.$option->tag)
+            @foreach($optionsGroupArray as $optionArray)
+                <div class="row bottom-menu-header">
+                @foreach($optionArray as $option)
+                @if (isset($option->tag))
+                    <div class="col-md-{{$option->columns}}">
+                        @include('system_options.inputs.'.$option->tag)
+                    </div>
+                @endif
+            @endforeach
                 </div>
-
-            @endif
         @endforeach
         <input type="submit">
         <p></p>

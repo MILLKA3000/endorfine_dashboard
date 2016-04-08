@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Options;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -21,5 +22,6 @@ class Controller extends BaseController
         {
             Cache::put($option->key, $option->value, 100);
         }
+        Cache::put('countBirthday', count(Client::getAllBirthdayNow()),1000);
     }
 }

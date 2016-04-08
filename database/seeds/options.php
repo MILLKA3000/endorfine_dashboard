@@ -17,7 +17,7 @@ class options extends Seeder
             'description' => 'Введіть назву клубу',
             'value' => 'Endorfine',
             'tag' => 'options-input',
-            'group' => '1',
+            'group' => '0',
             'columns' => '4'
         ]);
         \App\Options::create([
@@ -26,7 +26,7 @@ class options extends Seeder
             'description' => 'Завантажте ваше лого',
             'value' => 'off',
             'tag' => 'options-uploader',
-            'group' => '1',
+            'group' => '0',
             'columns' => '4'
         ]);
         \App\Options::create([
@@ -35,7 +35,7 @@ class options extends Seeder
             'description' => 'лого або текст',
             'value' => 'off',
             'tag' => 'options-switch',
-            'group' => '1',
+            'group' => '0',
             'columns' => '4'
         ]);
         \App\Options::create([
@@ -58,7 +58,7 @@ class options extends Seeder
                 {"name":"skin-yellow"},
                 {"name":"skin-yellow-light"}
                 ]',
-            'group' => '2',
+            'group' => '1',
             'columns' => '3'
         ]);
         \App\Options::create([
@@ -67,7 +67,7 @@ class options extends Seeder
             'description' => 'Вкл.-викл. футера',
             'value' => 'on',
             'tag' => 'options-switch',
-            'group' => '2',
+            'group' => '1',
             'columns' => '3'
         ]);
         \App\Options::create([
@@ -85,7 +85,7 @@ class options extends Seeder
             'description' => 'Днів до закінчення абонементів',
             'value' => '7',
             'tag' => 'options-input',
-            'group' => '2',
+            'group' => '1',
             'columns' => '3'
         ]);
     }

@@ -43,4 +43,9 @@ class Client extends Model
     {
         return $this->hasMany('App\ClientsToTickets','client_id','id');
     }
+
+    static public function getAllBirthdayNow()
+    {
+        return self::where('birthday', date("Y-m-d"))->get();
+    }
 }

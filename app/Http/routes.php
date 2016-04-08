@@ -138,6 +138,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/trainers/getAllTrainers', 'TrainerController@getAllTrainers');
         Route::resource('/trainers', 'TrainerController');
 
+        #Trainers
+        Route::get('/today-birthdays', 'TodayBirthdayController@index');
+
     });
 
 });
