@@ -16,6 +16,6 @@ class Chapter extends Model
     protected $softDelete = true;
 
     protected $fillable = [
-        'name', 'address', 'info'
+        'name', 'address', 'info','email'
     ];
 }

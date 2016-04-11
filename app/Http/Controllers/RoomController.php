@@ -45,13 +45,13 @@ class RoomController extends Controller
         foreach($request->trainerAllowed as $trainer){
             $trainer = User::find($trainer);
             $calendar_service = new GoogleCalendar();
-            $calendar = $calendar_service->setNewCalendar($trainer->name."-".$room->getNameChapter->name.":".$room->name,$trainer);
+            $calendar = $calendar_service->setNewCalendar($room,$trainer);
             if($calendar) {
                 JoinTrainerToRoom::create([
                     'room_id' => $room->id,
                     'trainer_id' => $trainer->id,
                     'room_calendar_id' => $calendar,
-                    'name' => $trainer->name."-".$room->getNameChapter->name.":".$room->name
+                    'name' => $trainer->name.":".$room->name
                 ]);
             }
         }
@@ -70,9 +70,13 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
+        $users = new JoinTrainerToRoom();
         $chapters = Chapter::all();
         $room = Room::find($id);
-        return view('rooms.create_edit', compact('room','chapters'));
+        $trainerAllowed = $users->getAllowedTrainers;
+        dd($trainerAllowed);
+        $getAllTrainer = User::whereNotIn('id',$trainerAllowed->lists('trainer_id'))->get();
+        return view('rooms.create_edit', compact('room','chapters','getAllTrainer','trainerAllowed'));
     }
 
     /**

@@ -15,7 +15,7 @@ class TraningToTrainer extends Model
      * @var array
      */
     protected $fillable = [
-        'id_events', 'id_user', 'name', 'start', 'end','description','note'
+        'id_events', 'id_user', 'name', 'start', 'end','description','id_trainer_to_rooms'
     ];
 
 

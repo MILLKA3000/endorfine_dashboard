@@ -16,6 +16,13 @@ class GetAllEventsaModel extends Model
     protected $idCalendar;
     protected $options = [];
 
+    /**
+     * Підтянути з АПІ гуглу івенти
+     *
+     *
+     * @param array $idCalendar
+     * @param array $options
+     */
     public function __construct($idCalendar,$options=[]){
         $this->idCalendar = $idCalendar;
 
@@ -30,6 +37,11 @@ class GetAllEventsaModel extends Model
         $this->options = array_merge($this->options,$options);
     }
 
+    /**
+     * Метод для витягнення івентів по календярю
+     *
+     * @return \Google_Service_Calendar_Events
+     */
     public function getAll(){
 
         $calendar = new GoogleCalendar;

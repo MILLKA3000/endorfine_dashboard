@@ -20,6 +20,9 @@ class EventModel
 
     protected $getActiveTickets;
 
+    /**
+     * ХАРД КОД перенести в локалізацію
+     */
     protected $thisTrainingNoAccess = 'Клієнт був відмічений на це заняття';
 
     protected $notTicket = 'Клієнт немає доступних абонементів';
@@ -187,6 +190,11 @@ class EventModel
         $this->ticket->update();
     }
 
+    /**
+     * Витягнути архів тренувань по клієнту
+     *
+     * @return array
+     */
     public function getAllTrainingOfClient(){
         $trainings = [];
         foreach($this->client->getAllTickets as $ticket){

@@ -15,12 +15,14 @@ class Chapters extends Seeder
             'name' => 'Головне відділення',
             'address' => 'Мазепи 26\1',
             'info' => 'Фітнес',
+            'email' => 'endorfinefitness@gmail.com'
         ]);
 
         \App\Chapter::create([
             'name' => 'Відділення 2',
             'address' => 'Центр',
             'info' => 'Тренажерний зал',
+            'email' => 's.tchekanov@svitla.com'
         ]);
     }
 }

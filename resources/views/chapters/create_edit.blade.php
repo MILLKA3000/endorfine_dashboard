@@ -34,6 +34,13 @@
                 <span class="help-block">{{ $errors->first('address', ':message') }}</span>
             </div>
         </div>
+        <div class="form-group  {{ $errors->has('email') ? 'has-error' : '' }}">
+            {!! Form::label('email', 'E-mail філії', array('class' => 'control-label')) !!}
+            <div class="controls">
+                {!! Form::text('email', null, array('class' => 'form-control')) !!}
+                <span class="help-block">{{ $errors->first('email', ':message') }}</span>
+            </div>
+        </div>
         <div class="form-group  {{ $errors->has('info') ? 'has-error' : '' }}">
             {!! Form::label('info', 'Інформація', array('class' => 'control-label')) !!}
             <div class="controls">

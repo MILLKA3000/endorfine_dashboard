@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('info',2000);
+            $table->string('email')->unique();
             $table->timestamps();
             $table->softDeletes();
         });
