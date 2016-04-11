@@ -15,7 +15,6 @@ class options extends Seeder
             'key' => 'title',
             'name' => 'Назва клубу',
             'description' => 'Введіть назву клубу',
-            'value' => 'Endorfine',
             'tag' => 'options-input',
             'group' => '0',
             'columns' => '4'
@@ -24,7 +23,6 @@ class options extends Seeder
             'key' => 'logo',
             'name' => 'Ваше лого',
             'description' => 'Завантажте ваше лого',
-            'value' => 'off',
             'tag' => 'options-uploader',
             'group' => '0',
             'columns' => '4'
@@ -33,7 +31,6 @@ class options extends Seeder
             'key' => 'logo_switcher',
             'name' => 'Включення логл',
             'description' => 'лого або текст',
-            'value' => 'off',
             'tag' => 'options-switch',
             'group' => '0',
             'columns' => '4'
@@ -42,7 +39,6 @@ class options extends Seeder
             'key' => 'themes',
             'name' => 'Кольорова тема',
             'description' => 'Вибір кольорової схеми',
-            'value' => 'skin-green',
             'tag' => 'options-select',
             'options' => '[
                 {"name":"skin-black"}, 
@@ -65,7 +61,6 @@ class options extends Seeder
             'key' => 'footer',
             'name' => 'Інфа',
             'description' => 'Вкл.-викл. футера',
-            'value' => 'on',
             'tag' => 'options-switch',
             'group' => '1',
             'columns' => '3'
@@ -74,16 +69,14 @@ class options extends Seeder
             'key' => 'next_birthdays',
             'name' => 'Наступні ДН',
             'description' => 'Кількість днів для наступних ДН',
-            'value' => '3',
             'tag' => 'options-input',
-            'group' => '2',
+            'group' => '1',
             'columns' => '3'
         ]);
         \App\Options::create([
             'key' => 'outstanding_tickets',
             'name' => 'Абонементи що скоро закінчуються',
             'description' => 'Днів до закінчення абонементів',
-            'value' => '7',
             'tag' => 'options-input',
             'group' => '1',
             'columns' => '3'
