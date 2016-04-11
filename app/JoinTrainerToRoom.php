@@ -10,5 +10,8 @@ class JoinTrainerToRoom extends Model
 
     protected $guarded  = array('id');
 
-
+    public function getNameRoom()
+    {
+        return $this->hasOne('App\Room','id','room_id');
+    }
 }

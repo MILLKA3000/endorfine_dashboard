@@ -171,6 +171,7 @@ class GetAllCalendarsModel extends Model
                         'id' => $event['id_events'],
                         'trainer' => User::where('id', $event['id_user'])->get()->first()->name,
                         'trainer_id' => $event['id_user'],
+                        'title_concat_room' => $events_to_calendar->name." - ".$event['name'],
                         'title' => $event['name'],
                         'description' => $event['description'],
                         'start' => $event['start'],
@@ -191,9 +192,8 @@ class GetAllCalendarsModel extends Model
      * @return array
      */
     public function getActiveTraning($minutesBack = 50){
-
+        $this->minutesBack = $minutesBack;
         $fromDBEvents = $this->getCalendarEventsFromDB();
-
 
         if(count($fromDBEvents)>0){
             $traningFormated = $this->loadFromDB($fromDBEvents);
@@ -209,7 +209,7 @@ class GetAllCalendarsModel extends Model
 
         $activeTraning = array_first($traningFormated, function($key, $value)
         {
-            if(Carbon::parse($value['start']) >= Carbon::parse("this day")->subMinute($minutesBack)) {
+            if(Carbon::parse($value['start']) >= Carbon::parse("this day")->subMinute($this->minutesBack)) {
                 return $value['id'];
             }
         });

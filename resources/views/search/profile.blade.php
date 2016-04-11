@@ -33,11 +33,10 @@
             <li class="list-group-item">
                 <b>Загальна кількість занять</b> <a class="pull-right" id="countAllTicketAccess">{{$numAbonement->event->countAllTicketAccess()}}</a>
             </li>
-
             @if(!empty($numAbonement->client->getActiveTickets->first()))
                 <li class="list-group-item">
                     <b>Заняття</b> {!! Form::select('ticket',
-                    array_pluck($numAbonement->training['traningFormated'],'title', 'id'), $numAbonement->training['activeTraning']['id'] ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
+                    array_pluck($numAbonement->training['traningFormated'],'title_concat_room', 'id'), $numAbonement->training['activeTraning']['id'] ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
                 </li>
                 <a href="#" class="btn btn-primary btn-block" id="checkTraning"><b>Відмітити</b></a>
             @endif
