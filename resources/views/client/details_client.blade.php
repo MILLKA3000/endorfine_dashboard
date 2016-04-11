@@ -246,6 +246,12 @@
                     },
                     titleFormat: 'Архів тренувань',
                     events: {!!$client->calendar!!},
+                    eventClick: function(event) {
+                        var isDelete = confirm("Ви бажаэте видалити заняття");
+                        if(isDelete){
+                            send = delEvent("{{ csrf_token() }}",{{$client->id}},event.id);
+                        }
+                    },
                     eventRender: function (event, element) {
                     element.qtip({
                     content: {

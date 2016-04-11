@@ -122,6 +122,7 @@ Route::group(['middleware' => ['web']], function () {
 
         #Events
         Route::post('/event/addEvents', 'EventsController@addEvents');
+        Route::post('/event/deleteEvents', 'EventsController@deleteEvents');
 
 
         #Search

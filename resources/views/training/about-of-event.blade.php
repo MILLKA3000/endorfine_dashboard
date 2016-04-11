@@ -5,9 +5,17 @@
     <section class="invoice">
         <!-- title row -->
         <div class="row">
+            <div class="col-xs-12 text-center h1">
+                {!! Cache::get('logo_switcher') == 'on' ? '<div class="logoinclude"></div>' : Cache::get('title')!!}</b>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    Тренування:  {{$event->name}} - [{{$event->start}} - {{$event->end}}]
+                    Тренування:  {{$event->name}}
+                </h2>
+                <h2 class="page-header">
+                    Дата та час проведення: [{{$event->start}} - {{$event->end}}]
                 </h2>
                 <h2 class="page-header">
                     Тренер: {{$event->getNameTrainer->name}}
@@ -17,7 +25,7 @@
         </div>
         <div class="row invoice-info">
             <div class="col-sm-12 invoice-col">
-                {{$event->description}}
+                Опис тренування: {{$event->description}}
             </div>
         </div>
         <!-- Table row -->
@@ -34,7 +42,7 @@
                     @foreach($event->getVisitedClients as $tikets)
                         <tr>
                             <td>
-                                {{$tikets->getTicket->getNameClient->photo}}
+                                <img height="50" src="{{$tikets->getTicket->getNameClient->photo}}">
                             </td>
                             <td>
                                 {{$tikets->getTicket->getNameClient->name}}
