@@ -70,12 +70,10 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        $users = new JoinTrainerToRoom();
         $chapters = Chapter::all();
         $room = Room::find($id);
-        $trainerAllowed = $users->getAllowedTrainers;
-        dd($trainerAllowed);
-        $getAllTrainer = User::whereNotIn('id',$trainerAllowed->lists('trainer_id'))->get();
+        $trainerAllowed = User::whereIn('id',$room->getAllowedTrainers->lists('trainer_id'))->whereRoleId(3)->get();
+        $getAllTrainer = User::whereNotIn('id',$room->getAllowedTrainers->lists('trainer_id'))->whereRoleId(3)->get();
         return view('rooms.create_edit', compact('room','chapters','getAllTrainer','trainerAllowed'));
     }
 
@@ -92,6 +90,28 @@ class RoomController extends Controller
     {
         $room = Room::find($id);
         $room->update($request->toArray());
+        $trainersAllowed = JoinTrainerToRoom::whereRoomId($id)->get();
+        foreach($request->trainerAllowed as $trainer){
+            $trainer = User::find($trainer);
+            $calendar_service = new GoogleCalendar();
+            if(in_array($trainer->id,$trainersAllowed->lists('trainer_id')->toArray())==false){
+                $calendar = $calendar_service->setNewCalendar($room,$trainer);
+                if($calendar) {
+                    JoinTrainerToRoom::create([
+                        'room_id' => $room->id,
+                        'trainer_id' => $trainer->id,
+                        'room_calendar_id' => $calendar,
+                        'name' => $trainer->name.":".$room->name
+                    ]);
+                }
+            }else{
+                $calendar = $calendar_service->destroyCalendar($room,$trainer);
+                if($calendar) {
+                    JoinTrainerToRoom::whereTrainerId($trainer->id)->whereRoomId($id)->destroy();
+                }
+            }
+        }
+
         return redirect('/rooms');
     }
 

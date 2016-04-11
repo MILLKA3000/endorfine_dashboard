@@ -20,7 +20,7 @@ class CreateOptionsTable extends Migration
             $table->string('tag');
             $table->integer('group');
             $table->integer('columns');
-            $table->json('options')->nullable();
+            $table->string('options',2000)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

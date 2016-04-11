@@ -35,4 +35,7 @@ class Room extends Model
         return self::where('chapter_id',Cache::get('chapterActive'))->get();
     }
 
+    public function getAllowedTrainers(){
+        return $this->hasMany('App\JoinTrainerToRoom','room_id','id');
+    }
 }

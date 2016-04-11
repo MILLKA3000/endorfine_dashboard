@@ -143,7 +143,7 @@ class GetAllCalendarsModel extends Model
                     'name' => $event['title'],
                     'description' => $event['description'],
                     'start' => $event['start'],
-                    'id_trainer_to_rooms' => $user_ID->room_id,
+                    'id_trainer_to_rooms' => $user_ID->id,
                     'end' => $event['end']
                 ];
                 if (!empty($fromDB)) {
