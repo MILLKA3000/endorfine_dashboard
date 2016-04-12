@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\OptionsForChapters;
 use Illuminate\Http\Request;
 use App\Options;
 use App\Http\Requests;
@@ -47,13 +48,15 @@ class OptionsController extends Controller
      */
     public function save(Requests\Options $request)
     {
+        dd($request);
         if ($request->hasFile('logo')) {
             $this->logoFile=$request->file('logo');
             $this->fileUpload();
         }
         $options = $request->except('_token');
         foreach ($options as $key => $value){
-            !empty($value) ? Options::where('key', $key)->update(['value' => $value]) : '';
+            dd($key);
+            !empty($value) ? OptionsForChapters::where('key', $key)->update(['value' => $value]) : '';
         }
         return redirect('/options');
     }

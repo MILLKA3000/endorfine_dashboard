@@ -131,7 +131,7 @@
                                     <div class="form-group  {{ $errors->has('status_id') ? 'has-error' : '' }}">
                                         {!! Form::label('status_id', 'Статус кліента', array('class' => 'control-label')) !!}
                                         <div class="controls">
-                                            {!! Form::select('status_id', $client->statuses->lists('name', 'id'), 1,array('class' => 'form-control')) !!}
+                                            {!! Form::select('status_id', $client->statuses->lists('name', 'id'), $client->status_id,array('class' => 'form-control')) !!}
                                             <span class="help-block">{{ $errors->first('status_id', ':message') }}</span>
                                         </div>
                                     </div>

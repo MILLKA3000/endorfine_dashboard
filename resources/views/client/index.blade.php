@@ -20,7 +20,6 @@
                data-paging="true"
                data-info="true"
                data-length-change="true"
-               data-ajax="/clients/data"
                data-page-length="25"
                 width="100%">
             <thead>
@@ -32,11 +31,38 @@
                 <th data-sortable="true">Абонементи</th>
                 <th data-sortable="true">Знижка</th>
                 <th data-sortable="true" data-filterable="select">Заняття</th>
-                <th data-sortable="true">Активний</th>
-                <th>Дія</th>
+                <th width="50">Дія</th>
             </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                @foreach($clients as $client)
+                    <tr>
+                        <td>{{$client->getNumTicket->numTicket}}</td>
+                        <td><img class='photo_mic' src='{{$client->photo}}' width='50'></td>
+                        <td>{{$client->name}}</td>
+                        <td>{{$client->phone}}</td>
+                        <td>
+                            @foreach($client->tickets as $ticket)
+                                @if($ticket->hasEnabled)
+                                    {{$ticket->getNameTicket->name}}<br/>
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>
+                            @if (isset($client->discount))
+                                @if ($client->discount->percent>0)
+                                    <small class="label label-warning">{{$client->discount->name}} - {{$client->discount->percent}}%</small><br/>
+                                @endif
+                            @endif
+                        </td>
+                        <td>{{$client->event->countAllTicketAccess()}}</td>
+                        <td>
+                            <a href="{{{ URL::to('clients/' . $client->id ) }}}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
+                            <a href="{{{ URL::to('clients/' . $client->id . '/destroy' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
 @stop
 

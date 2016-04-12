@@ -21,7 +21,7 @@
         {{--</div>--}}
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">{!! Cache::get('logo_switcher') == 'on' ? '<div class="logoinclude"></div>' : Cache::get('title')!!}</p>
 
             <form action="{{ url('/login') }}" method="post">
 

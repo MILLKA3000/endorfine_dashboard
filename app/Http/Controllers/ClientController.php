@@ -18,10 +18,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Client;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 
+use Psy\Exception\ErrorException;
 use Yajra\Datatables\Facades\Datatables;
 
 class ClientController extends Controller
@@ -29,11 +31,26 @@ class ClientController extends Controller
 
     protected $client;
 
+    /**
+     * список всіх клієнтів
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        return view('client.index');
+        $clients = Client::select('id', 'photo', 'name','phone','detail','status_id','enabled')->get();
+        foreach($clients as $client) {
+            $client->event = new EventModel($client);
+            $client->discount = $client->getNameStatus->getNameDiscountForClients;
+            $client->tickets = $client->getActiveTickets;
+
+        }
+        return view('client.index',compact('clients'));
     }
 
+    /**
+     * Сторінка для створення нового клієнта
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $statuses = ClientStatuses::all();
@@ -46,43 +63,66 @@ class ClientController extends Controller
         return view('client.create_edit', compact('statuses','tickets','discounts','lastTicket'));
     }
 
+    /**
+     * Створити нового клієнта
+     * @param ClientRequest $request
+     * @return $this|Redirect
+     */
     public function store(ClientRequest $request)
     {
         $client = new Client ();
-        $client->fill(array_merge($request->toArray(),$this->getPhoto($request->photo)));
-        $client->save();
-        $this->client = $client->id;
-        if(isset($client->id)) {
-            $ticket = new ClientsToTickets();
-            $ticket->ticket_id = $request->ticket;
-            $ticket->client_id = $client->id;
-            $ticket->statusTicket_id = 1;
-            $ticket->discount_id = $request->discount;
-            $ticket->numTicket = $request->numTicket;
-            $ticket->save();
-        }else{
-
+        try {
+            $client->fill(array_merge($request->toArray(),$this->getPhoto($request->photo)));
+            $client->save();
+            $this->client = $client->id;
+            if(isset($client->id)) {
+                $ticket = new ClientsToTickets();
+                $ticket->ticket_id = $request->ticket;
+                $ticket->client_id = $client->id;
+                $ticket->statusTicket_id = 1;
+                $ticket->discount_id = $request->discount;
+                $ticket->numTicket = $request->numTicket;
+                $ticket->save();
+            }
+            return redirect('/clients');
         }
-
-        return redirect('/clients');
+        catch(\Exception $e){
+            return view('exceptions.msg')->with('msg', ' Неможливо створити користувача');
+        }
     }
 
+    /**
+     * Сторінка детальних даних по клієнту
+     * @param $id
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($id)
     {
         $client = Client::find($id);
-        $event = new EventModel($client);
-        $calendar = new GetAllCalendarsModel();
-        $client->training = $calendar->getActiveTraning();
-        $client->statuses = ClientStatuses::all();
-        $client->traningFormated = $client->training['traningFormated'];
-        $client->activeTraning = $client->training['activeTraning'];
-        $client->countAllTicketAccess = $event->countAllTicketAccess();
-        $client->hasActiveTikets = $client->getActiveTickets->first();
-        $client->active = 'activity';
-        $client->calendar = json_encode($event->getAllTrainingOfClient());
-        return view('client.details_client',compact('client'));
+        try {
+            $event = new EventModel($client);
+            $calendar = new GetAllCalendarsModel();
+            $client->training = $calendar->getActiveTraning();
+            $client->statuses = ClientStatuses::all();
+            $client->traningFormated = $client->training['traningFormated'];
+            $client->activeTraning = $client->training['activeTraning'];
+            $client->countAllTicketAccess = $event->countAllTicketAccess();
+            $client->hasActiveTikets = $client->getActiveTickets->first();
+            $client->active = 'activity';
+            $client->calendar = json_encode($event->getAllTrainingOfClient());
+
+            return view('client.details_client', compact('client'));
+        }
+        catch(\Exception $e){
+            return view('exceptions.msg')->with('msg', ' Даного користувача не існує');
+        }
     }
 
+    /**
+     * Сторінка для добавлення нового додаткового сервісу клієнту
+     * @param Client $client
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function joinService(Client $client)
     {
         $event = new EventModel($client);
@@ -95,20 +135,37 @@ class ClientController extends Controller
         return view('client.joinService', compact('client'));
     }
 
+    /**
+     * Сторінка для добавлення нового абонемента клієнту
+     * @param Client $client
+     * @param Request $request
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function joinTicket(Client $client, Request $request)
     {
-        $event = new EventModel($client);
-        $calendar = new GetAllCalendarsModel();
-        $client->training =  $calendar->getActiveTraning();
-        $client->traningFormated = $client->training['traningFormated'];
-        $client->activeTraning = $client->training['activeTraning'];
-        $client->countAllTicketAccess = $event->countAllTicketAccess();
-        $client->tickets = Ticket::all()->where('enabled',1);
-        $client->discounts = Discounts::whereIn('status',[2,3])->get();
-        if($request->ajax())  return view('client.joinTicketSingle', compact('client'));
-        return view('client.joinTicket', compact('client'));
+        try {
+            $event = new EventModel($client);
+            $calendar = new GetAllCalendarsModel();
+            $client->training =  $calendar->getActiveTraning();
+            $client->traningFormated = $client->training['traningFormated'];
+            $client->activeTraning = $client->training['activeTraning'];
+            $client->countAllTicketAccess = $event->countAllTicketAccess();
+            $client->tickets = Ticket::all()->where('enabled',1);
+            $client->discounts = Discounts::whereIn('status',[2,3])->get();
+            if($request->ajax())  return view('client.joinTicketSingle', compact('client'));
+            return view('client.joinTicket', compact('client'));
+        }
+        catch(\Exception $e){
+            return view('exceptions.msg')->with('msg', 'Не існує даних по клієнту');
+        }
     }
 
+    /**
+     * Зберегти новий сервіс клієнту
+     * @param Request $request
+     * @param Client $client
+     * @return Redirect
+     */
     public function saveServiceClient(Request $request, Client $client)
     {
         $dateTime = new Carbon();
@@ -120,6 +177,12 @@ class ClientController extends Controller
         return redirect('/clients/'.$client->id.'?active=service');
     }
 
+    /**
+     * Зберегти новий абонемент клієнту
+     * @param Request $request
+     * @param Client $client
+     * @return Redirect|string
+     */
     public function saveTicketClient(Request $request, Client $client)
     {
         $ticket = new ClientsToTickets();
@@ -133,32 +196,71 @@ class ClientController extends Controller
         return redirect('/clients/'.$client->id);
     }
 
+    /**
+     * Сторінка форми для зміни даних про абонемент клієнта
+     * @param ClientsToTickets $activeTicket
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editTicketClient(ClientsToTickets $activeTicket){
-        $client = Client::find($activeTicket->client_id);
-        $event = new EventModel($client);
-        $calendar = new GetAllCalendarsModel();
-        $client->training =  $calendar->getActiveTraning();
-        $client->traningFormated = $client->training['traningFormated'];
-        $client->activeTraning = $client->training['activeTraning'];
-        $client->discounts = Discounts::whereIn('status',[2,3])->get();
-        $client->countAllTicketAccess = $event->countAllTicketAccess();
-        $client->tickets = Ticket::all()->where('enabled',1);
-        $client->statusTicket = StatusesTicket::all();
-        return view('client.joinTicket', compact('activeTicket','client'));
+        try {
+            $client = Client::find($activeTicket->client_id);
+            $event = new EventModel($client);
+            $calendar = new GetAllCalendarsModel();
+            $client->training = $calendar->getActiveTraning();
+            $client->traningFormated = $client->training['traningFormated'];
+            $client->activeTraning = $client->training['activeTraning'];
+            $client->discounts = Discounts::whereIn('status', [2, 3])->get();
+            $client->countAllTicketAccess = $event->countAllTicketAccess();
+            $client->tickets = Ticket::all()->where('enabled', 1);
+            $client->statusTicket = StatusesTicket::all();
+
+            return view('client.joinTicket', compact('activeTicket', 'client'));
+        }
+        catch(\Exception $e){
+            return view('exceptions.msg')->with('msg', 'Абонемента не існує');
+        }
     }
 
+    /**
+     * Обновити дані по абонементу у клієнта
+     * @param Request $request
+     * @param ClientsToTickets $activeTicket
+     * @return $this|Redirect
+     */
     public function updateTicketClient(Request $request, ClientsToTickets $activeTicket){
-        $activeTicket->update($request->toArray());
-        return redirect('/clients/'.$activeTicket->client_id);
+        try {
+            $activeTicket->update($request->toArray());
+            return redirect('/clients/'.$activeTicket->client_id);
+        }
+        catch(\Exception $e){
+            return view('exceptions.msg')->with('msg', 'Абонемент не оновленно');
+        }
     }
 
+    /**
+     * Обновити дані по клієнту
+     * @param UpdateClientRequest $request
+     * @param Client $client
+     * @return $this|Redirect
+     */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $this->client = $client->id;
-        $client->update(array_merge($request->toArray(),(!empty($request->photo))?$this->getPhoto($request->photo):['photo'=>$client->photo]));
-        return redirect('/clients/'.$client->id);
+        try {
+            $this->client = $client->id;
+            $client->update(array_merge($request->toArray(),(!empty($request->photo))?$this->getPhoto($request->photo):['photo'=>$client->photo]));
+            return redirect('/clients/'.$client->id);
+        }
+        catch(\Exception $e){
+            return view('exceptions.msg')->with('msg', 'Клієнт не оновленно');
+        }
     }
 
+    /**
+     * Видалити клієнта
+     * @param Client $client
+     * @return mixed
+     * @throws \Exception
+     */
     public function destroy(Client $client)
     {
         ClientsToTickets::where('client_id',$client->id)->update(['numTicket'=>null]);
@@ -166,18 +268,35 @@ class ClientController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Видалити сервіс клієнту
+     * @param ClientToService $service
+     * @return Redirect
+     * @throws \Exception
+     */
     public function destroyServiceClient(ClientToService $service)
     {
         $service->delete();
         return redirect((str_contains(URL::previous(), '?active=service')?URL::previous():URL::previous().'?active=service'));
     }
 
+    /**
+     * Видалити абонемент клієнту
+     * @param ClientsToTickets $ticket
+     * @return mixed
+     * @throws \Exception
+     */
     public function destroyTicketClient(ClientsToTickets $ticket)
     {
         $ticket->delete();
         return redirect()->back();
     }
 
+    /**
+     * перевести фото клієнта з ibase64 в файл
+     * @param $im
+     * @return array
+     */
     private function getPhoto($im)
     {
         $path = '/img/no-user-image.gif';
@@ -193,51 +312,11 @@ class ClientController extends Controller
         return ['photo'=>$path];
     }
 
-    public function data()
-    {
-        $clients = Client::select('id','id as numID', 'photo', 'name','phone','detail','detail as discount','status_id','enabled')->get();
-
-        return Datatables::of($clients)
-            ->edit_column('numID', function($client){
-                return $client->getNumTicket->numTicket;
-            })
-            ->edit_column('status_id', function($client){
-                $event = new EventModel($client);
-                return $event->countAllTicketAccess();
-            })
-            ->edit_column('detail', function($client){
-
-                $tickets = '';
-                $client->discount = $client->getNameStatus->getNameDiscountForClients;
-                foreach($client->getActiveTickets as $ticket){
-                    if($ticket->hasEnabled) {
-                        $tickets .= $ticket->getNameTicket->name . ' <br/>';
-                        $client->discountTicket = $ticket->getNameDiscountForTicket;
-                    }
-                }
-                 return $tickets;
-            })
-            ->edit_column('discount', function($client){
-                $discounts = '';
-                if (isset($client->discount))
-                    if ($client->discount->percent>0)
-                        $discounts = '<small class="label label-warning">'.$client->discount->name.' - '.$client->discount->percent.'%</small><br/>';
-                if (isset($client->discountTicket))
-                    if ($client->discountTicket->percent>0)
-                        $discounts .= '<small class="label label-warning">'.$client->discountTicket->name.' - '.$client->discountTicket->percent.'%</small><br/>';
-                return $discounts .= '<small class="label label-success"> Загальна: '.($client->discount->percent + ((isset($client->discountTicket))?$client->discountTicket->percent:0)).'%</small>';
-            })
-            ->edit_column('photo', function($client){
-                return "<img class='photo_mic' src='$client->photo' width='50'>";
-            })
-            ->edit_column('enabled', '@if ($enabled=="1") <span class=\'glyphicon text-green glyphicon-ok\'></span> @else <span class=\'glyphicon text-red glyphicon-remove\'></span> @endif')
-
-            ->add_column('actions', '<a href="{{{ URL::to(\'clients/\' . $id ) }}}" class="btn btn-success btn-sm " ><span class="glyphicon glyphicon-pencil"></span>   </a>
-                    <a href="{{{ URL::to(\'clients/\' . $id . \'/destroy\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> </a>')
-            ->remove_column('id')
-            ->make();
-    }
-
+    /**
+     * АПІ для виведення всіх абонементів клієнта
+     * @param Client $client
+     * @return mixed
+     */
     public function getAllTickets(Client $client)
     {
         $this->client = $client;
@@ -271,6 +350,11 @@ class ClientController extends Controller
             ->make();
     }
 
+    /**
+     * АПІ для виведення активних абонементів клієнта
+     * @param Client $client
+     * @return mixed
+     */
     public function getAllTicketsActive(Client $client)
     {
         $this->client = $client;
@@ -293,6 +377,11 @@ class ClientController extends Controller
             ->make();
     }
 
+    /**
+     * АПІ для виведення Сервісів Клієнта
+     * @param Client $client
+     * @return mixed
+     */
     public function getAllService(Client $client)
     {
 
@@ -310,6 +399,11 @@ class ClientController extends Controller
             ->make();
     }
 
+    /**
+     * інтуїтивний пошук першого вільного абонемента для призначення його новому користувачеві
+     * @param $tickets
+     * @return bool|int
+     */
     private function findEmptyTicket($tickets){
         $arrayTickets = [];
         foreach($tickets as $ticket){
