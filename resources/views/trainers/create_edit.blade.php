@@ -75,18 +75,18 @@
                 <span class="help-block">Дана ставка буде отримана тренером в будь-якому випадку, навіть якщо тренування не відбулося </span>
             </div>
 
-            <div class="form-group col-md-6 {{ $errors->has('role_id') ? 'has-error' : '' }}">
-                {!! Form::label('role_id', 'Тип контракту', array('class' => 'control-label')) !!}
+            <div class="form-group col-md-6 {{ $errors->has('payment_id') ? 'has-error' : '' }}">
+                {!! Form::label('payment_id', 'Тип контракту', array('class' => 'control-label')) !!}
                 <div class="controls">
-                    {!! Form::select('role_id', array_merge([0=>'Немає контракту'],[1=>'Процент'],[2=>'Статичний'],[3=>'Градація']), '',array('class' => 'form-control','id' => 'payment')) !!}
-                    <span class="help-block">{{ $errors->first('role_id', ':message') }}</span>
+                    {!! Form::select('payment_id', array_merge([0=>'Немає контракту'],['percent'=>'Процент'],['static'=>'Статичний'],['array'=>'Градація']), '',array('class' => 'form-control','id' => 'payment')) !!}
+                    <span class="help-block">{{ $errors->first('payment_id', ':message') }}</span>
                 </div>
                 <span class="help-block">Виберіть тип контракту запропонований системою, для подальшого його налаштування.</span>
             </div>
         </div>
         <br/>
         <br/>
-        <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-1" style="display: none">
+        <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-percent" style="display: none">
             {!! Form::label('percent', 'Введіть % ставки для тренера на кожне заняття', array('class' => 'control-label')) !!}
             <div class="controls">
                 {!! Form::text('percent',null, array('class' => 'form-control')) !!}
@@ -94,7 +94,7 @@
             <span class="help-block">З кожного абонемента з одного заняття візьметься %. Наприклад (введено 50% і абонемент коштує 100 на 10 занять, тоді тренер за нього получить зп 5, але не менше ніж вказано в мінімальній ставці).</span>
         </div>
 
-        <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-2" style="display: none">
+        <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-static" style="display: none">
             {!! Form::label('static', 'Введіть статичну сумму ставки для тренера на кожне заняття', array('class' => 'control-label')) !!}
             <div class="controls">
                 {!! Form::text('static',null, array('class' => 'form-control')) !!}
@@ -102,16 +102,30 @@
             <span class="help-block">Тренер получить за дане заняття сталу суму яка ніяк не впливає на кількість абонементів,але не менше ніж вказано в мінімальній ставці.</span>
         </div>
 
-        <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-3" style="display: none">
+        <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-array" style="display: none">
             {!! Form::label('array', 'Дана ставка рахується за допомогою можливих кількох градацій', array('class' => 'control-label')) !!}
-            <div class="list-group-item-success">
-                <div class="controls col-md-2">
-                    {!! Form::text('array[]',null, array('class' => 'form-control')) !!}
+            <div class="list-group-item-success payments">
+                <div class="row">
+                    <div class="controls col-md-2">
+                        <label>Мінімальна кількість клієнтів для отримання додаткової оплати</label>
+                    </div>
+                    <div class="controls col-md-2">
+                        <label>Сума додаткової оплати(за 1 клієнта)</label>
+                    </div>
                 </div>
-                <div class="controls col-md-2">
-                    {!! Form::text('array[]',null, array('class' => 'form-control')) !!}
+                <div class="row payment">
+                    <div class="controls col-md-2">
+                        {!! Form::text('array[0][peopleCount]',null, array('class' => 'form-control')) !!}
+                    </div>
+                    <div class="controls col-md-2">
+                        {!! Form::text('array[0][value]',null, array('class' => 'form-control')) !!}
+                    </div>
+
+                    <button type="button" class="btn btn-danger remove-payment">-</button>
                 </div>
+
             </div>
+            <button type="button" class="btn btn-info add-payment">+</button>
             <span class="help-block">Наприклад (до 5 абонементів сумма за кожен 5, від 6 до 10 сумма за кожен 10)</span>
         </div>
 
@@ -147,6 +161,7 @@
 {{-- Scripts --}}
 @section('custom-scripts')
     <script>
+        var i = 0;
         $(function() {
             $('#payment').on('change',function(){
                 $('.type-payments').hide(500);
@@ -154,5 +169,22 @@
                 $('#type-payments-'+$(this).val()).show(500);
             })
         });
+        $("button.add-payment").click(function() {
+            i++;
+            $("div.row.payment")
+                    .last()
+                    .clone()
+                    .appendTo($("div.payments"))
+                    .find("input").attr("name",function(j,oldVal) {
+                return oldVal.replace(/\[(\d+)\]/,function(){
+                    return "[" + i + "]";
+                });
+            });
+            $("button.remove-payment").click(function() {
+                remove(parent);
+            });
+
+        });
     </script>
+
 @stop

@@ -40,7 +40,7 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -76,7 +76,14 @@ class TrainerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+//        if (!empty($password)) {
+//            if ($password === $passwordConfirmation) {
+//                $users->password = bcrypt($password);
+//            }
+//        }
+//        $users->update();
+        dd($request);
     }
 
     public function getAllTrainers(){
