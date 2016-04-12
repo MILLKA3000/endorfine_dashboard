@@ -99,5 +99,14 @@ class EventsController extends Controller
         return json_encode($response);
     }
 
+    public function deleteEvents(Request $request)
+    {
+
+        $events = new EventModel(Client::find($request->id_client));
+        $response = $events->delEvent($request->id_event);
+        $response['calendar'] = $events->getAllTrainingOfClient();
+        return json_encode($response);
+    }
+
 
 }

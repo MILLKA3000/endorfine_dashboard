@@ -33,7 +33,7 @@
                             @if(isset($client->hasActiveTikets))
                             <li class="list-group-item">
                                 <b>Заняття</b> {!! Form::select('ticket',
-                                array_pluck($client->traningFormated,'title', 'id'), $client->activeTraning['id'] ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
+                                array_pluck($client->traningFormated,'title_concat_room', 'id'), $client->activeTraning['id'] ,array('class' => 'form-control', 'id' => 'event-traning')) !!}</a>
                             </li>
                                 <a href="#" class="btn btn-primary btn-block" id="checkTraning"><b>Відмітити</b></a>
                             @endif
@@ -75,29 +75,6 @@
         $(function() {
             $('#checkTraning').on('click',function(){
                 send = checkEvent("{{ csrf_token() }}",{{$client->id}},$('#event-traning').val());
-                send.done(function (data) {
-                    var obj = jQuery.parseJSON(data);
-                    if(obj.countAllTicketAccess !== undefined) {
-                        $('#countAllTicketAccess').text(obj.countAllTicketAccess);
-                    }
-                    if(obj.status !== undefined){
-                        toastr["success"](obj.status);
-                    }else{
-                        toastr["error"](obj.error);
-                    }
-
-                    var tables = $.fn.dataTable.fnTables(true);
-
-                    $(tables).each(function () {
-                        $(this).dataTable().fnClearTable();
-                        $(this).dataTable().fnDestroy();
-                    });
-
-                    $(".table").dataTable();
-                    $('#calendar').fullCalendar('removeEvents');
-                    $('#calendar').fullCalendar( 'addEventSource', obj.calendar);
-                    $('#calendar').fullCalendar('refetchEvents');
-                });
             });
         });
     </script>

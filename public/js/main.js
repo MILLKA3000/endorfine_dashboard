@@ -25,7 +25,47 @@ function checkEvent(token,client_id,event){
             "id_event": event,
             "id_client": client_id,
         }
+    }).done(function (data) {
+        showToastr(data);
+    });;
+}
+
+function delEvent(token,client_id,event){
+    return $.ajax({
+        method: "POST",
+        url: "/event/deleteEvents",
+        data: {
+            "_token": token,
+            "id_event": event,
+            "id_client": client_id,
+        }
+    }).done(function (data) {
+        showToastr(data);
     });
+}
+
+function showToastr(data){
+    var obj = jQuery.parseJSON(data);
+    if(obj.countAllTicketAccess !== undefined) {
+        $('#countAllTicketAccess').text(obj.countAllTicketAccess);
+    }
+    if(obj.status !== undefined){
+        toastr["success"](obj.status);
+    }else{
+        toastr["error"](obj.error);
+    }
+
+    var tables = $.fn.dataTable.fnTables(true);
+
+    $(tables).each(function () {
+        $(this).dataTable().fnClearTable();
+        $(this).dataTable().fnDestroy();
+    });
+
+    $(".table").dataTable();
+    $('#calendar').fullCalendar('removeEvents');
+    $('#calendar').fullCalendar( 'addEventSource', obj.calendar);
+    $('#calendar').fullCalendar('refetchEvents');
 }
 
 function resize() {

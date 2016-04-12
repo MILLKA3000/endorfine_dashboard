@@ -29,6 +29,8 @@ class EventModel
 
     protected $doneTicket = 'Клієнту відмічений абонемент';
 
+    protected $removeTicket = 'Клієнту відновлене заняття' ;
+
     public function __construct(Client $client){
         $this->client = $client;
     }
@@ -72,6 +74,23 @@ class EventModel
                 'error'=>$this->notTicket,
             ];
         }
+    }
+
+
+    public function delEvent($id_event){
+        $this->id_event = $id_event;
+        $this->eventEventIdFromDB = $this->getIdEventFromDB();
+        $this->getActiveTickets = $this->hasActiveTicketClient();
+        $this->ticket = $this->client->getAllTickets->last();
+        $this->clientVisitingDestroyEvent();
+        if (!isset($this->getActiveTickets)){
+            $this->statusTicketActiveRestore();
+        }
+
+        return [
+            'status'=>$this->removeTicket,
+            'countAllTicketAccess' => $this->countAllTicketAccess()
+        ];
     }
 
     /**
@@ -135,11 +154,11 @@ class EventModel
     /**
      * Перевіряє статуси абонементів
      */
-    private function checkAccess(){
+    private function checkAccess($qty = 1){
         $countVisited = $this->countVisited();
         if($countVisited < $this->ticket->getNameTicket->qtySessions){
             $this->clientVisiting();
-            if($countVisited == $this->ticket->getNameTicket->qtySessions-1){
+            if($countVisited == $this->ticket->getNameTicket->qtySessions-$qty){
                 $this->statusTicketLocked();
             }
         }else{
@@ -171,6 +190,21 @@ class EventModel
             'training_id' => $this->eventEventIdFromDB->id,
             'ticket_id' => $this->ticket->id,
         ]);
+    }
+
+    /**
+     * Запис в БД сліента котрий прийшов на заняття
+     */
+    private function clientVisitingDestroyEvent(){
+        VisitedClients::whereTrainingId($this->eventEventIdFromDB->id)->whereTicketId($this->ticket->id)->delete();
+    }
+
+    /**
+     * Виставляє статус закритий абонемент
+     */
+    private function statusTicketActiveRestore(){
+        $this->ticket->statusTicket_id = 2;
+        $this->ticket->update();
     }
 
     /**

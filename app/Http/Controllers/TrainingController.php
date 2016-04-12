@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\JoinTrainerToRoom;
 use App\Models\Calendar\GetAllCalendarsModel;
 use App\Models\Calendar\GetAllEventsaModel;
 use App\TraningToTrainer;
@@ -19,8 +20,8 @@ class TrainingController extends Controller
 
     public function detailTrainer(User $trainer){
         $helperCalendar = new GetAllCalendarsModel();
-        $connectToCalendar = TraningToTrainer::where('id_user',$trainer->id)->get();
-        $trainer->events = json_encode($helperCalendar->loadFromDB($connectToCalendar));
+        $trainer->training = TraningToTrainer::whereIdUser($trainer->id)->get();
+        $trainer->events = json_encode($helperCalendar->getEventFromColections($trainer));
         return view('training.about-of-trainer',compact('trainer'));
     }
 }

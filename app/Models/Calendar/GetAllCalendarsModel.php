@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GetAllCalendarsModel extends Model
 {
-    protected $trainer;
+    public $trainer;
 
     private $calendarsOfTrainer;
 
@@ -165,24 +165,31 @@ class GetAllCalendarsModel extends Model
     public function loadFromDB($rooms){
         $events = [];
         foreach ($rooms as $events_to_calendar) {
-            foreach ($events_to_calendar->training as $event) {
-                if(!empty($event)) {
-                    $events[$events_to_calendar->id][] = [
-                        'id' => $event['id_events'],
-                        'trainer' => User::where('id', $event['id_user'])->get()->first()->name,
-                        'trainer_id' => $event['id_user'],
-                        'title' => $event['name'],
-                        'description' => $event['description'],
-                        'start' => $event['start'],
-                        'end' => $event['end'],
-                        'clients' => VisitedClients::where('training_id', $event['id'])->get()
-                    ];
-                }
-            }
+            $events[$events_to_calendar->id] = $this->getEventFromColections($events_to_calendar);
         }
         return $events;
     }
 
+
+    public function getEventFromColections($collections){
+        $events = [];
+        foreach ($collections->training as $event) {
+            if(!empty($event)) {
+                $events[] = [
+                    'id' => $event['id_events'],
+                    'trainer' => User::where('id', $event['id_user'])->get()->first()->name,
+                    'trainer_id' => $event['id_user'],
+                    'title_concat_room' => $collections->name." - ".$event['name'],
+                    'title' => $event['name'],
+                    'description' => $event['description'],
+                    'start' => $event['start'],
+                    'end' => $event['end'],
+                    'clients' => VisitedClients::where('training_id', $event['id'])->get()
+                ];
+            }
+        }
+        return $events;
+    }
 
     /**
      * Інтуїтивний пошук для вибору з селекту всіх тренувань підходяжче значення по часу
@@ -191,9 +198,8 @@ class GetAllCalendarsModel extends Model
      * @return array
      */
     public function getActiveTraning($minutesBack = 50){
-
+        $this->minutesBack = $minutesBack;
         $fromDBEvents = $this->getCalendarEventsFromDB();
-
 
         if(count($fromDBEvents)>0){
             $traningFormated = $this->loadFromDB($fromDBEvents);
@@ -209,7 +215,7 @@ class GetAllCalendarsModel extends Model
 
         $activeTraning = array_first($traningFormated, function($key, $value)
         {
-            if(Carbon::parse($value['start']) >= Carbon::parse("this day")->subMinute($minutesBack)) {
+            if(Carbon::parse($value['start']) >= Carbon::parse("this day")->subMinute($this->minutesBack)) {
                 return $value['id'];
             }
         });
