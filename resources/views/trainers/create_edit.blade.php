@@ -104,7 +104,7 @@
 
         <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-array" style="display: none">
             {!! Form::label('array', 'Дана ставка рахується за допомогою можливих кількох градацій', array('class' => 'control-label')) !!}
-            <div class="list-group-item-success payments">
+            <div class="payments">
                 <div class="row">
                     <div class="controls col-md-2">
                         <label>Мінімальна кількість клієнтів для отримання додаткової оплати</label>
@@ -181,8 +181,12 @@
                 });
             });
             $("button.remove-payment").click(function() {
-                remove(parent);
-            });
+                i--;
+
+                $("div.row.payment").children().last().remove();
+
+                return(i);
+            })
 
         });
     </script>
