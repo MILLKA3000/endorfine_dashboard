@@ -106,22 +106,22 @@
             {!! Form::label('array', 'Дана ставка рахується за допомогою можливих кількох градацій', array('class' => 'control-label')) !!}
             <div class="payments">
                 <div class="row">
-                    <div class="controls col-md-2">
+                    <div class="controls col-md-2 col-xs-5">
                         <label>Мінімальна кількість клієнтів для отримання додаткової оплати</label>
                     </div>
-                    <div class="controls col-md-2">
+                    <div class="controls col-md-2 col-xs-5">
                         <label>Сума додаткової оплати(за 1 клієнта)</label>
                     </div>
                 </div>
-                <div class="row payment">
-                    <div class="controls col-md-2">
+                <div class="row payment" data-item="item0">
+                    <div class="controls col-md-2 col-xs-5">
                         {!! Form::text('array[0][peopleCount]',null, array('class' => 'form-control')) !!}
                     </div>
-                    <div class="controls col-md-2">
+                    <div class="controls col-md-2 col-xs-5">
                         {!! Form::text('array[0][value]',null, array('class' => 'form-control')) !!}
                     </div>
 
-                    <button type="button" class="btn btn-danger remove-payment">-</button>
+                    <button type="button" class="btn btn-danger remove-payment" id="item0">-</button>
                 </div>
 
             </div>
@@ -161,6 +161,7 @@
 {{-- Scripts --}}
 @section('custom-scripts')
     <script>
+        $("#item0").hide();
         var i = 0;
         $(function() {
             $('#payment').on('change',function(){
@@ -171,21 +172,27 @@
         });
         $("button.add-payment").click(function() {
             i++;
-            $("div.row.payment")
+            var itemList = $("div.row.payment")
                     .last()
                     .clone()
                     .appendTo($("div.payments"))
-                    .find("input").attr("name",function(j,oldVal) {
-                return oldVal.replace(/\[(\d+)\]/,function(){
-                    return "[" + i + "]";
-                });
-            });
-            $("button.remove-payment").click(function() {
-                i--;
+                    .attr('data-item','item'+i);
 
-                $("div.row.payment").children().last().remove();
+            itemList.find("input").attr("name",function(j,oldVal) {
+                         return oldVal.replace(/\[(\d+)\]/,function(){
+                            return "[" + i + "]";
+                        });
+                     })
+            itemList.find("button").attr("id", 'item'+i).show();
 
-                return(i);
+
+            $(".remove-payment").click(function() {
+
+                var id = $(this).attr('id');
+                if (id == 'item0'){
+                    return false;
+                }
+                $('[data-item=\''+id+'\']').remove();
             })
 
         });
