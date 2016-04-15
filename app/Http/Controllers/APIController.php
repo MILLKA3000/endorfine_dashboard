@@ -28,12 +28,12 @@ class APIController extends Controller
             if($this->validate_email($input['email'])==false){
                 $client = $this->getClient($input);
                 if ($client){
-                    return response()->json(['result' => $client]);
+                    return response()->json($client);
                 }
             }
-            return response()->json(['result' => ['error' => 'Ви ввели щось не вірно']]);
+            return response()->json('Ви ввели щось не вірно',500);
         }
-        return response()->json(['result' => ['data' => $token]]);
+        return response()->json($token);
     }
 
     /**
@@ -53,9 +53,9 @@ class APIController extends Controller
             $trainer->training = TraningToTrainer::getTrainingFromTo($trainer,$from,$to);
             $trainer->events = json_encode($helperCalendar->getEventFromColections($trainer));
         }catch(\Exception  $e){
-            return response()->json(['result' => ['error' => 'error response']]);
+            return response()->json('Ви ввели щось не вірно',500);
         }
-        return response()->json(['result' => ['data' => $trainer]]);
+        return response()->json($trainer);
     }
 
     /**
@@ -84,8 +84,8 @@ class APIController extends Controller
             $event = new EventModel($client);
             $client->calendar = json_encode($event->getAllTrainingOfClient());
         }catch(\Exception $e){
-            return ['error'=>'Неможливо получити дані'];
+            return response()->json('Ви ввели щось не вірно',500);
         }
-        return ['data' => $client];
+        return $client;
     }
 }
