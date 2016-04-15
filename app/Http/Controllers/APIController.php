@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 use App\Client;
 use App\ClientsToTickets;
+use App\Models\Calendar\GetAllCalendarsModel;
 use App\Models\Events\EventModel;
+use App\TraningToTrainer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\User;
 use Hash;
-use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class APIController extends Controller
 {
 
@@ -27,9 +31,9 @@ class APIController extends Controller
                     return response()->json(['result' => $client]);
                 }
             }
-            return response()->json(['result' => 'Ви ввели щось не вірно']);
+            return response()->json(['result' => ['error' => 'Ви ввели щось не вірно']]);
         }
-        return response()->json(['result' => $token]);
+        return response()->json(['result' => ['data' => $token]]);
     }
 
     /**
@@ -40,8 +44,18 @@ class APIController extends Controller
     public function get_user_details(Request $request)
     {
         $input = $request->all();
-        $user = JWTAuth::toUser($input['token']);
-        return response()->json(['result' => $user]);
+        $from = (isset($input['start'])) ? $input['start'] : Carbon::now()->subDays(7);
+        $to = (isset($input['end'])) ? $input['end'] : Carbon::now()->addDays(7);
+
+        try {
+            $trainer = JWTAuth::toUser($input['token']);
+            $helperCalendar = new GetAllCalendarsModel();
+            $trainer->training = TraningToTrainer::getTrainingFromTo($trainer,$from,$to);
+            $trainer->events = json_encode($helperCalendar->getEventFromColections($trainer));
+        }catch(\Exception  $e){
+            return response()->json(['result' => ['error' => 'error response']]);
+        }
+        return response()->json(['result' => ['data' => $trainer]]);
     }
 
     /**
@@ -54,9 +68,7 @@ class APIController extends Controller
         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     /**
@@ -66,10 +78,14 @@ class APIController extends Controller
      * @return mixed
      */
     private function getClient($input) {
-        $id_client = ClientsToTickets::where('numTicket',$input['email'])->get()->first()->getNameClient->id;
-        $client = Client::wherePhone($input['password'])->whereId($id_client)->get()->first();
-        $event = new EventModel($client);
-        $client->calendar = json_encode($event->getAllTrainingOfClient());
-        return $client;
+        try {
+            $id_client = ClientsToTickets::where('numTicket', $input['email'])->get()->first()->getNameClient->id;
+            $client = Client::wherePhone($input['password'])->whereId($id_client)->get()->first();
+            $event = new EventModel($client);
+            $client->calendar = json_encode($event->getAllTrainingOfClient());
+        }catch(\Exception $e){
+            return ['error'=>'Неможливо получити дані'];
+        }
+        return ['data' => $client];
     }
 }
