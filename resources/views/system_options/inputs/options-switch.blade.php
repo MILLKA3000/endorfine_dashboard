@@ -1,8 +1,8 @@
 <div class="box-header with-border">
     <label><h3 class="box-title">{{$option->name}}</h3></label>
     <div>
-        <input type="radio" name="{{$option->key}}" value="on" {{$option->getOptionsValue->value == 'on' ? 'checked' : ''}}>on
-        <input type="radio" name="{{$option->key}}" value="off" {{$option->getOptionsValue->value == 'off' ? 'checked' : ''}}>off
+        <input type="radio" name="{{$option->key}}" value="on" {{$valueFromDb == 'on' ? 'checked' : ''}}>on
+        <input type="radio" name="{{$option->key}}" value="off" {{$valueFromDb == 'off' ? 'checked' : ''}}>off
     </div>
     <div class="help-block">{{$option->description}}</div>
 </div>

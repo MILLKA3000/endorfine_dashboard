@@ -40,8 +40,15 @@ class ServicesController extends Controller
      */
     public function store(ServiceRequest $request)
     {
-        $status = new Services($request->toArray());
-        $status->save();
+        try
+        {
+            $status = new Services($request->toArray());
+            $status->save();
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/services');
     }
 
@@ -77,8 +84,15 @@ class ServicesController extends Controller
      */
     public function update(ServiceRequest $request, $id)
     {
-        $services = Services::find($id);
-        $services->update($request->toArray());
+        try
+        {
+            $services = Services::find($id);
+            $services->update($request->toArray());
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }   
+        
         return redirect('/services');
     }
 

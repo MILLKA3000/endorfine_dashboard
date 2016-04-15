@@ -41,9 +41,16 @@ class ClientStatusController extends Controller
      */
     public function store(NameRequest $request)
     {
-        $status = new ClientStatuses ();
-        $status->fill($request->toArray());
-        $status->save();
+        try
+        {
+            $status = new ClientStatuses ();
+            $status->fill($request->toArray());
+            $status->save();
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/clients/statuses');
     }
 
@@ -79,7 +86,14 @@ class ClientStatusController extends Controller
      */
     public function update(NameRequest $request, ClientStatuses $status)
     {
-        $status->update($request->toArray());
+        try
+        {
+            $status->update($request->toArray());
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/clients/statuses');
     }
 

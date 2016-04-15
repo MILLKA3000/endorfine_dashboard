@@ -41,8 +41,15 @@ class DiscountsController extends Controller
      */
     public function store(DiscountRequest $request)
     {
-        $status = new Discounts($request->toArray());
-        $status->save();
+        try
+        {
+            $status = new Discounts($request->toArray());
+            $status->save();
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/discounts');
     }
 
@@ -78,8 +85,14 @@ class DiscountsController extends Controller
      */
     public function update( Discounts $discount, DiscountRequest $request)
     {
-
-        $discount->update($request->toArray());
+        try
+        {
+            $discount->update($request->toArray());
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('discounts');
     }
 

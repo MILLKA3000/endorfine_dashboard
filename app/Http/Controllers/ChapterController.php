@@ -30,8 +30,15 @@ class ChapterController extends Controller
      */
     public function store(Requests\Chapter $request)
     {
-        $chapter = new Chapter($request->toArray());
-        $chapter->save();
+        try
+        {
+            $chapter = new Chapter($request->toArray());
+            $chapter->save();
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Філію не створено');
+        }
+        
         return redirect('/chapters');
     }
 
@@ -58,8 +65,15 @@ class ChapterController extends Controller
      */
     public function update(Requests\Chapter $request, $id)
     {
-        $chapter = Chapter::find($id);
-        $chapter->update($request->toArray());
+        try
+        {
+            $chapter = Chapter::find($id);
+            $chapter->update($request->toArray());
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/chapters');
     }
 

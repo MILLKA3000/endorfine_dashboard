@@ -6,6 +6,7 @@ use App\OptionsForChapters;
 use Illuminate\Http\Request;
 use App\Options;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,16 +49,24 @@ class OptionsController extends Controller
      */
     public function save(Requests\Options $request)
     {
-        dd($request);
-        if ($request->hasFile('logo')) {
-            $this->logoFile=$request->file('logo');
-            $this->fileUpload();
+        try
+        {
+            if ($request->hasFile('logo')) {
+                $this->logoFile = $request->file('logo');
+                $this->fileUpload();
+            }
+            $options = $request->except('_token');
+
+            foreach ($options as $key => $value) {
+                !empty($value) ? OptionsForChapters::whereIdOptions(Options::getIdForOptions($key))
+                    ->whereIdChapter(Cache::get('chapterActive'))
+                    ->update(['value' => $value]) : '';
+            }
         }
-        $options = $request->except('_token');
-        foreach ($options as $key => $value){
-            dd($key);
-            !empty($value) ? OptionsForChapters::where('key', $key)->update(['value' => $value]) : '';
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Налаштування не збережено');
         }
+        
         return redirect('/options');
     }
 

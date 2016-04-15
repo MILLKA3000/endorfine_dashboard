@@ -40,23 +40,28 @@ class RoomController extends Controller
      */
     public function store(Requests\Room $request)
     {
-        $room = new Room($request->toArray());
-        $room->save();
-        foreach($request->trainerAllowed as $trainer){
-            $trainer = User::find($trainer);
-            $calendar_service = new GoogleCalendar();
-            $calendar = $calendar_service->setNewCalendar($room,$trainer);
-            if($calendar) {
-                JoinTrainerToRoom::create([
-                    'room_id' => $room->id,
-                    'trainer_id' => $trainer->id,
-                    'room_calendar_id' => $calendar,
-                    'name' => $trainer->name.":".$room->name
-                ]);
+        try
+        {
+            $room = new Room($request->toArray());
+            $room->save();
+            foreach($request->trainerAllowed as $trainer){
+                $trainer = User::find($trainer);
+                $calendar_service = new GoogleCalendar();
+                $calendar = $calendar_service->setNewCalendar($room,$trainer);
+                if($calendar) {
+                    JoinTrainerToRoom::create([
+                        'room_id' => $room->id,
+                        'trainer_id' => $trainer->id,
+                        'room_calendar_id' => $calendar,
+                        'name' => $trainer->name.":".$room->name
+                    ]);
+                }
             }
         }
-
-
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/rooms');
     }
 
@@ -88,30 +93,36 @@ class RoomController extends Controller
      */
     public function update(Requests\Room $request, $id)
     {
-        $room = Room::find($id);
-        $room->update($request->toArray());
-        $trainersAllowed = JoinTrainerToRoom::whereRoomId($id)->get();
-        foreach($request->trainerAllowed as $trainer){
-            $trainer = User::find($trainer);
-            $calendar_service = new GoogleCalendar();
-            if(in_array($trainer->id,$trainersAllowed->lists('trainer_id')->toArray())==false){
-                $calendar = $calendar_service->setNewCalendar($room,$trainer);
-                if($calendar) {
-                    JoinTrainerToRoom::create([
-                        'room_id' => $room->id,
-                        'trainer_id' => $trainer->id,
-                        'room_calendar_id' => $calendar,
-                        'name' => $trainer->name.":".$room->name
-                    ]);
-                }
-            }else{
-                $calendar = $calendar_service->destroyCalendar($room,$trainer);
-                if($calendar) {
-                    JoinTrainerToRoom::whereTrainerId($trainer->id)->whereRoomId($id)->destroy();
+        try
+        {
+            $room = Room::find($id);
+            $room->update($request->toArray());
+            $trainersAllowed = JoinTrainerToRoom::whereRoomId($id)->get();
+            foreach($request->trainerAllowed as $trainer){
+                $trainer = User::find($trainer);
+                $calendar_service = new GoogleCalendar();
+                if(in_array($trainer->id,$trainersAllowed->lists('trainer_id')->toArray())==false){
+                    $calendar = $calendar_service->setNewCalendar($room,$trainer);
+                    if($calendar) {
+                        JoinTrainerToRoom::create([
+                            'room_id' => $room->id,
+                            'trainer_id' => $trainer->id,
+                            'room_calendar_id' => $calendar,
+                            'name' => $trainer->name.":".$room->name
+                        ]);
+                    }
+                }else{
+                    $calendar = $calendar_service->destroyCalendar($room,$trainer);
+                    if($calendar) {
+                        JoinTrainerToRoom::whereTrainerId($trainer->id)->whereRoomId($id)->destroy();
+                    }
                 }
             }
         }
-
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/rooms');
     }
 

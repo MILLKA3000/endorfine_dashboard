@@ -17,7 +17,8 @@ class options extends Seeder
             'description' => 'Введіть назву клубу',
             'tag' => 'options-input',
             'group' => '0',
-            'columns' => '4'
+            'columns' => '4',
+            'defaultValue' => 'Club name'
         ]);
         \App\Options::create([
             'key' => 'logo',
@@ -25,7 +26,8 @@ class options extends Seeder
             'description' => 'Завантажте ваше лого',
             'tag' => 'options-uploader',
             'group' => '0',
-            'columns' => '4'
+            'columns' => '4',
+            'defaultValue' => ''
         ]);
         \App\Options::create([
             'key' => 'logo_switcher',
@@ -33,7 +35,8 @@ class options extends Seeder
             'description' => 'лого або текст',
             'tag' => 'options-switch',
             'group' => '0',
-            'columns' => '4'
+            'columns' => '4',
+            'defaultValue' => 'off'
         ]);
         \App\Options::create([
             'key' => 'themes',
@@ -55,7 +58,8 @@ class options extends Seeder
                 {"name":"skin-yellow-light"}
                 ]',
             'group' => '1',
-            'columns' => '3'
+            'columns' => '3',
+            'defaultValue' => 'skin-green'
         ]);
         \App\Options::create([
             'key' => 'footer',
@@ -63,7 +67,8 @@ class options extends Seeder
             'description' => 'Вкл.-викл. футера',
             'tag' => 'options-switch',
             'group' => '1',
-            'columns' => '3'
+            'columns' => '3',
+            'defaultValue' => 'on'
         ]);
         \App\Options::create([
             'key' => 'next_birthdays',
@@ -71,7 +76,8 @@ class options extends Seeder
             'description' => 'Кількість днів для наступних ДН',
             'tag' => 'options-input',
             'group' => '1',
-            'columns' => '3'
+            'columns' => '3',
+            'defaultValue' => '3'
         ]);
         \App\Options::create([
             'key' => 'outstanding_tickets',
@@ -79,7 +85,8 @@ class options extends Seeder
             'description' => 'Днів до закінчення абонементів',
             'tag' => 'options-input',
             'group' => '1',
-            'columns' => '3'
+            'columns' => '3',
+            'defaultValue' => '7'
         ]);
     }
 }

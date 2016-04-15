@@ -39,8 +39,15 @@ class RolesController extends Controller
      */
     public function store(NameRequest $request)
     {
-        $status = new Role($request->toArray());
-        $status->save();
+        try
+        {
+            $status = new Role($request->toArray());
+            $status->save();
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('role');
     }
 
@@ -75,7 +82,14 @@ class RolesController extends Controller
      */
     public function update(NameRequest $request, Role $role)
     {
-        $role->update($request->toArray());
+        try
+        {
+            $role->update($request->toArray());
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('role');
     }
 

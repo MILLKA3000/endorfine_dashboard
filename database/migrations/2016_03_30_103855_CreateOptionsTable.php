@@ -21,6 +21,7 @@ class CreateOptionsTable extends Migration
             $table->integer('group');
             $table->integer('columns');
             $table->string('options',2000)->nullable();
+            $table->string('defaultValue');
             $table->timestamps();
             $table->softDeletes();
         });

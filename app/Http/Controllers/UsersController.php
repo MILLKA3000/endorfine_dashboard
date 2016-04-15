@@ -39,14 +39,19 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-
-        $user = new User ($request->except('password','password_confirmation'));
-        $user->password = bcrypt($request->password);
-        $user->confirmation_code = str_random(32);
-        $user->role_id = $request->role_id;
-        $user->enabled = $request->enabled;
-
-        $user->save();
+        try
+        {
+            $user = new User ($request->except('password','password_confirmation'));
+            $user->password = bcrypt($request->password);
+            $user->confirmation_code = str_random(32);
+            $user->role_id = $request->role_id;
+            $user->enabled = $request->enabled;
+            $user->save();
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/users');
     }
 
@@ -77,14 +82,19 @@ class UsersController extends Controller
         $passwordConfirmation = $request->password_confirmation;
         $users->role_id = $request->role_id;
         $users->enabled = $request->enabled;
-
-        if (!empty($password)) {
-            if ($password === $passwordConfirmation) {
-                $users->password = bcrypt($password);
+        try
+        {
+            if (!empty($password)) {
+                if ($password === $passwordConfirmation) {
+                    $users->password = bcrypt($password);
+                }
             }
+            $users->update();
         }
-        $users->update();
-
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('/users');
     }
 

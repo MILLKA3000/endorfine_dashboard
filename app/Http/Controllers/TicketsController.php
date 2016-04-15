@@ -41,8 +41,15 @@ class TicketsController extends Controller
      */
     public function store(TicketsRequest $request)
     {
-        $status = new Ticket($request->toArray());
-        $status->save();
+        try
+        {
+            $status = new Ticket($request->toArray());
+            $status->save();
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('tickets');
     }
 
@@ -77,7 +84,14 @@ class TicketsController extends Controller
      */
     public function update(Ticket $ticket, TicketsRequest $request)
     {
-        $ticket->update($request->toArray());
+        try
+        {
+            $ticket->update($request->toArray());
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        
         return redirect('tickets');
     }
 

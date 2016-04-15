@@ -25,7 +25,9 @@ class Controller extends BaseController
         foreach ($options as $option)
         {
             Cache::forget($option->key);
-            Cache::put($option->key, $option->getOptionsValue->value, 100);
+
+            Cache::put($option->key, !empty($option->getOptionsValue->first()->value) ? 
+                $option->getOptionsValue->first()->value : $option->defaultValue, 100);
         }
         Cache::put('countBirthday', count(Client::getAllBirthdayNow()),1000);
 
