@@ -222,6 +222,10 @@ li {
     color: #FFFFff;
 }
 
+.payment{
+    padding: 5px;
+}
+
 .tickets-list-item{
     font-size: 32px;
     text-align: center;
