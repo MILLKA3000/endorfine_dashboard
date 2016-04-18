@@ -26,8 +26,13 @@ class TrainerRequest extends Request
         return [
             'name' => 'required|min:3',
             'min' => 'required|min:0|numeric',
-            'activityTime' => 'min:0|numeric',
-            'value' => 'required|min:0|numeric',
+            'percent' => 'min:0|max:100|numeric',
+            'static' => 'min:0|numeric',
+
         ];
+        foreach($this->request->get('array[peopleCount]') as $key => $value)
+        {
+            $rules['array[0][peopleCount].'.$key] = 'required';
+        }
     }
 }

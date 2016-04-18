@@ -40,7 +40,7 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+
     }
 
     /**
@@ -83,7 +83,7 @@ class TrainerController extends Controller
 //            }
 //        }
 //        $users->update();
-        dd($request);
+        
     }
 
     public function getAllTrainers(){
