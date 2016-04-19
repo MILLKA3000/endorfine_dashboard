@@ -17,9 +17,9 @@
 {!! Form::open(array('url' => URL::to('role'), 'method' => 'UPDATE', 'class' => 'bf', 'files'=> true)) !!}
 @endif
         <!-- Tabs Content -->
-<div class="tab-content">
+<div class="tab-content row">
     <!-- General tab -->
-    <div class="tab-pane active" id="tab-general">
+    <div class="col-xs-12 tab-pane active" id="tab-general">
         <div class="form-group  {{ $errors->has('name') ? 'has-error' : '' }}">
             {!! Form::label('name', 'Назва ролі', array('class' => 'control-label')) !!}
             <div class="controls">

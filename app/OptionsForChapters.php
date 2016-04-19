@@ -8,6 +8,6 @@ class OptionsForChapters extends Model
 {
     protected $table = 'options_for_chapters';
     protected $fillable = [
-        'value'
+        'id_options', 'id_chapter', 'value', 'array_permissions'
     ];
 }

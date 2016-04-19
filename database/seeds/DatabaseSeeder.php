@@ -82,9 +82,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('--------------------------------');
         $this->command->info('The JoinTrainerToRoom table has been seeded!');
         $this->command->info('--------------------------------');
-        $this->call(options_for_chapters::class);
-        $this->command->info('--------------------------------');
-        $this->command->info('The options_for_chapters table has been seeded!');
+//        $this->call(options_for_chapters::class);
         $this->command->info('--------------------------------');
         $this->command->info('END');
         $this->command->info('--------------------------------');

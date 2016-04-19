@@ -24,7 +24,7 @@ class Options extends Request
     public function rules()
     {
         return [
-            'title' => 'Required|Min:3|Max:80|AlphaNum',
+            'title' => 'Required|Min:3|Max:80|regex:/^[\pL\s\-\0-9]+$/u',
             'next_birthdays' => 'Integer|Min:0|Max:360',
             'logo' => 'Image|max:15500',
         ];

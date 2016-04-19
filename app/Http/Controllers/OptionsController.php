@@ -49,6 +49,9 @@ class OptionsController extends Controller
      */
     public function save(Requests\Options $request)
     {
+//        whereIdOptions(Options::getIdForOptions($key))
+//            ->whereIdChapter(Cache::get('chapterActive'))
+//            ->
         try
         {
             if ($request->hasFile('logo')) {
@@ -56,11 +59,17 @@ class OptionsController extends Controller
                 $this->fileUpload();
             }
             $options = $request->except('_token');
-
+            OptionsForChapters::whereIdChapter(Cache::get('chapterActive'))->delete();
             foreach ($options as $key => $value) {
-                !empty($value) ? OptionsForChapters::whereIdOptions(Options::getIdForOptions($key))
-                    ->whereIdChapter(Cache::get('chapterActive'))
-                    ->update(['value' => $value]) : '';
+                if(!empty($value))
+                {
+                    OptionsForChapters::create(
+                        ['id_options' => Options::getIdForOptions($key),
+                        'id_chapter' => intval(Cache::get('chapterActive')),
+                        'value' => $value,
+                        'array_permissions' => 1]
+                    );
+                }
             }
         }
         catch(\Exception $e) {
