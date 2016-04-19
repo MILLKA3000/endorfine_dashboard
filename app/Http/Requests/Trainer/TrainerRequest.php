@@ -23,11 +23,25 @@ class TrainerRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|min:3',
             'min' => 'required|min:0|numeric',
-            'activityTime' => 'min:0|numeric',
-            'value' => 'required|min:0|numeric',
+            'percent' => 'min:0|max:100|numeric',
+            'static' => 'min:0|numeric',
+
         ];
+        foreach($this->request->get('array') as $key => $values)
+        {
+            $partOfName = 'array.' .$key;
+            foreach ($values as $people => $value)
+            {
+                
+                $rules[$partOfName .'.' .$people] = 'numeric|min:0';
+                $rules[$partOfName .'.' .$value] = 'numeric|min:0';
+            }
+
+        }
+        return $rules;
+
     }
 }

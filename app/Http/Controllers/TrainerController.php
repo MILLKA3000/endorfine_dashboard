@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Trainer\TrainerRequest;
+use App\Http\Requests\UserRequest;
+use App\PaymentsVariables;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -38,9 +41,15 @@ class TrainerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        dd($request);
+
+        $user = new User ($request->except('password','password_confirmation'));
+        $user->password = bcrypt($request->password);
+        $user->confirmation_code = str_random(32);
+        $user->role_id = $request->role_id;
+        $user->enabled = $request->enabled;
+        $user->save();
     }
 
     /**
@@ -70,20 +79,39 @@ class TrainerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param TrainerRequest|Request $request
+     * @param User $user
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(TrainerRequest $request, User $user, PaymentsVariables $payments )
     {
+        
+        $password = $request->password;
+        $passwordConfirmation = $request->password_confirmation;
+        $user->role_id = $request->role_id;
+        $user->enabled = $request->enabled;
+        $payments->min = $request->min;
+        $payments->value = $request->value;
+        $payments->type_id = $request->type_id;
+        
+        try
+        {
+            if (!empty($password)) {
+                if ($password === $passwordConfirmation) {
+                    $user->password = bcrypt($password);
+                }
+            }
+            $user->update($request->toArray());
+            $payments->update($request->toArray());
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
 
-//        if (!empty($password)) {
-//            if ($password === $passwordConfirmation) {
-//                $users->password = bcrypt($password);
-//            }
-//        }
-//        $users->update();
-        dd($request);
+        return redirect('trainers');
+       
+        
     }
 
     public function getAllTrainers(){
