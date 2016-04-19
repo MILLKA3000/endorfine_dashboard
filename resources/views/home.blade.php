@@ -14,12 +14,12 @@
     </style>
 @endsection
 @section('content')
-
-    <div>
-        <input class="form-control input-lg" id="search" type="text" placeholder="Ім'я клієнта або номер абонимента">
-    </div>
-    <br>
     <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <input class="form-control input-lg" id="search" type="text" placeholder="Ім'я клієнта або номер абонимента">
+        </div>
+        <br>
+
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-warning">
                 <div class="content-dashboard">
