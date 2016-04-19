@@ -69,7 +69,7 @@ function showToastr(data){
 }
 
 function resize() {
-    $('.tickets-accordion ul').height($('.content-dashboard').height() - 200);
+    //$('.tickets-accordion ul').height($('.content-dashboard').height() - 200);
 }
 
 $('.dropdown select').on("click", function(e){

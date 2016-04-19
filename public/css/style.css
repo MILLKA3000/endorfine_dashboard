@@ -17,7 +17,7 @@
 }
 
 .box.box-primary {
-    display: table;
+    display: inline-block;
     border-top-color: #F15523;
 }
 
@@ -33,7 +33,7 @@
 .content-dashboard{
     padding-top: 15px;
     overflow-y: auto;
-    max-height: 60vh;
+    /*max-height: 60vh;*/
 }
 .box{
      margin-bottom: 0px;
@@ -49,19 +49,19 @@
     box-shadow: none;
 }
 
-#pbar_innertext{
+.pbar_innertext{
     z-index: 3;
     position: absolute;
     text-align: center;
-    top: 0;
-    font-size: 20pt;
+    top: -4px;
+    font-size: 14pt;
     left: 0;
     width: 100%;
     height: 100%;
     color: rgba(0, 0, 0, 1);
 }
 
-#pbar_innerdiv{
+.pbar_innerdiv{
     z-index: 2;
     height: 100%;
     width: 100%;
@@ -69,9 +69,9 @@
     position: absolute;
 }
 
-#pbar_outerdiv{
+.pbar_outerdiv{
     width: 100%;
-    height: 40px;
+    height: 20px;
     z-index: 1;
     position: relative;
     background-color: #FFF ;
@@ -79,7 +79,7 @@
 
 .tickets-accordion{
     margin-top: 2px;
-    padding: 40px 0;
+    padding: 60px 0 30px 0;
 }
 
 .tickets-accordion ul,
@@ -162,7 +162,7 @@ li {
     margin: -25px 0 -25px 0;
 }
 
-.tickets-accordion li.event-acordion { background-color: #00a65a !important;color:white!important; }
+.tickets-accordion li.event-acordion { background-color: #00a65a !important;color:white!important; min-height: 300px;}
 .tickets-accordion li.event-acordion-last.hover { background-color: #f39c12  !important;color:white!important; }
 .tickets-accordion li.event-acordion-last { background: #dd4b39!important;color:white!important; }
 
@@ -269,24 +269,24 @@ li {
 }
 
 @media (max-height: 1080px){
-    .content-dashboard {
-        max-height: 63vh;
-        height: 63vh;
-    }
+    /*.content-dashboard {*/
+        /*max-height: 63vh;*/
+        /*height: 63vh;*/
+    /*}*/
 }
 
 @media (max-height: 900px){
-    .content-dashboard {
-        max-height: 55.5vh;
-        height: 55.5vh;
-    }
+    /*.content-dashboard {*/
+        /*max-height: 55.5vh;*/
+        /*height: 55.5vh;*/
+    /*}*/
 }
 
 @media (max-height: 768px){
-    .content-dashboard {
-        max-height: 53vh;
-        height: 53vh;
-    }
+    /*.content-dashboard {*/
+        /*max-height: 53vh;*/
+        /*height: 53vh;*/
+    /*}*/
 }
 @media (min-height: 768px){
     .tickets-accordion .hover .clients,
@@ -349,3 +349,11 @@ li {
     /*margin: 10px;*/
     /*background-color: #e4fffc;*/
 /*}*/
+@media (min-width: 1920px){
+    .col-big-6 {
+        width: 50%;
+    }
+    .col-big-12 {
+        width: 100%;
+    }
+}
