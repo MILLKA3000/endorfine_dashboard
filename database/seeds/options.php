@@ -31,7 +31,7 @@ class options extends Seeder
         ]);
         \App\Options::create([
             'key' => 'logo_switcher',
-            'name' => 'Включення логл',
+            'name' => 'Включення лого',
             'description' => 'лого або текст',
             'tag' => 'options-switch',
             'group' => '0',
