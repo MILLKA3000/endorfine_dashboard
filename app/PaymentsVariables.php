@@ -8,6 +8,10 @@ class PaymentsVariables extends Model
 {
     protected $table = 'paymentsVariables';
     protected $fillable = [
-        'name', 'type_id', 'min', 'value'
+        'name', 'user_id', 'typePayments_id', 'min', 'value'
     ];
+    public function getTypeVariables()
+    {
+        return $this->hasOne('app/TypeVariablesOfPayment','id','type_id');
+    }
 }

@@ -91,7 +91,7 @@
             <div class="controls">
                 {!! Form::text('percent',null, array('class' => 'form-control')) !!}
             </div>
-            <span class="help-block">З кожного абонемента з одного заняття візьметься %. Наприклад (введено 50% і абонемент коштує 100 на 10 занять, тоді тренер за нього получить зп 5, але не менше ніж вказано в мінімальній ставці).</span>
+            <span class="help-block">З кожного абонемента з одного заняття візьметься %. Наприклад (введено 50% і абонемент коштує 100 на 10 занять, тоді тренер за нього отримає зп 5, але не менше ніж вказано в мінімальній ставці).</span>
         </div>
 
         <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-static" style="display: none">
@@ -99,7 +99,7 @@
             <div class="controls">
                 {!! Form::text('static',null, array('class' => 'form-control')) !!}
             </div>
-            <span class="help-block">Тренер получить за дане заняття сталу суму яка ніяк не впливає на кількість абонементів,але не менше ніж вказано в мінімальній ставці.</span>
+            <span class="help-block">Тренер отримає за дане заняття сталу суму яка ніяк не залежить від кількості абонементів,але не менше ніж вказано в мінімальній ставці.</span>
         </div>
 
         <div class="form-group col-md-8 col-md-offset-2 type-payments" id="type-payments-array" style="display: none">

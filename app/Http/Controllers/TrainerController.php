@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Trainer\TrainerRequest;
 use App\Http\Requests\UserRequest;
 use App\PaymentsVariables;
+use App\PaymentTrener;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class TrainerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(TrainerRequest $request)
     {
 
         $user = new User ($request->except('password','password_confirmation'));
@@ -49,7 +50,22 @@ class TrainerController extends Controller
         $user->confirmation_code = str_random(32);
         $user->role_id = $request->role_id;
         $user->enabled = $request->enabled;
-        $user->save();
+
+        $payments = new PaymentsVariables();
+        $payments->min = $request->min;
+        $payments->value = $request->value;
+        $payments->typePayments_id = $request->typePayments_id;
+
+        try
+        {
+            $user->save();
+            $payments->whereUserId($user->id)->save();
+
+        }
+        catch(\Exception $e) {
+            return view('exceptions.msg')->with('msg', ' Зміни не збережено');
+        }
+        return redirect('trainers');
     }
 
     /**
@@ -84,16 +100,16 @@ class TrainerController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function update(TrainerRequest $request, User $user, PaymentsVariables $payments )
+    public function update(TrainerRequest $request, User $user)
     {
-        
+        $payments = new PaymentsVariables();
         $password = $request->password;
         $passwordConfirmation = $request->password_confirmation;
         $user->role_id = $request->role_id;
         $user->enabled = $request->enabled;
         $payments->min = $request->min;
         $payments->value = $request->value;
-        $payments->type_id = $request->type_id;
+        $payments->typePayments_id = $request->typePayments_id;
         
         try
         {
@@ -103,7 +119,8 @@ class TrainerController extends Controller
                 }
             }
             $user->update($request->toArray());
-            $payments->update($request->toArray());
+            $payments->whereUserId($user->id)->update($payments->toArray());
+
         }
         catch(\Exception $e) {
             return view('exceptions.msg')->with('msg', ' Зміни не збережено');

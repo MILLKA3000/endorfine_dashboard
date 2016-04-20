@@ -15,8 +15,10 @@ class PaymentsVariables extends Migration
         Schema::create('paymentsVariables', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('type_id')->nullable();
-            $table->foreign('type_id')->references('id')->on('typeVariables')->onDelete('set null');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('typePayments_id')->nullable();
+            $table->foreign('typePayments_id')->references('id')->on('typeVariables')->onDelete('set null');
             $table->integer('min');
             $table->integer('value');
             $table->timestamps();
