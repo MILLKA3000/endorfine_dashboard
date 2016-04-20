@@ -52,6 +52,7 @@ class OptionsController extends Controller
 //        whereIdOptions(Options::getIdForOptions($key))
 //            ->whereIdChapter(Cache::get('chapterActive'))
 //            ->
+
         try
         {
             if ($request->hasFile('logo')) {
