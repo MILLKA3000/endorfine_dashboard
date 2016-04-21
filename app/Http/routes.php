@@ -143,6 +143,10 @@ Route::group(['middleware' => ['web']], function () {
 
         #Trainers
         Route::get('/trainers/getAllTrainers', 'TrainerController@getAllTrainers');
+        Route::get('trainers/{trainer}/show', 'TrainerController@show');
+        Route::get('trainers/{trainer}/edit', 'TrainerController@edit');
+        Route::put('trainers/{trainer}/edit', 'TrainerController@update');
+        Route::get('trainers/{trainer}/destroy', 'TrainerController@destroy');
         Route::resource('/trainers', 'TrainerController');
 
 		#BirthDay

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Trainer\TrainerRequest;
 use App\Http\Requests\UserRequest;
 use App\PaymentsVariables;
-use App\PaymentTrener;
+
 use App\Role;
+use App\TypeVariablesOfPayment;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -48,7 +49,7 @@ class TrainerController extends Controller
         $user = new User ($request->except('password','password_confirmation'));
         $user->password = bcrypt($request->password);
         $user->confirmation_code = str_random(32);
-        $user->role_id = $request->role_id;
+        $user->role_id = 3;
         $user->enabled = $request->enabled;
 
         $payments = new PaymentsVariables();
@@ -102,15 +103,20 @@ class TrainerController extends Controller
      */
     public function update(TrainerRequest $request, User $user)
     {
+
         $payments = new PaymentsVariables();
         $password = $request->password;
         $passwordConfirmation = $request->password_confirmation;
         $user->role_id = $request->role_id;
         $user->enabled = $request->enabled;
         $payments->min = $request->min;
-        $payments->value = $request->value;
-        $payments->typePayments_id = $request->typePayments_id;
+        $payments->value = $request->payment_id;
+
+        $type_id = TypeVariablesOfPayment::whereName($request->payment_id)->get()->first()->id;
+
+        $payments->typePayments_id = $type_id;
         
+
         try
         {
             if (!empty($password)) {
